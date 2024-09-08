@@ -39,6 +39,11 @@ export const navBarConfig: NavBarConfig = {
     LinkPreset.Archive,
     LinkPreset.About,
     {
+      name: 'UABC',
+      url: 'https://www.uabc.mx/',
+      external: true,
+    },
+    {
       name: 'FIAD',
       url: 'http://fiad.ens.uabc.mx/',     // Internal links should not include the base path, as it is automatically added
       external: true,                               // Show an external link icon and will open in a new tab
@@ -49,8 +54,9 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
   avatar: 'assets/images/avatar.png',  // Relative to the /src directory. Relative to the /public directory if it starts with '/'
   name: 'Javier Jalid S. S. (World X)',
-  bio: '¡Bienvenidos a la página oficial del Grupo 932!',
+  bio: '¡Bienvenidos a la página del Grupo 932!',
   links: [
+    /*
     {
       name: 'Youtube',
       icon: 'bxl:youtube',
