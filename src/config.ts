@@ -52,11 +52,16 @@ export const profileConfig: ProfileConfig = {
   bio: '¡Bienvenidos a la página oficial del Grupo 932!',
   links: [
     {
-      name: 'Twitter',
+      name: 'Youtube',
+      icon: 'bxl:youtube',
+      url: 'https://www.youtube.com/@worldx1091',
+    },/*
+    {
+      name: 'X',
       icon: 'fa6-brands:twitter',       // Visit https://icones.js.org/ for icon codes
                                         // You will need to install the corresponding icon set if it's not already included
                                         // `pnpm add @iconify-json/<icon-set-name>`
-      url: 'https://twitter.com',
+      url: 'https://x.com/WorldX15',
     },
     {
       name: 'Steam',
@@ -67,7 +72,7 @@ export const profileConfig: ProfileConfig = {
       name: 'GitHub',
       icon: 'fa6-brands:github',
       url: 'https://github.com/saicaca/fuwari',
-    },
+    },*/
   ],
 }
 
