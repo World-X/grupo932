@@ -1,9 +1,9 @@
 ---
 title: Introducción
-published: 2024-09-08
-description: '¿Qué es este sitio? ¿Cuál es su propósito? Recomiendo bastante que leas esta publicación.'
+published: 2024-09-07
+description: '¿Qué es este sitio? ¿Cuál es su propósito? ¡Recomiendo bastante que leas este artículo de bienvenida!'
 image: ''
-tags: [intro, info]
+tags: [intro, info, meta]
 category: 'Informativo'
 draft: false 
 language: ''
