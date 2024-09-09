@@ -48,6 +48,11 @@ export const navBarConfig: NavBarConfig = {
       url: 'http://fiad.ens.uabc.mx/',     // Internal links should not include the base path, as it is automatically added
       external: true,                               // Show an external link icon and will open in a new tab
     },
+    {
+      name: 'WhatsApp',
+      url: 'https://web.whatsapp.com/',
+      external: true,
+    }
   ],
 }
 
