@@ -28,18 +28,18 @@ Esta guía fue extraída de la guía que hice en Discord, así que no fue modifi
 :::
 ## Paso 1: Descarga MinGW
 Dirígete a https://sourceforge.net/projects/mingw/ y descarga el instalador.
-![Imagen 1](/src/content/posts/how-to-install-c-compiler/image1.jpg)
+![Imagen 1](./how-to-install-c-compiler/image1.jpg)
 Deberías obtener un archivo ejecutable llamado `mingw-get-setup.exe`. Procede a abrirlo.
-![Imagen 2](/src/content/posts/how-to-install-c-compiler/image2.jpg)
+![Imagen 2](./how-to-install-c-compiler/image2.jpg)
 ## Paso 2: Instala MinGW
 Cuando aparezca esta ventana, procede a instalar el compilador.
-![Imagen 3](/src/content/posts/how-to-install-c-compiler/image3.jpg)
+![Imagen 3](./how-to-install-c-compiler/image3.jpg)
 Recomiendo darle a continuar, pero si gustas puedes cambiar la dirección de donde se instalará el compilador (no recomendable).
-![Imagen 4](/src/content/posts/how-to-install-c-compiler/image4.jpg)
+![Imagen 4](./how-to-install-c-compiler/image4.jpg)
 Procederá a descargar el catálogo. Una vez completado, procede.
-![Imagen 5](/src/content/posts/how-to-install-c-compiler/image5.jpg)
+![Imagen 5](./how-to-install-c-compiler/image5.jpg)
 Va a aparecer esta ventana. Aquí verás varios paquetes que puedes instalar.
-![Imagen 6](/src/content/posts/how-to-install-c-compiler/image6.jpg)
+![Imagen 6](./how-to-install-c-compiler/image6.jpg)
 Una breve descripción de cada uno (**leer es opcional**, es meramente informativo):
 1. `mingw-developer-toolkit`: Este metapaquete contiene los componentes necesarios para crear una instalación de MSYS relativamente completa y adecuada para la mayoría de las necesidades de los desarrolladores de MinGW.
 2. `mingw32-base`: Este paquete se utiliza para compilar el programa C, incluyendo el enlazador y otras herramientas binarias.
@@ -49,43 +49,43 @@ Una breve descripción de cada uno (**leer es opcional**, es meramente informati
 6. `mingw32-gcc-objc`: Este paquete se utiliza para compilar lenguaje C objetivo.
 ## Paso 3: Selecciona paquetes
 Procede a marcar los siguientes paquetes para instalarlos.
-![Imagen 7](/src/content/posts/how-to-install-c-compiler/image7.jpg)
+![Imagen 7](./how-to-install-c-compiler/image7.jpg)
 `mingw32-base`, `mingw32-gcc-g++` y `mingw32-gcc-objc`.
-![Imagen 8](/src/content/posts/how-to-install-c-compiler/image8.jpg)
+![Imagen 8](./how-to-install-c-compiler/image8.jpg)
 ## Paso 4: Aplica cambios e instala paquetes
 Dirígete a "Installation > Apply Changes". Esto aplicará los cambios que realizamos.
-![Imagen 9](/src/content/posts/how-to-install-c-compiler/image9.jpg)
+![Imagen 9](./how-to-install-c-compiler/image9.jpg)
 Presiona en "Apply" para aplicar. Tus componentes serán instalados.
-![Imagen 10](/src/content/posts/how-to-install-c-compiler/image10.jpg)
+![Imagen 10](./how-to-install-c-compiler/image10.jpg)
 Una vez terminado, puedes cerrar esta ventana y la ventana del instalador... ¡listo! Tu compilador ya está instalado, pero tu sistema no sabe donde se encuentra el directorio del compilador, así que todavía no puedes usarlo en VSC (Visual Studio Code).
-![Imagen 11](/src/content/posts/how-to-install-c-compiler/image11.jpg)
+![Imagen 11](./how-to-install-c-compiler/image11.jpg)
 ## Paso 5: Abre la configuración avanzada de variables de entorno
 Busca el panel de control.
-![Imagen 12](/src/content/posts/how-to-install-c-compiler/image12.jpg)
+![Imagen 12](./how-to-install-c-compiler/image12.jpg)
 Dirígete a Sistema y Seguridad.
-![Imagen 13](/src/content/posts/how-to-install-c-compiler/image13.jpg)
+![Imagen 13](./how-to-install-c-compiler/image13.jpg)
 Después Sistema.
-![Imagen 14](/src/content/posts/how-to-install-c-compiler/image14.jpg)
+![Imagen 14](./how-to-install-c-compiler/image14.jpg)
 Abre la configuración avanzada.
-![Imagen 15](/src/content/posts/how-to-install-c-compiler/image15.jpg)
+![Imagen 15](./how-to-install-c-compiler/image15.jpg)
 Entra a Variables de Entorno.
-![Imagen 16](/src/content/posts/how-to-install-c-compiler/image16.jpg)
+![Imagen 16](./how-to-install-c-compiler/image16.jpg)
 ## Paso 6: Agrega una nueva dirección en tu variable de entorno `Path`
 Selecciona Path, y después presiona Editar.
-![Imagen 17](/src/content/posts/how-to-install-c-compiler/image17.jpg)
+![Imagen 17](./how-to-install-c-compiler/image17.jpg)
 Aparecerá esta ventana. Presiona en Nuevo, y después en Buscar.
-![Imagen 18](/src/content/posts/how-to-install-c-compiler/image18.jpg)
+![Imagen 18](./how-to-install-c-compiler/image18.jpg)
 Busca la dirección de `MinGW`, y después la carpeta `bin`. Si no cambiaste la dirección predeterminada, debería estar en `C:\MinGW\bin`. Una vez seleccionada, procede a darle OK.
-![Imagen 19](/src/content/posts/how-to-install-c-compiler/image19.jpg)
+![Imagen 19](./how-to-install-c-compiler/image19.jpg)
 Procede a darle otra vez OK, asegúrandote que la dirección de `bin` esté añadida a la lista.
-![Imagen 20](/src/content/posts/how-to-install-c-compiler/image20.jpg)
+![Imagen 20](./how-to-install-c-compiler/image20.jpg)
 Otra vez.
-![Imagen 21](/src/content/posts/how-to-install-c-compiler/image21.jpg)
+![Imagen 21](./how-to-install-c-compiler/image21.jpg)
 Por última vez, presiona OK. Por favor, **asegúrate de presionar todos los OK necesarios, NO CIERRES LAS VENTANAS**, si lo haces, no se guardarán tus cambios, y tendrás que hacer el paso 6 de nuevo.
 
 ¡Listo! Ya tu compilador está instalado y tu sistema ya sabe donde está ubicado.
 ## Paso bonus: Confirmar que el compilador está instalado
 Para confirmar que realmente está instalado todo perfectamente, procede a abrir el Command Prompt, o CMD.
-![Imagen 22](/src/content/posts/how-to-install-c-compiler/image22.jpg)
+![Imagen 22](./how-to-install-c-compiler/image22.jpg)
 Copia y pega la siguiente línea en la terminal: `g++ --version`. Si te aparece la versión como en la imagen, entonces quiere decir que todo se instalo correctamente. Ahora puedes tomarme el descansito que te mereces.
-![Imagen 23](/src/content/posts/how-to-install-c-compiler/image23.jpg)
+![Imagen 23](./how-to-install-c-compiler/image23.jpg)
