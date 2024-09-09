@@ -19,6 +19,12 @@ html.dark .wg  { color: rgb(64, 255, 64); }
 html.dark .dp  { color: rgb(160, 128, 255); }
 /*html.dark .gg  { color: rgb(160, 160, 160); }
 </style>
+## Tabla de contenido
+- [Contexto](#contexto)
+- [La meta y visión de este sitio](#la-meta-y-visión-de-este-sitio)
+- [Limitaciones](#limitaciones)
+- [¿Ahora qué?](#ahora-qué)
+___
 ## Contexto
 Desde el principio, antes de la creación de esta página, nuestro principal método de comunicación, además de hablar en persona, fue por medio de <b class="wg">WhatsApp</b>, y algunos compañeros del grupo se unieron también a un grupo de <b class="dp">Discord</b> administrado por Allan. Estos medios de comunicación han servido sus propósitos respectivos para poder comunicarnos de forma eficiente.
 

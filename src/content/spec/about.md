@@ -1,6 +1,6 @@
 # Acerca De
 ## Horario
-![Horario del Grupo 932](/src/assets/images/horario.jpg)
+![Horario del Grupo 932](./horario.jpg)
 ## Bienvenida
 ¡Bienvenidos a la página del Grupo 932 de la FIAD de la UABC!
 Este sitio fue creado por Javier Jalid, con la meta de crear un sitio web donde el grupo pueda acceder a información, guías, documentación, entre otras cosas, de forma más conveniente y rápida.
