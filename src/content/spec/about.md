@@ -1,4 +1,7 @@
 # Acerca De
+:::important[IMPORTANTE]
+Esta página está incompleta y/o en desarrollo. Puede cambiar en el futuro. Si tienes alguna sugerencia para mejorar ésta, déjame saber por favor. Gracias por su comprensión.
+:::
 ## Horario
 ![Horario del Grupo 932](./horario.jpg)
 ## Bienvenida
