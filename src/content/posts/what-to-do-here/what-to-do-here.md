@@ -25,20 +25,24 @@ Si es así, entonces no te preocupes, ¡porque voy a explicarte a detalle todas 
 ## Barra de navegación superior
 ![Barra de navegación superior](topbar.jpg)
 ### Botones
-- **Grupo 932**: Página principal del sitio.
-- **Inicio**: Ídem.
-- **Repositorio**: Muestra el archivero, como línea de tiempo, de todas las publicaciones en el sitio.
-- **Acerca De**: Una página especial para mostrar información básica general y una bienvenida.
-- **UABC**: Un enlace directo hacia la página oficial de la ***Universidad Autónoma de Baja California***.
-- **FIAD**: Un enlace directo hacia la página oficial de la ***Facultad de Ingeniería, Arquitectura y Diseño***.
-- **WhatsApp**: Un enlace directo hacia la página oficial de ***WhatsApp Web***.
+1. **Grupo 932**: Página principal del sitio.
+2. **Inicio**: Ídem.
+3. **Repositorio**: Muestra el archivero, como línea de tiempo, de todas las publicaciones en el sitio.
+4. **Acerca De**: Una página especial para mostrar información básica general y una bienvenida.
+5. **UABC**: Un enlace directo hacia la página oficial de la ***Universidad Autónoma de Baja California***.
+6. **FIAD**: Un enlace directo hacia la página oficial de la ***Facultad de Ingeniería, Arquitectura y Diseño***.
+7. **WhatsApp**: Un enlace directo hacia la página oficial de ***WhatsApp Web***.
 ### Herramientas
-- **Buscar**: Puedes buscar publicaciones específicas en base a su contenido.
-- **Color del tema**: Puedes personalizar la apariencia del sitio cambiando el color principal.
-- **Modo**: Puedes cambiar la apariencia del sitio al modo oscuro, claro, o el que esté usando tu sistema.
+8. **Buscar**: Puedes buscar publicaciones específicas en base a su contenido.
+9. **Color del tema**: Puedes personalizar la apariencia del sitio cambiando el color principal.
+10. **Modo**: Puedes cambiar la apariencia del sitio al modo oscuro, claro, o el que esté usando tu sistema.
 ## Página principal
 ![Página principal](main-page.jpg)
-Pendiente.
+1. **Acerca De**.
+2. **Categorías**.
+3. **Etiquetas**.
+4. **Lista de publicaciones**.
+5. **Páginas**.
 ### Repositorio
 ![Página principal](main-page.jpg)
 Pendiente.
