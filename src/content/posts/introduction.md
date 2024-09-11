@@ -49,3 +49,5 @@ Además, este es un sitio estático, lo cual significa que algunas herramientas 
 Por último, el URL y dominio que dirigen a este sitio son limitados por **GitHub Pages**. Algunas direcciones como `fiadgrupo932.com.co` o algo similar salen en aproximadamente de \$160 a \$200 por un año, pero todavía no estoy seguro de si realmente valga la pena hacer esta inversión, incluso si no es mucho, especialmente si cooperamos entre todos o la mayoría, pero tampoco es necesario.
 ## ¿Ahora qué?
 Gracias por leer hasta el final. Si tienes alguna duda o sugerencia, puedes comunicarte conmigo. **Con toda sinceridad**, espero el apoyo de todos ustedes, realmente quiero que este proyecto funcione, y daré mi mejor esfuerzo para moderar este sitio de forma organizada y responsable, para que sea la herramienta o una de las herramientas principales con las cuales ustedes puedan confiar usar.
+
+Recomiendo bastante que ahora te familiarices con este sitio leyendo esta [guía rápida](/grupo932/posts/what-to-do-here/what-to-do-here/).
