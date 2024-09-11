@@ -9,8 +9,8 @@ Esta página está incompleta y/o en desarrollo. Puede cambiar en el futuro. Si 
 Este sitio fue creado por Javier Jalid, con la meta de crear un sitio web donde el grupo pueda acceder a información, guías, documentación, entre otras cosas, de forma más conveniente y rápida.
 
 Recomiendo bastante que lean los siguientes artículos para comenzar:
-1. [Introducción](https://world-x.github.io/grupo932/posts/introduction/)
-2. [¿Cómo usar este sitio? Una guía rápida](https://world-x.github.io/grupo932/posts/what-to-do-here/)
+1. [Introducción](../posts/introduction/)
+2. [¿Cómo usar este sitio? Una guía rápida](../posts/what-to-do-here/what-to-do-here/)
 
 Cualquier duda, pregunta, o sugerencia puedes acércarte conmigo presencialmente o por medio de WhatsApp o Discord.
 
