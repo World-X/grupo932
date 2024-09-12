@@ -19,7 +19,7 @@ function getDate() {
   }
   const roundedMinutes = String(minutes).padStart(2, '0')
 
-  return `${year}-${month}-${day}T${hours}:${roundedMinutes}:00Z`
+  return `${year}-${month}-${day}T${hours}:${roundedMinutes}:00-07:00`
 }
 
 const args = process.argv.slice(2)

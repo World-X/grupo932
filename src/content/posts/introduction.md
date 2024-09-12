@@ -1,6 +1,6 @@
 ---
 title: Introducción
-published: 2024-09-07
+published: 2024-09-07T12:00:00-07:00
 description: '¿Qué es este sitio? ¿Cuál es su propósito? ¡Recomiendo bastante que leas este artículo de bienvenida!'
 image: ''
 tags: [intro, info, meta]

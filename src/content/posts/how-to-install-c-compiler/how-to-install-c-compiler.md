@@ -1,6 +1,6 @@
 ---
 title: Cómo instalar compilador de C/C++
-published: 2024-09-09
+published: 2024-09-09T14:00:00-07:00
 description: '¿Tienes una computadora que no puede correr C/C++? Es probable que necesites un compilador de C para poder ejecutarlos.'
 image: ''
 tags: [guía, c, c++]
