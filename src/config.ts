@@ -24,16 +24,12 @@ export const siteConfig: SiteConfig = {
       url: ''                // (Optional) URL link to the original artwork or artist's page
     }
   },
-  favicon: [
+  favicon: [    // Leave this array empty to use the default favicon
     {
-      src: '/favicon/avatar-icon-32.png',
-      //sizes: '32x32',
-    },/*    // Leave this array empty to use the default favicon
-    {
-      src: '/public/favicon/avatar-icon-6.png',    // Path of the favicon, relative to the /public directory
+      src: '/favicon/avatar-icon-32.png',    // Path of the favicon, relative to the /public directory
       //theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
       //sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-    }*/
+    }
   ]
 }
 
