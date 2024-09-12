@@ -9,19 +9,48 @@ draft: false
 language: ''
 ---
 ## Tabla de contenido
-- Conceptos
-    - ASCII
-    - Sistema númerico binario
-    - Sistema númerico hexadecimal
-- Recursos
-    - ASCII
-- Herramientas
-    - Conversores en línea
-    - Conversor en Python
+- [Herramientas](#herramientas)
+    - [Conversores en línea](#conversores-en-línea)
+        - [Texto a decimal](#texto-a-decimal)
+        - [Texto a binario](#texto-a-binario)
+        - [Texto a hexadecimal](#texto-a-hexadecimal)
+        - [Decimal a binario](#decimal-a-binario)
+        - [Decimal a hexadecimal](#decimal-a-hexadecimal)
+        - [Binario a hexadecimal](#binario-a-hexadecimal)
+    - [Conversor en Python](#conversor-en-python)
 ___
 **Cada carácter en un texto está asociado a un valor numérico** en la [tabla ASCII](https://elcodigoascii.com.ar/), que es un estándar utilizado para representar letras, números, símbolos y controladores en código binario. Entender cómo convertir texto a su forma decimal no solo es útil para la programación y el análisis de datos, sino que también es esencial para comprender cómo las computadoras procesan y almacenan información.
+## Herramientas
+A continuación se muestran algunas herramientas para convertir de texto a sistemas númericos y viceversa.
+### Conversores en línea
+#### Texto a decimal
+- https://cryptii.com/pipes/text-decimal
+- https://capitalizemytitle.com/text-to-decimal-converter/
+- https://onlinetexttools.com/convert-text-to-decimal
+#### Texto a binario
+- https://www.rapidtables.com/convert/number/ascii-to-binary.html
+- https://www.duplichecker.com/text-to-binary.php
+- https://www.convertbinary.com/text-to-binary/
+#### Texto a hexadecimal
+- https://www.rapidtables.com/convert/number/ascii-to-hex.html
+- https://www.duplichecker.com/text-to-hex.php
+- https://magictool.ai/tool/text-to-hex-converter/
+#### Decimal a binario
+- https://www.rapidtables.com/convert/number/decimal-to-binary.html
+- https://www.binaryhexconverter.com/decimal-to-binary-converter
+- https://www.inchcalculator.com/decimal-to-binary-converter/
+#### Decimal a hexadecimal
+- https://www.rapidtables.com/convert/number/decimal-to-hex.html
+- https://www.geeksforgeeks.org/decimal-to-hex-converter/
+- https://www.binaryhexconverter.com/decimal-to-hex-converter
+#### Binario a hexadecimal
+- https://www.rapidtables.com/convert/number/binary-to-hex.html
+- https://www.binaryhexconverter.com/binary-to-hex-converter
+- https://www.duplichecker.com/binary-to-hex.php
+### Conversor en Python
+Un problema de usar varias herramientas de conversión que encuentren en el Internet es que pueden usar alguna versión de ASCII que es diferente a la que los demás usan, lo cual puede hacer las traducciones inconsistentes. Es por eso que decidí compartir este código de Python, para simplificar las conversiones bajo el mismo estándar.
 
-A continuación se muestran algunos recursos y herramientas que estén relacionados con el tema.
+Puedes copiar y pegar el siguiente código en una IDE de Python (como SPYDER) para correrlo. Desplegará una ventana donde puedes escribir una línea de texto que será traducida a sus valores decimales (en ASCII), además de convertirlos a binario y hexadecimal. Este código fue hecho por ChatGPT, y ligeramente modificado por mí.
 ```python
 import tkinter as tk
 
