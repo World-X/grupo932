@@ -1,14 +1,27 @@
 ---
 title: Convertir texto a DEC, BCD y HEX
 published: 2024-09-11
-description: 'Descripción predeterminada'
-image: ''
-tags: [binario, ascii, bcd, trabajo, tarea, organizacion, computadoras, python]
-category: 'Código'
+description: 'Una colección de recursos para convertir texto a decimal (ASCII), binario, hexadecimal, etcétera, y viceversa.'
+image: './test2.jpg'
+tags: [binario, ascii, hexadecimal, decimal, trabajo, tarea, organizacion, computadoras, python, recurso]
+category: 'Recurso'
 draft: false 
 language: ''
 ---
-Si ya sabes como convertir texto a DECIMAL (usando ASCII), BINARIO y HEXADECIMAL, entonces puede servirte mucho el siguiente código para realizar tu trabajo más rápido; córrelo en una IDE como SPYDER.
+## Tabla de contenido
+- Conceptos
+    - ASCII
+    - Sistema númerico binario
+    - Sistema númerico hexadecimal
+- Recursos
+    - ASCII
+- Herramientas
+    - Conversores en línea
+    - Conversor en Python
+___
+**Cada carácter en un texto está asociado a un valor numérico** en la [tabla ASCII](https://elcodigoascii.com.ar/), que es un estándar utilizado para representar letras, números, símbolos y controladores en código binario. Entender cómo convertir texto a su forma decimal no solo es útil para la programación y el análisis de datos, sino que también es esencial para comprender cómo las computadoras procesan y almacenan información.
+
+A continuación se muestran algunos recursos y herramientas que estén relacionados con el tema.
 ```python
 import tkinter as tk
 
