@@ -1,5 +1,5 @@
 ---
-title: Convertir texto a DEC, BCD y HEX
+title: Convertir texto a Decimal, Binario y Hexadecimal
 published: 2024-09-11
 description: 'Una colección de recursos para convertir texto a decimal (ASCII), binario, hexadecimal, etcétera, y viceversa.'
 image: './test2.jpg'
