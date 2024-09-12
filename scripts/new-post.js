@@ -1,15 +1,25 @@
 /* This is a script to create a new post markdown file with front-matter */
 
-import fs from "fs"
-import path from "path"
+import fs from 'fs'
+import path from 'path'
 
 function getDate() {
   const today = new Date()
   const year = today.getFullYear()
-  const month = String(today.getMonth() + 1).padStart(2, "0")
-  const day = String(today.getDate()).padStart(2, "0")
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
 
-  return `${year}-${month}-${day}`
+  const hours = String(today.getHours()).padStart(2, '0')
+
+  // Round minutes to nearest multiple of 10
+  let minutes = Math.round(today.getMinutes() / 10) * 10
+  if (minutes === 60) {
+    minutes = 0
+    today.setHours(today.getHours() + 1) // Adjust hour if minutes round up to 60
+  }
+  const roundedMinutes = String(minutes).padStart(2, '0')
+
+  return `${year}-${month}-${day}|${hours}:${roundedMinutes}`
 }
 
 const args = process.argv.slice(2)
@@ -25,10 +35,10 @@ let fileName = args[0]
 // Add .md extension if not present
 const fileExtensionRegex = /\.(md|mdx)$/i
 if (!fileExtensionRegex.test(fileName)) {
-  fileName += ".md"
+  fileName += '.md'
 }
 
-const targetDir = "./src/content/posts/"
+const targetDir = './src/content/posts/'
 const fullPath = path.join(targetDir, fileName)
 
 if (fs.existsSync(fullPath)) {
