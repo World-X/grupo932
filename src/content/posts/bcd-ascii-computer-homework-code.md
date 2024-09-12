@@ -5,7 +5,7 @@ description: 'Descripción predeterminada'
 image: ''
 tags: [binario, ascii, bcd, trabajo, tarea, organizacion, computadoras, python]
 category: 'Código'
-draft: true 
+draft: false 
 language: ''
 ---
 Si ya sabes como convertir texto a DECIMAL (usando ASCII), BINARIO y HEXADECIMAL, entonces puede servirte mucho el siguiente código para realizar tu trabajo más rápido; córrelo en una IDE como SPYDER.
