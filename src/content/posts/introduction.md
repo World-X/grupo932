@@ -1,5 +1,5 @@
 ---
-title: Introducción
+title: 🏳️ Introducción
 published: 2024-09-07
 description: '¿Qué es este sitio? ¿Cuál es su propósito? ¡Recomiendo bastante que leas este artículo de bienvenida!'
 image: ''
@@ -25,6 +25,9 @@ html.dark .dp  { color: rgb(160, 128, 255); }
 - [Limitaciones](#limitaciones)
 - [¿Ahora qué?](#ahora-qué)
 ___
+:::important[IMPORTANTE]
+Este sitio todavía está en fase de desarrollo. Es decir, algunas cosas podrían cambiar en el futuro.
+:::
 ## Contexto
 Desde el principio, antes de la creación de esta página, nuestro principal método de comunicación, además de hablar en persona, fue por medio de <b class="wg">WhatsApp</b>, y algunos compañeros del grupo se unieron también a un grupo de <b class="dp">Discord</b> administrado por Allan. Estos medios de comunicación han servido sus propósitos respectivos para poder comunicarnos de forma eficiente.
 

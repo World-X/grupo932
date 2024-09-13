@@ -1,5 +1,5 @@
 ---
-title: ¿Cómo usar este sitio? Una guía rápida
+title: 🗺️ ¿Cómo usar este sitio? Una guía rápida
 published: 2024-09-08
 description: '¿Estás interesado en saber que herramientas existen en este sitio? ¿Tienes alguna sugerencia para mejorarlo? ¡Lee este artículo para aprender más!'
 image: ''
@@ -21,6 +21,9 @@ language: ''
     - [Modo](#modo)
     - [Botón de ir arriba](#botón-de-ir-arriba)
 ___
+:::important[IMPORTANTE]
+Este sitio todavía está en fase de desarrollo. Es decir, algunas cosas podrían cambiar en el futuro.
+:::
 Este sitio puede parecer tanto sencillo como confuso para quienes estén aquí por primera vez, y es probable que lo primero que estén pensando es...
 > ¿Qué puedo hacer en este sitio? ¿Por dónde empiezo?
 
