@@ -1,6 +1,6 @@
 ---
 title: Convertir texto a Decimal, Binario y Hexadecimal
-published: 2024-09-11
+published: 2024-09-10
 description: 'Una colección de recursos para convertir texto a decimal (ASCII), binario, hexadecimal, etcétera, y viceversa.'
 image: ''
 tags: [binario, ascii, hexadecimal, decimal, trabajo, tarea, organizacion, computadoras, python, recurso]
