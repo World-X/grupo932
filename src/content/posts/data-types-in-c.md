@@ -5,7 +5,7 @@ description: 'Aprende todos los tipos de datos que existen en C, y algunas carac
 image: ''
 tags: [c, recurso, datos]
 category: 'Recurso'
-draft: true 
+draft: false 
 language: ''
 ---
 ## Tabla de contenido
@@ -15,12 +15,13 @@ language: ''
     - *[int](#int)*
     - *[long](#long)*
     - *[enum](#enum)*
+        - *[Creación de una enumeración](#creación-de-una-enumeración)*
     - *[float](#float)*
     - *[double](#double)*
 - [Tipos derivados](#tipos-derivados)
 ___
 :::note[NOTA]
-Esta información fue parcialmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* en 2002.
+Esta información fue parcialmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* en 2002 (páginas 20-27).
 :::
 Los tipos de datos en C se clasifican en: tipos *primitivos* y tipos *derivados*.
 ## Tipos primitivos
@@ -51,12 +52,12 @@ Esta calificación da lugar a los siguientes tipos extras:
 
 Si los calificadores **signed** y **unsigned** se utilizan sin un tipo entero específicado, se asume el tipo **int**. Por este motivo, las siguientes declaraciones son equivalentes:
 ```c
-signed x; /* es equivalente a */
+signed x;     /* es equivalente a */
 signed int x;
 ```
 Un tipo entero calificado con **signed** es equivalente a utilizarlo sin calificar. Según esto, las siguientes declaraciones son equivalentes:
 ```c
-char y; /* es equivalente a */
+char y;        /* es equivalente a */
 signed char y;
 ```
 ### *char*
@@ -107,14 +108,48 @@ Evidentemente, el tipo **unsigned long** puede almacenar valores en el rango de 
 
 En general, podemos afirmar que la longitud de un **int** es menor o igual que la longtitud de un **long**.
 ### *enum*
-La declaración 
-### *float*
-El tipo **float** se utiliza para declarar un dato en coma flotante de 32 bits en el formato IEEE 754 (este formato utiliza 1 bit para el signo, 8 bits para el exponente y 24 para la mantisa). Los datos de tipo **float** almacenan valores con una precisión aproximada de 7 digítos. Para especificar que una constante (un literal) es de tipo **float**, hay que añadir al final de su valor la letra 'f' o 'F'. El siguiente ejemplo declara las variables *a*, *b* y *c*, de tipo real de precisión simple:
+La declaración de un *tipo enumerado* es simplemente una lista de valores que pueden ser tomados por una variable de ese tipo. Los valores de un tipo enumerado se representarán con identificadores, que serán las constantes del nuevo tipo. Por ejemplo,
 ```c
+enum dia_semana {
+    lunes,
+    martes,
+    miercoles,
+    jueves,
+    viernes,
+    sabado,
+    domingo
+} hoy;
 
+enum dia_semana ayer;
+```
+Este ejemplo declara las variables *hoy* y *ayer* del tipo enumerado *dia_semana*. Estas variables pueden tomar cualquier valor de los especificados, *lunes* a *domingo*. Los valores de las constantes que componen el tipo enumerado comienzan en cero y aumentan de uno en uno según se lee la declaración de arriba a abajo o de izquierda a derecha. Según esto, el valor de *lunes* es 0, el valor de *martes* es 1, el valor de *miercoles* es 2, etc.
+#### Creación de una enumeración
+Crear una enumeración supone definir un nuevo tipo de datos, denominado *tipo enumerado* y declarar una variable de ese tipo. La sintaxis es la siguiente:
+```c
+enum tipo_enumerado
+{
+    /* identificadores de las constantes enteras */
+};
+```
+donde *tipo_enumerado* es un identificador que nombra el nuevo tipo definido.
+:::warning[AVISO]
+La información es incompleta por ahora, pero suficiente para entender lo más básico de los enumeradores.
+:::
+### *float*
+El tipo **float** se utiliza para declarar un dato en coma flotante de 32 bits (4 bytes) en el formato IEEE 754 (este formato utiliza 1 bit para el signo, 8 bits para el exponente y 23 para la [mantisa](https://dle.rae.es/mantisa)). Los datos de tipo **float** almacenan valores con una precisión aproximada de 6-7 digítos. Para especificar que una constante (un literal) es de tipo **float**, hay que añadir al final de su valor la letra 'f' o 'F'. El siguiente ejemplo declara las variables *a*, *b* y *c*, de tipo real de precisión simple:
+```c
+float a = 3.141592F;
+float b = 2.2e-5F; /* 2.2e-5 = 2.2 por 10 elevado a -5 */
+float c = 2/3.0F;  /* 0.666667 */
 ```
 ### *double*
-El tipo **double** se utiliza 
+El tipo **double** se utiliza para declarar un dato en coma flotante de 64 bits (8 bytes) en el formato IEEE 754 (1 bit para el signo, 11 bits para el exponente y 52 para la [mantisa](https://dle.rae.es/mantisa)). Los datos de tipo **double** almacenan valores con una precisión aproximada de 15-16 dígitos. Por omisión, una constante es considerada de tipo **double**. El siguiente ejemplo declara las variables *a*, *b* y *c*, de tipo real de precisión doble:
+```c
+double a = 3.141592; /* una constante es double por omisión */
+double b = 2.2e+5;   /* 2.2e+5 = 2.2 por 10 elevado a 5 */
+double c = 2.0/3.0;
+```
+Algunos compiladores también proporcionan el tipo **long double**. Un número real de precisión doble formato largo puede tener hasta 19 dígitos significativos.
 ## Tipos derivados
 Los tipos derivados son construidos a partir de los tipos primitivos. Algunos de ellos son: *estructuras*, *uniones*, *matrices* (*arrays*), *punteros* y *funciones*.
 :::warning[AVISO]
