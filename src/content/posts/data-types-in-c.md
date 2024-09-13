@@ -132,9 +132,72 @@ enum tipo_enumerado
 };
 ```
 donde *tipo_enumerado* es un identificador que nombra el nuevo tipo definido.
-:::warning[AVISO]
-La información es incompleta por ahora, pero suficiente para entender lo más básico de los enumeradores.
+
+Después de definir un tipo enumerado, podemos declarar una o más variables de ese tipo, de la forma:
+```c
+enum tipo_enumerado [variable[, variable]...];
+```
+El siguiente ejemplo declara una variable llamada *color* del tipo enumerado *colores*, la cual puede tomar cualquier valor de los especificados en la lista.
+```c
+enum colores
+{
+    azul, amarillo, rojo, verde, blanco, negro
+};
+enum colores color;
+
+color = azul;
+```
+Como ya hemos dicho, cada identificador de la lista de constantes en una enumeración, tiene asociado un valor. Por defecto, el primer identificador tiene asociado el valor 0, el siguiente el valor 1, y así sucesivamente. Según esto,
+```c
+color = verde; /* es equivalente a */
+color = 3;
+```
+:::note[NOTA]
+Para ANSI C un tipo enumerado es un tipo **int**. Sin embargo, para C++ un tipo enumerado es un nuevo tipo entero diferente de los anteriores. Esto significa que en C++ un valor de tipo **int** no puede ser asignado directamente a una variable de un tipo enumerado, sino que habría que hacer una conversión explicíta de tipo. Por ejemplo:
+```c
+color = (enum colores)3; /* conversión explícita de int a colores */
+```
 :::
+A cualquier identificador de la lista se le puede asignar un valor inicial entero por medio de una expresión constante. Los identificadores sucesivos tomarán valores correlativos a partir de éste. Por ejemplo:
+```c
+enum colores
+{
+    azul, amarillo, rojo, verde = 0, blanco, negro
+} color;
+```
+Este ejemplo define un tipo enumerado llamado *colores* y declara una variable *color* de ese tipo. Los valores asociados a los identificadores son los siguientes: *azul* = *0*, *amarillo* = *1*, *rojo* = *2*, *verde* = 0, *blanco* = *1* y *negro* = *2*.
+
+A los miembros de una enumeración se les aplica las siguientes reglas:
+* Dos o más miembros pueden tener un mismo valor.
+* Un identificador no puede aparecer en más de un tipo.
+* Desafortunadamente, no es posible leer o escribir directamente un valor de un tipo enumerado. El siguiente ejemplo aclara ese detalle.
+```c
+/* enum.c */
+#include <stdio.h>
+
+enum colores
+{
+    azul, amarillo, rojo, verde, blanco, negro
+};
+
+main()
+{
+    enum colores color;
+
+    /* Leer un color introducido desde el teclado */
+    printf("Color: ");
+    scanf("%d", &color);
+    /* Visualizar un color */
+    printf("%d\n", color);
+}
+```
+Ejecución del programa:
+<pre>
+<i>
+Color: 3<b>[Entrar]</b>
+3
+<i>
+</pre>
 ### *float*
 El tipo **float** se utiliza para declarar un dato en coma flotante de 32 bits (4 bytes) en el formato IEEE 754 (este formato utiliza 1 bit para el signo, 8 bits para el exponente y 23 para la [mantisa](https://dle.rae.es/mantisa)). Los datos de tipo **float** almacenan valores con una precisión aproximada de 6-7 digítos. Para especificar que una constante (un literal) es de tipo **float**, hay que añadir al final de su valor la letra 'f' o 'F'. El siguiente ejemplo declara las variables *a*, *b* y *c*, de tipo real de precisión simple:
 ```c
