@@ -15,6 +15,10 @@ let width: PAGE_WIDTH = SHRINK_WIDTH
 onMount(() => {
   width = getStoredWidth()
   applyPageWidth(width)
+  setTimeout(myFunction, 1)
+  function myFunction() {
+    document.documentElement.classList.add('maximum-width-delay-gone')
+  }
 })
 
 /*
