@@ -56,8 +56,10 @@ export function getStoredTheme(): LIGHT_DARK_MODE {
 
 export function applyPageWidth(width: PAGE_WIDTH) {
   if (width === SHRINK_WIDTH) {
+    document.documentElement.style.setProperty('--page-width', '75rem')
     console.log('Changed to SHRINK width!')
   } else {
+    document.documentElement.style.setProperty('--page-width', '85rem')
     console.log('Changed to EXPAND width!')
   }
 }

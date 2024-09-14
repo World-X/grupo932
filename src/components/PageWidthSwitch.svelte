@@ -14,7 +14,39 @@ let width: PAGE_WIDTH = SHRINK_WIDTH
 
 onMount(() => {
   width = getStoredWidth()
+  applyPageWidth(width)
 })
+
+/*
+onMount(() => {
+  let width = getStoredWidth()  // Retrieve the stored width setting, like "compact" or "expanded"
+  
+  // Apply the current width setting to the document
+  applyWidthToDocument(width)
+
+  // Listen for window resize events to adjust the layout (if necessary)
+  const adjustWidthOnResize: Parameters<typeof window.addEventListener<'resize'>>[1] = () => {
+    // Optionally, auto-adjust based on window size or update UI
+    applyWidthToDocument(width)
+  }
+  window.addEventListener('resize', adjustWidthOnResize)
+
+  // Listen for width setting changes (could be from a button or switch in your app)
+  const changeWidthWhenSettingChanged: Parameters<typeof document.addEventListener<'change'>>[1] = (e: Event) => {
+    const newWidth = (e.target as HTMLInputElement).value  // Assuming it's from an input or switch
+    width = newWidth
+    applyWidthToDocument(width)
+    storeWidthSetting(width)  // Store the user's new width setting
+  }
+  document.addEventListener('width-change', changeWidthWhenSettingChanged)
+
+  // Cleanup: remove event listeners when the component is unmounted
+  return () => {
+    window.removeEventListener('resize', adjustWidthOnResize)
+    document.removeEventListener('width-change', changeWidthWhenSettingChanged)
+  }
+})
+*/
 
 function switchWidth(newWidth: PAGE_WIDTH) {
   width = newWidth
