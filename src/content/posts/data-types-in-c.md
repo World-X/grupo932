@@ -20,6 +20,7 @@ language: ''
     - *[double](#double)*
 - [Tipos derivados](#tipos-derivados)
 ___
+Artículo previo: [Caracteres de C](/grupo932/posts/characters-in-c/)
 :::note[NOTA]
 Esta información fue principalmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* (páginas 20-27).
 :::

@@ -5,7 +5,7 @@ description: ''
 image: ''
 tags: [c, c++, libro, guía, recurso, info, meta]
 category: 'Recurso'
-draft: true
+draft: false
 language: ''
 ---
 *C/C++ Curso de programación* es un libro escrito por *Fco. Javier Ceballos*. Ha pesar de que la segunda edición fue publicado en el mes de abril en el año 2002, es decir, han pasado mínimo 22 años desde su salida, sigue siendo relevante incluso en 2024, ya que C no ha cambiado mucho desde su creación en 1972.

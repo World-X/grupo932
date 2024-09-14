@@ -5,20 +5,14 @@ description: 'Aprende los diferentes tipos y grupos de caracteres que existen en
 image: ''
 tags: [c, recurso, caracteres, libro]
 category: 'Recurso'
-draft: true
+draft: false
 language: ''
 ---
 ## Tabla de contenido
-- [Tipos primitivos](#tipos-primitivos)
-    - *[char](#char)*
-    - *[short](#short)*
-    - *[int](#int)*
-    - *[long](#long)*
-    - *[enum](#enum)*
-        - *[Creación de una enumeración](#creación-de-una-enumeración)*
-    - *[float](#float)*
-    - *[double](#double)*
-- [Tipos derivados](#tipos-derivados)
+- [Letras, dígitos y carácter de subrayado](#letras-dígitos-y-carácter-de-subrayado)
+- [Espacios en blanco](#espacios-en-blanco)
+- [Caracteres especiales y signos de puntuación](#caracteres-especiales-y-signos-de-puntuación)
+- [Secuencias de escape](#secuencias-de-escape)
 ___
 :::note[NOTA]
 Esta información fue principalmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* (páginas 18-19).
@@ -81,8 +75,8 @@ El lenguaje C tiene predefinidas las siguientes secuencias de escape:
 |       \\?     | Signo de interrogación                                                                                      |
 |       \0      | Carácter nulo                                                                                               |
 :::note[NOTA]
-`\?` es considerado obsoleto en compiladores modernos, ya que los [trigraphs](), que eran la razón principal para su existencia, rara vez se usan y la mayoría de los compiladores ya no los interpretan por defecto. Además, la necesidad de evitar la ambigüedad con secuencias de caracteres como `??` ha desaparecido.
+`\?` es considerado obsoleto en compiladores modernos, ya que los [trígrafos](https://learn.microsoft.com/es-es/cpp/c-language/trigraphs?view=msvc-170), que eran la razón principal para su existencia, rara vez se usan y la mayoría de los compiladores ya no los interpretan por defecto. Además, la necesidad de evitar la ambigüedad con secuencias de caracteres como `??` ha desaparecido.
 :::
 Observe en la llamada a **printf** del ejemplo anterior la secuencia de escape *\n*.
 
-
+Siguiente artículo: [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)
