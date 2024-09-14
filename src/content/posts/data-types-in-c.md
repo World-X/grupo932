@@ -1,9 +1,9 @@
 ---
-title: Tipos de datos en C
-published: 2024-09-12
+title: Tipos de datos (en C)
+published: 2024-09-13
 description: 'Aprende todos los tipos de datos que existen en C, y algunas características de cada uno.'
 image: ''
-tags: [c, recurso, datos]
+tags: [c, recurso, datos, libro]
 category: 'Recurso'
 draft: false 
 language: ''
@@ -21,7 +21,7 @@ language: ''
 - [Tipos derivados](#tipos-derivados)
 ___
 :::note[NOTA]
-Esta información fue parcialmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* en 2002 (páginas 20-27).
+Esta información fue principalmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* (páginas 20-27).
 :::
 Los tipos de datos en C se clasifican en: tipos *primitivos* y tipos *derivados*.
 ## Tipos primitivos
