@@ -78,12 +78,12 @@ export const profileConfig: ProfileConfig = {
       name: 'Steam',
       icon: 'fa6-brands:steam',
       url: 'https://store.steampowered.com',
-    },
+    },*/
     {
       name: 'GitHub',
       icon: 'fa6-brands:github',
-      url: 'https://github.com/saicaca/fuwari',
-    },*/
+      url: 'https://github.com/World-X/grupo932',
+    },
   ],
 }
 
