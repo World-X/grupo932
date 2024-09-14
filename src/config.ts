@@ -37,7 +37,9 @@ export const navBarConfig: NavBarConfig = {
   links: [
     //LinkPreset.Home,
     LinkPreset.Archive,
-    LinkPreset.About,
+    //LinkPreset.About,
+    LinkPreset.Schedule,
+    LinkPreset.History,
     {
       name: 'UABC',
       url: 'https://www.uabc.mx/',
