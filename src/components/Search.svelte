@@ -91,6 +91,10 @@ $: search(keywordMobile, false)
   :global(html.expand) .search-width:active, :global(html.expand) .search-width:focus {
     width: 20rem;
   }
+
+  input:focus {
+    outline: 0;
+  }
 </style>
 
 <!-- search bar for desktop view -->
