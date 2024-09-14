@@ -74,6 +74,25 @@ $: search(keywordDesktop, true)
 $: search(keywordMobile, false)
 </script>
 
+<style>
+  .search-width {
+    width: 10rem;
+    /*max-width: 35rem;*/
+  }
+
+  .search-width:active, .search-width:focus {
+    width: 15rem;
+  }
+
+  :global(html.expand) .search-width {
+    width: 15rem;
+  }
+
+  :global(html.expand) .search-width:active, :global(html.expand) .search-width:focus {
+    width: 20rem;
+  }
+</style>
+
 <!-- search bar for desktop view -->
 <div id="search-bar" class="hidden lg:flex transition-all items-center h-11 mr-2 rounded-lg
       bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
@@ -81,8 +100,8 @@ $: search(keywordMobile, false)
 ">
     <slot name="search-icon"></slot>
     <input placeholder="{i18n(I18nKey.search)}" bind:value={keywordDesktop} on:focus={() => search(keywordDesktop, true)}
-           class="transition-all pl-10 text-sm bg-transparent outline-0
-         h-full w-40 active:w-60 focus:w-60 text-black/50 dark:text-white/50"
+           class="search-width transition-all pl-10 text-sm bg-transparent outline-0
+         h-full text-black/50 dark:text-white/50"
     >
 </div>
 
