@@ -212,6 +212,7 @@ function disableAnimation() {
 */
 
 function setClickOutsideToClose(panel: string, ignores: string[]) {
+	console.log(panel)
 	document.addEventListener("click", event => {
 		let panelDom = document.getElementById(panel);
 		let tDom = event.target;

@@ -35,7 +35,7 @@ export const siteConfig: SiteConfig = {
 
 export const navBarConfig: NavBarConfig = {
   links: [
-    LinkPreset.Home,
+    //LinkPreset.Home,
     LinkPreset.Archive,
     LinkPreset.About,
     {
