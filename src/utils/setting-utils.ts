@@ -1,9 +1,10 @@
-import type { LIGHT_DARK_MODE } from '@/types/config'
+import type { LIGHT_DARK_MODE, PAGE_WIDTH } from '@/types/config'
 import {
   AUTO_MODE,
   DARK_MODE,
   DEFAULT_THEME,
   LIGHT_MODE,
+  SHRINK_WIDTH,
 } from '@constants/constants.ts'
 
 export function getDefaultHue(): number {
@@ -51,4 +52,23 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 
 export function getStoredTheme(): LIGHT_DARK_MODE {
   return (localStorage.getItem('theme') as LIGHT_DARK_MODE) || DEFAULT_THEME
+}
+
+export function applyPageWidth(width: PAGE_WIDTH) {
+  if (width === SHRINK_WIDTH) {
+    console.log('Changed to SHRINK width!')
+  } else {
+    console.log('Changed to EXPAND width!')
+  }
+}
+
+// Function to save the width setting (compact or expand) to localStorage
+export function setWidthSetting(width: PAGE_WIDTH): void {
+  localStorage.setItem('page-width', width)
+  applyPageWidth(width)
+}
+
+// Function to get the current width setting from localStorage or fallback to default
+export function getStoredWidth(): PAGE_WIDTH {
+  return (localStorage.getItem('page-width') as PAGE_WIDTH) || SHRINK_WIDTH
 }

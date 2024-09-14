@@ -1,4 +1,10 @@
-import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from '@constants/constants'
+import type {
+  AUTO_MODE,
+  DARK_MODE,
+  EXPAND_WIDTH,
+  LIGHT_MODE,
+  SHRINK_WIDTH,
+} from '@constants/constants'
 
 export type SiteConfig = {
   title: string
@@ -67,6 +73,8 @@ export type LIGHT_DARK_MODE =
   | typeof LIGHT_MODE
   | typeof DARK_MODE
   | typeof AUTO_MODE
+
+export type PAGE_WIDTH = typeof SHRINK_WIDTH | typeof EXPAND_WIDTH
 
 export type BlogPostData = {
   body: string
