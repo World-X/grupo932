@@ -21,6 +21,6 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
   },
   [LinkPreset.History]: {
     name: 'Historia',
-    url: '/archive/',
+    url: '/history/',
   },
 }
