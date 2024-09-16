@@ -9,10 +9,18 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 // const { Content } = await schedulePost.render()
 ---
 <style>
-    h1 {
+    h1, h2 {
         display: block;
-        font-size: 2em;
         font-weight: bold;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-left: auto;
     }
 
     p {
@@ -35,10 +43,6 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     #schedule-settings-icon {
         rotate: 0deg;
         transition: rotate 0.5s;
-    }
-
-    #schedule-settings-icon:hover {
-        rotate: 90deg;
     }
     
     table {
@@ -109,15 +113,17 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
             </Markdown-->
             <div class="text-90 flex w-full">
                 <h1>Horario</h1>
-                <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();">
+                <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();" onmouseenter="scheduleMouseEnter();" onmouseleave="scheduleMouseLeave();">
                     <Icon name="material-symbols:settings-rounded" class="text-[1.25rem]" id="schedule-settings-icon"></Icon>
                 </button>
             </div>
-            <br>
+            <hr>
             <!-- Este <div> será un panel donde podrás cambiar varias opciones, como seleccionar a que subgrupo perteneces, cuál tema te gustaría usar, entre otras opciones (talvez) -->
             <div class="text-90" id="schedule-settings-panel" style="display: none;">
+                <div style="margin-top: 0.5rem;"></div>
                 <h2>Configuración</h2>
-                <p>En esta sección podrás configurar tu horario de acuerdo a tus necesidades.</p>
+                <div style="margin-bottom: 0.5rem;"></div>
+                <hr>
             </div>
             <br>
             <table class="text-90" id="table-test">
@@ -162,8 +168,8 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">18:00 - 19:00</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
         </div>
@@ -172,18 +178,27 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 
 <script is:inline>
 function scheduleSwitchButton() {
-    console.log("--------------------")
-    console.log("Debug: Clicked on menu button!")
-    let scheduleSettingsPanel = document.getElementById("schedule-settings-panel");
-    if (scheduleSettingsPanel) {
-        console.log("Debug: Does exist panel!")
-        if (scheduleSettingsPanel.style.display === "none") {
-            console.log("Debug: From none to block")
-            scheduleSettingsPanel.style.display = "block";
+    let panel = document.getElementById("schedule-settings-panel");
+    if (panel) {
+        if (panel.style.display === "none") {
+            panel.style.display = "block";
         } else {
-            console.log("Debug: From unknown to none")
-            scheduleSettingsPanel.style.display = "none";
+            panel.style.display = "none";
         }
+    }
+}
+
+function scheduleMouseEnter() {
+    let icon = document.getElementById("schedule-settings-icon");
+    if (icon) {
+        icon.style.rotate = "90deg";
+    }
+}
+
+function scheduleMouseLeave() {
+    let icon = document.getElementById("schedule-settings-icon");
+    if (icon) {
+        icon.style.rotate = "0deg";
     }
 }
 
