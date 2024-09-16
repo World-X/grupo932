@@ -1,19 +1,206 @@
 ---
+import { Icon } from 'astro-icon/components'
+// import { getEntry } from 'astro:content'
+// import Markdown from '@components/misc/Markdown.astro'
 import MainGridLayout from '../layouts/MainGridLayout.astro'
 
-import { getEntry } from 'astro:content'
-import Markdown from '@components/misc/Markdown.astro'
+// const schedulePost = await getEntry('spec', 'schedule')
 
-const schedulePost = await getEntry('spec', 'schedule')
-
-const { Content } = await schedulePost.render()
+// const { Content } = await schedulePost.render()
 ---
+<style>
+    h1 {
+        display: block;
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    p {
+        display: block;
+    }
+
+    table, tr, td, th {
+        border: solid black;
+        border-collapse: collapse;
+        border-width: 2px;
+        text-align: center;
+        padding: 8px;
+        overflow: hidden;
+    }
+
+    td, th {
+        width: 16.66%;
+    }
+
+    #schedule-settings-icon {
+        rotate: 0deg;
+        transition: rotate 0.5s;
+    }
+
+    #schedule-settings-icon:hover {
+        rotate: 90deg;
+    }
+    
+    table {
+        width: 100%;
+    }
+    
+    th {
+        background-color: oklch(0.86 0.1 var(--hue));
+        color: oklch(0.35 0.1 var(--hue));
+        border-color: oklch(0.35 0.15 var(--hue))
+    }
+    
+    html.dark th {
+        background-color: oklch(0.35 0.1 var(--hue));
+        color: oklch(0.86 0.1 var(--hue));
+    }
+
+    html.dark table, html.dark tr, html.dark td, html.dark th {
+        border-color: white;
+    }
+
+    .hour {
+        background-color: lightgray;
+    }
+
+    html.dark .hour {
+        background-color: dimgray;
+    }
+
+    td.lc {
+        background-color: hsl(345, 60%, 80%);
+    }
+
+    td.tys {
+        background-color: hsl(90, 61%, 80%)
+    }
+
+    td.pe {
+        background-color: hsl(285, 61%, 80%);
+    }
+
+    td.ea {
+        background-color: hsl(135, 61%, 80%);
+    }
+
+    td.mdli {
+        background-color: hsl(180, 61%, 80%);
+    }
+
+    td.odlc {
+        background-color: hsl(255, 61%, 80%);
+    }
+
+    td.hu {
+        background-color: hsl(0, 0%, 80%);
+    }
+
+    td.md {
+        background-color: hsl(255, 60%, 80%);
+    }
+</style>
+
 <MainGridLayout title="Horario" description="Horario">
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
         <div class="card-base z-10 px-9 py-6 relative w-full ">
-            <Markdown class="mt-2">
+            <!--Markdown class="mt-2">
                 <Content />
-            </Markdown>
+            </Markdown-->
+            <div class="text-90 flex w-full">
+                <h1>Horario</h1>
+                <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();">
+                    <Icon name="material-symbols:settings-rounded" class="text-[1.25rem]" id="schedule-settings-icon"></Icon>
+                </button>
+            </div>
+            <br>
+            <!-- Este <div> será un panel donde podrás cambiar varias opciones, como seleccionar a que subgrupo perteneces, cuál tema te gustaría usar, entre otras opciones (talvez) -->
+            <div class="text-90" id="schedule-settings-panel" style="display: none;">
+                <h2>Configuración</h2>
+                <p>En esta sección podrás configurar tu horario de acuerdo a tus necesidades.</p>
+            </div>
+            <br>
+            <table class="text-90" id="table-test">
+                <tr>
+                    <th>Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                </tr>
+                <tr>
+                    <td class="hour">13:00 - 14:00</td>
+                    <td class="lc">LC</td>
+                    <td rowspan="2" class="ea">EA</td>
+                    <td rowspan="2" class="ea">EA/LC</td>
+                    <td rowspan="2" class="odlc">ODLC/PE</td>
+                    <td rowspan="2" class="lc">LC</td>
+                </tr>
+                <tr>
+                    <td class="hour">14:00 - 15:00</td>
+                    <td rowspan="2" class="tys">TYS</td>
+                </tr>
+                <tr>
+                    <td class="hour">15:00 - 16:00</td>
+                    <td class="mdli">MDLI</td>
+                    <td rowspan="2" class="lc">LC/EA</td>
+                    <td class="tys">TYS</td>
+                    <td rowspan="2" class="mdli">MDLI</td>
+                </tr>
+                <tr>
+                    <td class="hour">16:00 - 17:00</td>
+                    <td rowspan="2" class="pe">PE</td>
+                    <td rowspan="2" class="pe">PE/ODLC</td>
+                    <td class="hu">HU</td>
+                </tr>
+                <tr>
+                    <td class="hour">17:00 - 18:00</td>
+                    <td rowspan="2" class="odlc">ODLC</td>
+                    <td rowspan="2" class="md">MD</td>
+                    <td rowspan="2" class="md">MD</td>
+                </tr>
+                <tr>
+                    <td class="hour">18:00 - 19:00</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
         </div>
     </div>
 </MainGridLayout>
+
+<script is:inline>
+function scheduleSwitchButton() {
+    console.log("--------------------")
+    console.log("Debug: Clicked on menu button!")
+    let scheduleSettingsPanel = document.getElementById("schedule-settings-panel");
+    if (scheduleSettingsPanel) {
+        console.log("Debug: Does exist panel!")
+        if (scheduleSettingsPanel.style.display === "none") {
+            console.log("Debug: From none to block")
+            scheduleSettingsPanel.style.display = "block";
+        } else {
+            console.log("Debug: From unknown to none")
+            scheduleSettingsPanel.style.display = "none";
+        }
+    }
+}
+
+/*
+function loadButtonScript() {
+    console.log("Debug: Loading button script!")
+    let menuBtn = document.getElementById("schedule-menu-switch");
+    if (menuBtn) {
+        menuBtn.addEventListener("click", function () {
+            return;
+        });
+    }
+}
+
+
+loadButtonScript();
+
+document.addEventListener('astro:after-swap', loadButtonScript, { once: false });
+*/
+</script>
