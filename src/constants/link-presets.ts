@@ -17,7 +17,7 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
   },
   [LinkPreset.Schedule]: {
     name: 'Horario',
-    url: '/archive/',
+    url: '/schedule/',
   },
   [LinkPreset.History]: {
     name: 'Historia',
