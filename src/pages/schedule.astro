@@ -8,7 +8,39 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 
 // const { Content } = await schedulePost.render()
 ---
-<style>
+<style lang="scss">
+    $table-heading-bg-color: oklch(0.86 0.1 var(--hue));
+    $table-heading-color: oklch(0.35 0.1 var(--hue));
+    $table-heading-border-color: oklch(0.35 0.15 var(--hue));
+    
+    $lc-red: 345;
+    $tys-lime: 90;
+    $pe-purple: 285;
+    $ea-green: 135;
+    $mdli-cyan: 180;
+    $odlc-violet: 255;
+    $hu-gray: 0;
+    $md-blue: 225;
+    
+    $no-sat: 0%;
+    $base-sat: 20%;
+    $hover-sat: 30%;
+    $active-sat: 45%;
+    
+    $base-light: 70%;
+    $hover-light: 75%;
+    $active-light: 65%;
+    
+    $lc-background-color: hsl($lc-red, $base-sat, $base-light);
+    $tys-background-color: hsl($tys-lime, $base-sat, $base-light);
+    $pe-background-color: hsl($pe-purple, $base-sat, $base-light);
+    $ea-background-color: hsl($ea-green, $base-sat, $base-light);
+    $mdli-background-color: hsl($mdli-cyan, $base-sat, $base-light);
+    $odlc-background-color: hsl($odlc-violet, $base-sat, $base-light);
+    $hu-background-color: hsl($hu-gray, $no-sat, $base-light);
+    $md-background-color: hsl($md-blue, $base-sat, $base-light);
+
+    // Headings and paragraph
     h1, h2, p {
         display: block;
     }
@@ -26,6 +58,13 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         margin-left: auto;
     }
 
+    // Schedule Settings Icon
+    #schedule-settings-icon {
+        rotate: 0deg;
+        transition: rotate 0.5s;
+    }
+
+    // Table and cells
     table, tr, td, th {
         border: solid black;
         border-collapse: collapse;
@@ -39,9 +78,9 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         width: 16.66%;
     }
 
-    #schedule-settings-icon {
-        rotate: 0deg;
-        transition: rotate 0.5s;
+    td {
+        margin: 0;
+        padding: 0;
     }
     
     table {
@@ -49,9 +88,9 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     }
     
     th {
-        background-color: oklch(0.86 0.1 var(--hue));
-        color: oklch(0.35 0.1 var(--hue));
-        border-color: oklch(0.35 0.15 var(--hue))
+        background-color: $table-heading-bg-color;
+        color: $table-heading-color;
+        border-color: $table-heading-border-color;
     }
     
     html.dark th {
@@ -63,6 +102,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         border-color: white;
     }
 
+    // hour
     .hour {
         background-color: lightgray;
     }
@@ -71,36 +111,114 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         background-color: dimgray;
     }
 
+    // subjects
     td.lc {
-        background-color: hsl(345, 60%, 80%);
+        background-color: $lc-background-color;
     }
 
     td.tys {
-        background-color: hsl(90, 61%, 80%)
+        background-color: $tys-background-color;;
     }
 
     td.pe {
-        background-color: hsl(285, 61%, 80%);
+        background-color: $pe-background-color;
     }
 
     td.ea {
-        background-color: hsl(135, 61%, 80%);
+        background-color: $ea-background-color;
     }
 
     td.mdli {
-        background-color: hsl(180, 61%, 80%);
+        background-color: $mdli-background-color;
     }
 
     td.odlc {
-        background-color: hsl(255, 61%, 80%);
+        background-color: $odlc-background-color;
     }
 
     td.hu {
-        background-color: hsl(0, 0%, 80%);
+        background-color: $hu-background-color;
     }
 
     td.md {
-        background-color: hsl(255, 60%, 80%);
+        background-color: $md-background-color;
+    }
+
+    // subject buttons
+    td button {
+        background-color: hsla($lc-red, $base-sat, $base-light, 0);
+        width: 100%;
+        height: 100%;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+    }
+
+    td.lc button:hover {
+        background-color: hsl($lc-red, $hover-sat, $hover-light);
+    }
+
+    td.lc button:active {
+        background-color: hsl($lc-red, $active-sat, $active-light);
+    }
+
+    td.tys button:hover {
+        background-color: hsl($tys-lime, $hover-sat, $hover-light);
+    }
+
+    td.tys button:active {
+        background-color: hsl($tys-lime, $active-sat, $active-light);
+    }
+
+    td.pe button:hover {
+        background-color: hsl($pe-purple, $hover-sat, $hover-light);
+    }
+
+    td.pe button:active {
+        background-color: hsl($pe-purple, $active-sat, $active-light);
+    }
+
+    td.ea button:hover {
+        background-color: hsl($ea-green, $hover-sat, $hover-light);
+    }
+
+    td.ea button:active {
+        background-color: hsl($ea-green, $active-sat, $active-light);
+    }
+
+    td.mdli button:hover {
+        background-color: hsl($mdli-cyan, $hover-sat, $hover-light);
+    }
+
+    td.mdli button:active {
+        background-color: hsl($mdli-cyan, $active-sat, $active-light);
+    }
+
+    td.odlc button:hover {
+        background-color: hsl($odlc-violet, $hover-sat, $hover-light);
+    }
+
+    td.odlc button:active {
+        background-color: hsl($odlc-violet, $active-sat, $active-light);
+    }
+
+    td.hu button:hover {
+        background-color: hsl($hu-gray, $hover-sat, $hover-light);
+    }
+
+    td.hu button:active {
+        background-color: hsl($hu-gray, $active-sat, $active-light);
+    }
+
+    td.md button:hover {
+        background-color: hsl($md-blue, $hover-sat, $hover-light);
+    }
+
+    td.md button:active {
+        background-color: hsl($md-blue, $active-sat, $active-light);
     }
 </style>
 
@@ -141,26 +259,36 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">13:00 - 14:00</td>
-                    <td class="lc">LC</td>
-                    <td rowspan="2" class="ea">EA</td>
+                    <td class="lc">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">LC</button>
+                    </td>
+                    <td rowspan="2" class="ea">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">EA</button>
+                    </td>
                     <td rowspan="2" class="ea">EA/LC</td>
                     <td rowspan="2" class="odlc">ODLC/PE</td>
                     <td rowspan="2" class="lc">LC</td>
                 </tr>
                 <tr>
                     <td class="hour">14:00 - 15:00</td>
-                    <td rowspan="2" class="tys">TYS</td>
+                    <td rowspan="2" class="tys">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">TYS</button>
+                    </td>
                 </tr>
                 <tr>
                     <td class="hour">15:00 - 16:00</td>
-                    <td class="mdli">MDLI</td>
+                    <td class="mdli">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">MLDI</button>
+                    </td>
                     <td rowspan="2" class="lc">LC/EA</td>
                     <td class="tys">TYS</td>
                     <td rowspan="2" class="mdli">MDLI</td>
                 </tr>
                 <tr>
                     <td class="hour">16:00 - 17:00</td>
-                    <td rowspan="2" class="pe">PE</td>
+                    <td rowspan="2" class="pe">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">PE</button>
+                    </td>
                     <td rowspan="2" class="pe">PE/ODLC</td>
                     <td class="hu">HU</td>
                 </tr>
