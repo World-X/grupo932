@@ -9,8 +9,11 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 // const { Content } = await schedulePost.render()
 ---
 <style>
-    h1, h2 {
+    h1, h2, p {
         display: block;
+    }
+
+    h1, h2 {
         font-weight: bold;
     }
 
@@ -21,10 +24,6 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     h2 {
         font-size: 1.5em;
         margin-left: auto;
-    }
-
-    p {
-        display: block;
     }
 
     table, tr, td, th {
@@ -182,6 +181,28 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 </MainGridLayout>
 <script is:inline>
 applySubGroup(localStorage.getItem("subgroup") || 1);
+
+setupHours(window.matchMedia("(max-width: 768px)").matches);
+
+// Call setupHours function when screen is resized
+window.addEventListener("resize", function () {
+    setupHours(window.matchMedia("(max-width: 768px)").matches);
+});
+
+function setupHours(is_screen_medium) {
+    // Get all elements with "hour" class, IF screen is medium, set their content to an hour (from 13:00 to 19:00), ELSE set their content to an hour (from 13:00 to 19:00) and a dash followed by the next hour
+    let hours = document.getElementsByClassName("hour");
+    if (hours) {
+        for (let i = 0; i < hours.length; i++) {
+            let hour = hours[i];
+            if (is_screen_medium) {
+                hour.textContent = `${13 + i}:00`;
+            } else {
+                hour.textContent = `${13 + i}:00 - ${14 + i}:00`;
+            }
+        }
+    }
+}
 
 function scheduleSwitchButton() {
     let panel = document.getElementById("schedule-settings-panel");
