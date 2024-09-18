@@ -66,6 +66,26 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         transition: rotate 0.5s;
     }
 
+    // Subject Data Panel (Style for the panel that shows the subject data)
+    #subject-data-panel {
+        border-color: hsl(0, 0%, 80%);
+        border-radius: 16px;
+        border-width: 4px;
+        // All possible border styles are: none, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
+        border-style: inset;
+        padding: 8px;
+        padding-left: 16px;
+        transition: border-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
+    }
+
+    #subject-data-panel.lc {
+        border-color: hsl($lc-red, 85%, $base-light);
+    }
+    
+    #subject-data-panel.tys {
+        border-color: hsl($tys-lime, 85%, $base-light);
+    }
+
     // Table and cells
     table, tr, td, th {
         border: solid black;
@@ -158,7 +178,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         height: $button-height;
         text-align: center;
         vertical-align: middle;
-        padding: 0;
+        padding: 4px;
         margin: 0;
         transition: background-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
     }
@@ -270,38 +290,38 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">13:00 - 14:00</td>
-                    <td class="lc" onclick="showSubjectData(0)">
-                        <button>LC</button>
+                    <td class="lc">
+                        <button onclick="showSubjectData(0, 13)">Lenguaje C</button>
                     </td>
                     <td rowspan="2" class="ea">
-                        <button class="rowspan-2">EA</button>
+                        <button onclick="showSubjectData(1, 13)" class="rowspan-2">Estadística Avanzada</button>
                     </td>
                     <td rowspan="2" class="ea">
-                        <button class="rowspan-2">EA/LC</button>
+                        <button onclick="showSubjectData(2, 13)" class="rowspan-2">EA/LC</button>
                     </td>
                     <td rowspan="2" class="odlc">
-                        <button class="rowspan-2">ODLC/PE</button>
+                        <button onclick="showSubjectData(3, 13)" class="rowspan-2">ODLC/PE</button>
                     </td>
                     <td rowspan="2" class="lc">
-                        <button class="rowspan-2">LC</button>
+                        <button onclick="showSubjectData(4, 13)" class="rowspan-2">Lenguaje C</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="hour">14:00 - 15:00</td>
                     <td rowspan="2" class="tys">
-                        <button class="rowspan-2">TYS</button>
+                        <button onclick="showSubjectData(0, 14)" class="rowspan-2">Tecnología y Sociedad</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="hour">15:00 - 16:00</td>
                     <td class="mdli">
-                        <button>MDLI</button>
+                        <button style="font-size: 0.85rem;">Metodología de la Investigación</button>
                     </td>
                     <td rowspan="2" class="lc">
                         <button class="rowspan-2">LC/EA</button>
                     </td>
                     <td class="tys">
-                        <button>TYS</button>
+                        <button style="font-size: 0.85rem;">Tecnología y Sociedad</button>
                     </td>
                     <td rowspan="2" class="mdli">
                         <button class="rowspan-2">MDLI</button>
@@ -310,7 +330,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <tr>
                     <td class="hour">16:00 - 17:00</td>
                     <td rowspan="2" class="pe">
-                        <button class="rowspan-2">PE</button>
+                        <button class="rowspan-2">Programación Estructurada</button>
                     </td>
                     <td rowspan="2" class="pe">
                         <button class="rowspan-2">PE/ODLC</button>
@@ -322,13 +342,13 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <tr>
                     <td class="hour">17:00 - 18:00</td>
                     <td rowspan="2" class="odlc">
-                        <button class="rowspan-2">ODLC</button>
+                        <button class="rowspan-2">Organización de las Computadoras</button>
                     </td>
                     <td rowspan="2" class="md">
-                        <button class="rowspan-2">MD</button>
+                        <button class="rowspan-2">Matemáticas Discretas</button>
                     </td>
                     <td rowspan="2" class="md">
-                        <button class="rowspan-2">MD</button>
+                        <button class="rowspan-2">Matemáticas Discretas</button>
                     </td>
                 </tr>
                 <tr>
@@ -339,21 +359,30 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
             </table>
             <br>
             <div class="w-full" id="subject-data-panel" style="display: block;">
-                <hr>
-                <br>
+                <!--hr>
+                <br-->
                 <div class="flex w-full">
                     <!-- 'Asignatura' is placeholder -->
-                    <h2 id="subject-data-heading">Asignatura</h2>
+                    <h2>Información</h2>
                     <button aria-label="test" name="test" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="test" style="margin-left: auto;" onclick="hideSubjectData();">
                         <Icon name="material-symbols:close-rounded" class="text-[1.25rem]" id="test-icon"></Icon>
                     </button>
                 </div>
-                <p id="subject-data-hour">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis omnis incidunt ipsam obcaecati doloribus quisquam, molestiae sint sequi quod voluptatum itaque cupiditate exercitationem placeat, earum repudiandae deserunt culpa fuga aut.</p>
-                <br>
+                <div class="flex w-full">
+                    <Icon name="material-symbols:group-rounded" class="text-[1.5rem]"></Icon>
+                    <p style="margin: auto 8px;"><b>Asignatura: </b><span id="subject-data-name">A</span></p>
+                </div>
+                <p><b>Hora: </b><span id="subject-data-hour">B</span></p>
+                <p><b>Profesor: </b><span id="subject-data-teacher">C</span></p>
+                <p><b>Aula: </b><span id="subject-data-classroom">D</span></p>
+                <p><b>Subgrupo: </b><span id="subject-data-subgroup">E</span></p>
+                <p><b>Tipo: </b><span id="subject-data-type">F</span></p>
+                <!--br-->
             </div>
-            <hr>
+            <!--hr-->
             <br>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, mollitia? Enim amet dignissimos error atque qui eveniet consequatur veritatis itaque rem est illum, ullam, culpa consequuntur dolorem cupiditate dolore nihil!</p>
+            <p id="date-element">Fecha</p>
         </div>
     </div>
 </MainGridLayout>
@@ -366,6 +395,9 @@ setupHours(window.matchMedia("(max-width: 768px)").matches);
 window.addEventListener("resize", function () {
     setupHours(window.matchMedia("(max-width: 768px)").matches);
 });
+
+// Muestra el dia de la semana (Lunes, Martes, etc.)
+document.getElementById("date-element").textContent = new Date().toLocaleDateString("es-ES", { weekday: "long" });
 
 function setupHours(is_screen_medium) {
     // Get all elements with "hour" class, IF screen is medium, set their content to an hour (from 13:00 to 19:00), ELSE set their content to an hour (from 13:00 to 19:00) and a dash followed by the next hour
@@ -431,22 +463,78 @@ function applySubGroup(subgroup) {
     }
 }
 
-function showSubjectData(subject = 0) {
-    const subject_data = {
-        0: {
-            name: "Lenguaje C",
-            hour: "13:00 - 14:00",
-        },
-    };
-    let subjectDataHeading = document.getElementById("subject-data-heading");
+// NOTE: Will refactor this code, so functions regarding subjectData take a day and hour parameters instead of a subject id number
+
+function getSubjectData(day = 0, hour = 13) {
+    switch (day) {
+        case 0: // Monday
+            switch (hour) {
+                case 13: // 13:00 or 1:00PM
+                    return {
+                        tag: "lc",
+                        name: "Lenguaje C",
+                        hour: "13:00 - 14:00",
+                        teacher: "Antillón Macías César",
+                        classroom: "E45 - 301",
+                        subgroup: "Ambos",
+                        type: "Clase"
+                    };
+                case 14: // 14:00 or 2:00PM
+                    return {
+                        tag: "tys",
+                        name: "Tecnología y Sociedad",
+                        hour: "14:00 - 16:00",
+                        teacher: "Rangel Lopez Claudia Margarita",
+                        classroom: "E45 - 301",
+                        subgroup: "Ambos",
+                        type: "Taller"
+                    };
+                default:
+                    return {
+                        name: "Name",
+                        hour: "Hour",
+                        teacher: "Teacher",
+                        classroom: "Classroom",
+                        subgroup: "Subgroup",
+                        type: "Type"
+                    }
+            }
+        default:
+            return {
+                name: "Name",
+                hour: "Hour",
+                teacher: "Teacher",
+                classroom: "Classroom",
+                subgroup: "Subgroup",
+                type: "Type"
+            }
+    }
+}
+
+function showSubjectData(day = 0, hour = 13) {
+    const SUBJECT_DATA = getSubjectData(day, hour);
+    let subjectDataName = document.getElementById("subject-data-name");
     let subjectDataHour = document.getElementById("subject-data-hour");
-    if (subject_data[subject]) {
-        subjectDataHeading.textContent = `${subject_data[subject].name}`;
-        subjectDataHour.textContent = `${subject_data[subject].hour}`;
+    let subjectDataTeacher = document.getElementById("subject-data-teacher");
+    let subjectDataClassroom = document.getElementById("subject-data-classroom");
+    let subjectDataSubgroup = document.getElementById("subject-data-subgroup");
+    let subjectDataType = document.getElementById("subject-data-type");
+
+    if (SUBJECT_DATA) {
+        subjectDataName.textContent = SUBJECT_DATA.name;
+        subjectDataHour.textContent = SUBJECT_DATA.hour;
+        subjectDataTeacher.textContent = SUBJECT_DATA.teacher;
+        subjectDataClassroom.textContent = SUBJECT_DATA.classroom;
+        subjectDataSubgroup.textContent = SUBJECT_DATA.subgroup;
+        subjectDataType.textContent = SUBJECT_DATA.type;
     }
     let subjectDataPanel = document.getElementById("subject-data-panel");
     if (subjectDataPanel) {
         subjectDataPanel.style.display = "block";
+        removeSubjectDataClasses(subjectDataPanel);
+        if (SUBJECT_DATA.tag) {
+            subjectDataPanel.classList.add(SUBJECT_DATA.tag);
+        }
     }
 }
 
@@ -455,8 +543,15 @@ function hideSubjectData() {
     let subjectDataPanel = document.getElementById("subject-data-panel");
     if (subjectDataPanel) {
         subjectDataPanel.style.display = "none";
+        removeSubjectDataClasses(subjectDataPanel);
     }
 }
+
+function removeSubjectDataClasses(subjectDataPanel) {
+    if (subjectDataPanel) {
+        subjectDataPanel.classList.remove("lc", "tys", "pe", "ea", "mdli", "odlc", "hu", "md");
+    }
+} 
 
 /*
 function loadButtonScript() {
