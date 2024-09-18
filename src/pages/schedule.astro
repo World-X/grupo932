@@ -23,13 +23,13 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     $md-blue: 225;
     
     $no-sat: 0%;
-    $base-sat: 20%;
-    $hover-sat: 30%;
-    $active-sat: 45%;
+    $base-sat: 5%;
+    $hover-sat: 75%;
+    $active-sat: 55%;
     
-    $base-light: 70%;
-    $hover-light: 75%;
-    $active-light: 65%;
+    $base-light: 80%;
+    $hover-light: 85%;
+    $active-light: 75%;
     
     $lc-background-color: hsl($lc-red, $base-sat, $base-light);
     $tys-background-color: hsl($tys-lime, $base-sat, $base-light);
@@ -39,6 +39,9 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     $odlc-background-color: hsl($odlc-violet, $base-sat, $base-light);
     $hu-background-color: hsl($hu-gray, $no-sat, $base-light);
     $md-background-color: hsl($md-blue, $base-sat, $base-light);
+
+    $button-height: 3rem;
+    $button-rowspan-2-height: $button-height * 2;
 
     // Headings and paragraph
     h1, h2, p {
@@ -73,14 +76,18 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         padding: 8px;
         overflow: hidden;
     }
-
+    
     td, th {
         width: 16.66%;
     }
-
+    
     td {
         margin: 0;
         padding: 0;
+    }
+
+    tr {
+        height: $button-height;
     }
     
     table {
@@ -147,14 +154,18 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     // subject buttons
     td button {
         background-color: hsla($lc-red, $base-sat, $base-light, 0);
+        display: block;
         width: 100%;
-        height: 100%;
-        display: table-cell;
+        height: $button-height;
         text-align: center;
         vertical-align: middle;
         padding: 0;
         margin: 0;
-        overflow: auto;
+        transition: background-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
+    }
+
+    td button.rowspan-2 {
+        height: $button-rowspan-2-height;
     }
 
     td.lc button:hover {
@@ -206,11 +217,11 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     }
 
     td.hu button:hover {
-        background-color: hsl($hu-gray, $hover-sat, $hover-light);
+        background-color: hsl($hu-gray, $no-sat, $hover-light);
     }
 
     td.hu button:active {
-        background-color: hsl($hu-gray, $active-sat, $active-light);
+        background-color: hsl($hu-gray, $no-sat, $active-light);
     }
 
     td.md button:hover {
@@ -263,40 +274,62 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                         <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">LC</button>
                     </td>
                     <td rowspan="2" class="ea">
-                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">EA</button>
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">EA</button>
                     </td>
-                    <td rowspan="2" class="ea">EA/LC</td>
-                    <td rowspan="2" class="odlc">ODLC/PE</td>
-                    <td rowspan="2" class="lc">LC</td>
+                    <td rowspan="2" class="ea">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">EA/LC</button>
+                    </td>
+                    <td rowspan="2" class="odlc">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">ODLC/PE</button>
+                    </td>
+                    <td rowspan="2" class="lc">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">LC</button>
+                    </td>
                 </tr>
                 <tr>
                     <td class="hour">14:00 - 15:00</td>
                     <td rowspan="2" class="tys">
-                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">TYS</button>
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">TYS</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="hour">15:00 - 16:00</td>
                     <td class="mdli">
-                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">MLDI</button>
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">MDLI</button>
                     </td>
-                    <td rowspan="2" class="lc">LC/EA</td>
-                    <td class="tys">TYS</td>
-                    <td rowspan="2" class="mdli">MDLI</td>
+                    <td rowspan="2" class="lc">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">LC/EA</button>
+                    </td>
+                    <td class="tys">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">TYS</button>
+                    </td>
+                    <td rowspan="2" class="mdli">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">MDLI</button>
+                    </td>
                 </tr>
                 <tr>
                     <td class="hour">16:00 - 17:00</td>
                     <td rowspan="2" class="pe">
-                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">PE</button>
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">PE</button>
                     </td>
-                    <td rowspan="2" class="pe">PE/ODLC</td>
-                    <td class="hu">HU</td>
+                    <td rowspan="2" class="pe">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">PE/ODLC</button>
+                    </td>
+                    <td class="hu">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5">HU</button>
+                    </td>
                 </tr>
                 <tr>
                     <td class="hour">17:00 - 18:00</td>
-                    <td rowspan="2" class="odlc">ODLC</td>
-                    <td rowspan="2" class="md">MD</td>
-                    <td rowspan="2" class="md">MD</td>
+                    <td rowspan="2" class="odlc">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">ODLC</button>
+                    </td>
+                    <td rowspan="2" class="md">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">MD</button>
+                    </td>
+                    <td rowspan="2" class="md">
+                        <button class="flex transition whitespace-nowrap items-center w-full scale-animation h-9 px-3 mb-0.5 rowspan-2">MD</button>
+                    </td>
                 </tr>
                 <tr>
                     <td class="hour">18:00 - 19:00</td>
