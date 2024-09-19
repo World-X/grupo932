@@ -26,10 +26,12 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     $base-sat: 15%;
     $hover-sat: 75%;
     $active-sat: 55%;
+    $mid-sat: 35%;
     
     $base-light: 80%;
     $hover-light: 85%;
     $active-light: 75%;
+    $high-light: 90%;
     
     $lc-background-color: hsl($lc-red, $base-sat, $base-light);
     $tys-background-color: hsl($tys-lime, $base-sat, $base-light);
@@ -68,22 +70,26 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 
     // Subject Data Panel (Style for the panel that shows the subject data)
     #subject-data-panel {
-        border-color: hsl(0, 0%, 80%);
+        border-color: var(--primary);
+        background-color: hsl(0%, $no-sat, $high-light);
         border-radius: 16px;
         border-width: 4px;
         // All possible border styles are: none, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
         border-style: inset;
         padding: 8px;
         padding-left: 16px;
+        transition: background-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
         transition: border-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
     }
 
     #subject-data-panel.lc {
-        border-color: hsl($lc-red, 85%, $base-light);
+        background-color: hsl($lc-red, $mid-sat, $high-light);
+        border-color: hsl($lc-red, $hover-sat, $base-light);
     }
     
     #subject-data-panel.tys {
-        border-color: hsl($tys-lime, 85%, $base-light);
+        background-color: hsl($tys-lime, $mid-sat, $high-light);
+        border-color: hsl($tys-lime, $hover-sat, $base-light);
     }
 
     // Table and cells
