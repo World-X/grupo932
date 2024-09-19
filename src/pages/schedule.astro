@@ -63,6 +63,15 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         font-size: 1.5em;
     }
 
+    #schedule-menu-switch {
+        rotation: 0deg;
+        transition: rotate 0.5s;
+    }
+
+    #schedule-menu-switch:hover svg {
+        rotate: 90deg;
+    }
+
     // Schedule Settings Icon
     #schedule-settings-icon {
         rotate: 0deg;
@@ -99,8 +108,10 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     }
 
     #info-close-button svg {
+        rotate: 0deg;
         display: block;
         margin: auto;
+        transition: rotate 0.5s;
     }
 
     #info-close-button:hover {
@@ -111,6 +122,10 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     #info-close-button:active {
         background-color: hsl(0, 0%, 90%);
         border: 2px solid hsl(0, 0%, 70%);
+    }
+
+    #info-close-button:hover svg {
+        rotate: 90deg;
     }
 
     // Table and cells
@@ -287,7 +302,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
             </Markdown-->
             <div class="flex w-full">
                 <h1>Horario</h1>
-                <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();" onmouseenter="scheduleMouseEnter();" onmouseleave="scheduleMouseLeave();">
+                <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();">
                     <Icon name="material-symbols:settings-rounded" class="text-[1.25rem]" id="schedule-settings-icon" is:inline></Icon>
                 </button>
             </div>
@@ -470,20 +485,6 @@ function scheduleSwitchButton() {
             panel.style.display = "none";
             scheduleSettingsIcon.getElementsByTagName("path")[0].setAttribute("d", settingsSVG);
         }
-    }
-}
-
-function scheduleMouseEnter() {
-    let icon = document.getElementById("schedule-settings-icon");
-    if (icon) {
-        icon.style.rotate = "90deg";
-    }
-}
-
-function scheduleMouseLeave() {
-    let icon = document.getElementById("schedule-settings-icon");
-    if (icon) {
-        icon.style.rotate = "0deg";
     }
 }
 
