@@ -7,6 +7,7 @@ import {
 } from '../../node_modules/.pnpm/astro-icon@1.1.1/node_modules/@iconify/utils'
 */
 import MainGridLayout from '../layouts/MainGridLayout.astro'
+/* REMINDER: To install icon packages from Iconify, use pnpm i -D @iconify-json/{package_name} */
 ---
 <style lang="scss">
     $table-heading-bg-color: oklch(0.86 0.1 var(--hue));
@@ -70,16 +71,16 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 
     // Subject Data Panel (Style for the panel that shows the subject data)
     #subject-data-panel {
+        background-color: oklch(1.0 0.05 var(--hue));
         border-color: var(--primary);
-        background-color: hsl(0%, $no-sat, $high-light);
-        border-radius: 16px;
-        border-width: 4px;
+        border-radius: 12px;
+        border-width: 3px;
         // All possible border styles are: none, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset
         border-style: inset;
         padding: 8px;
         padding-left: 16px;
-        transition: background-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
-        transition: border-color cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
+        // transition: background-color ease-out 0.4s;
+        // transition: border-color ease-out 0.2s;
     }
 
     #subject-data-panel.lc {
@@ -90,6 +91,26 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     #subject-data-panel.tys {
         background-color: hsl($tys-lime, $mid-sat, $high-light);
         border-color: hsl($tys-lime, $hover-sat, $base-light);
+    }
+
+    #subject-data-panel.pe {
+        background-color: hsl($pe-purple, $mid-sat, $high-light);
+        border-color: hsl($pe-purple, $hover-sat, $base-light);
+    }
+
+    #info-close-button svg {
+        display: block;
+        margin: auto;
+    }
+
+    #info-close-button:hover {
+        background-color: hsl(0, 0%, 100%);
+        border: 2px solid hsl(0, 0%, 80%);
+    }
+    
+    #info-close-button:active {
+        background-color: hsl(0, 0%, 90%);
+        border: 2px solid hsl(0, 0%, 70%);
     }
 
     // Table and cells
@@ -321,40 +342,40 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <tr>
                     <td class="hour">15:00 - 16:00</td>
                     <td class="mdli">
-                        <button style="font-size: 0.85rem;">Metodología de la Investigación</button>
+                        <button onclick="showSubjectData(1, 15)" style="font-size: 0.85rem;">Metodología de la Investigación</button>
                     </td>
                     <td rowspan="2" class="lc">
-                        <button class="rowspan-2">LC/EA</button>
+                        <button onclick="showSubjectData(2, 15)" class="rowspan-2">LC/EA</button>
                     </td>
                     <td class="tys">
-                        <button style="font-size: 0.85rem;">Tecnología y Sociedad</button>
+                        <button onclick="showSubjectData(3, 15)" style="font-size: 0.85rem;">Tecnología y Sociedad</button>
                     </td>
                     <td rowspan="2" class="mdli">
-                        <button class="rowspan-2">MDLI</button>
+                        <button onclick="showSubjectData(4, 15)" class="rowspan-2">MDLI</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="hour">16:00 - 17:00</td>
                     <td rowspan="2" class="pe">
-                        <button class="rowspan-2">Programación Estructurada</button>
+                        <button onclick="showSubjectData(0, 16)" class="rowspan-2">Programación Estructurada</button>
                     </td>
                     <td rowspan="2" class="pe">
-                        <button class="rowspan-2">PE/ODLC</button>
+                        <button onclick="showSubjectData(1, 16)" class="rowspan-2">PE/ODLC</button>
                     </td>
                     <td class="hu">
-                        <button>HU</button>
+                        <button onclick="showSubjectData(3, 16)">HU</button>
                     </td>
                 </tr>
                 <tr>
                     <td class="hour">17:00 - 18:00</td>
                     <td rowspan="2" class="odlc">
-                        <button class="rowspan-2">Organización de las Computadoras</button>
+                        <button onclick="showSubjectData(2, 17)" class="rowspan-2">Organización de las Computadoras</button>
                     </td>
                     <td rowspan="2" class="md">
-                        <button class="rowspan-2">Matemáticas Discretas</button>
+                        <button onclick="showSubjectData(3, 17)" class="rowspan-2">Matemáticas Discretas</button>
                     </td>
                     <td rowspan="2" class="md">
-                        <button class="rowspan-2">Matemáticas Discretas</button>
+                        <button onclick="showSubjectData(4, 17)" class="rowspan-2">Matemáticas Discretas</button>
                     </td>
                 </tr>
                 <tr>
@@ -370,19 +391,35 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <div class="flex w-full">
                     <!-- 'Asignatura' is placeholder -->
                     <h2>Información</h2>
-                    <button aria-label="test" name="test" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="test" style="margin-left: auto;" onclick="hideSubjectData();">
-                        <Icon name="material-symbols:close-rounded" class="text-[1.25rem]" id="test-icon"></Icon>
+                    <!-- An appropiate aria-label could be  -->
+                    <button aria-label="test" name="test" class="scale-animation rounded-lg w-11 h-11 active:scale-90" id="info-close-button" style="margin-left: auto;" onclick="hideSubjectData();">
+                        <Icon name="material-symbols:close-rounded" class="text-[1.25rem]" id="info-close-icon"></Icon>
                     </button>
                 </div>
                 <div class="flex w-full">
-                    <Icon name="material-symbols:group-rounded" class="text-[1.5rem]"></Icon>
-                    <p style="margin: auto 8px;"><b>Asignatura: </b><span id="subject-data-name">A</span></p>
+                    <Icon name="streamline:class-lesson-solid" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Asignatura: </b><span id="subject-data-name">A</span></p>
                 </div>
-                <p><b>Hora: </b><span id="subject-data-hour">B</span></p>
-                <p><b>Profesor: </b><span id="subject-data-teacher">C</span></p>
-                <p><b>Aula: </b><span id="subject-data-classroom">D</span></p>
-                <p><b>Subgrupo: </b><span id="subject-data-subgroup">E</span></p>
-                <p><b>Tipo: </b><span id="subject-data-type">F</span></p>
+                <div class="flex w-full">
+                    <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Hora: </b><span id="subject-data-hour">B</span></p>
+                </div>
+                <div class="flex w-full">
+                    <Icon name="material-symbols:person" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Profesor: </b><span id="subject-data-teacher">C</span></p>
+                </div>
+                <div class="flex w-full">
+                    <Icon name="material-symbols:location-on-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Aula: </b><span id="subject-data-classroom">D</span></p>
+                </div>
+                <div class="flex w-full">
+                    <Icon name="material-symbols:group-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Subgrupo: </b><span id="subject-data-subgroup">E</span></p>
+                </div>
+                <div class="flex w-full">
+                    <Icon name="material-symbols:category-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Tipo: </b><span id="subject-data-type">F</span></p>
+                </div>
                 <!--br-->
             </div>
             <!--hr-->
@@ -495,6 +532,16 @@ function getSubjectData(day = 0, hour = 13) {
                         subgroup: "Ambos",
                         type: "Taller"
                     };
+                case 16: // 16:00 or 4:00PM
+                    return {
+                        tag: "pe",
+                        name: "Programación Estructurada",
+                        hour: "16:00 - 18:00",
+                        teacher: "Nuñez Yepiz Pedro",
+                        classroom: "E45 - 301",
+                        subgroup: "Ambos",
+                        type: "Taller"
+                    }
                 default:
                     return {
                         name: "Name",
