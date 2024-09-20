@@ -9,10 +9,10 @@ ___
     - [1.0.1](#101) (14/09/2024)
 ___
 ## 1.1
-(14/09/2024)
+(19/09/2024)
 <!-- Se incorporó GitHub Copilot en el proceso de desarrollo. -->
 - **Se agregaron 2 nuevos artículos especiales**.
-    1. [Horario](/grupo932/about/)
+    1. [Horario](/grupo932/schedule/)
     2. [Historia](#historia)
 - Eliminado el botón "Acerca De" en la barra de navegación superior, ya que era redundante.
 - Modificado el perfil de la sección izquierda para mostrar el nombre de la página y su versión más reciente.
