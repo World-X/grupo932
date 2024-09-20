@@ -55,12 +55,12 @@ import { Icon } from 'astro-icon/components'
         font-size: 1.5em;
     }
 
-    #schedule-menu-switch {
+    #schedule-menu-switch-button {
         rotation: 0deg;
         transition: rotate 0.5s;
     }
 
-    #schedule-menu-switch:hover svg {
+    #schedule-menu-switch-button:hover svg {
         rotate: 90deg;
     }
 
@@ -475,7 +475,7 @@ import { Icon } from 'astro-icon/components'
 </style>
 <div class="flex w-full">
     <h1>Horario</h1>
-    <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();">
+    <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch-button" style="margin-left: auto;">
         <Icon name="material-symbols:settings-rounded" class="text-[1.25rem]" id="schedule-settings-icon" is:inline></Icon>
     </button>
 </div>
@@ -618,3 +618,48 @@ import { Icon } from 'astro-icon/components'
 </div>
 <!--hr-->
 <br>
+<script>
+/*
+import {
+    getIconData,
+    iconToSVG,
+} from '../../node_modules/.pnpm/astro-icon@1.1.1/node_modules/@iconify/utils'
+*/
+/*
+function setupEventListeners(code: number) {
+    console.log("Setting up event listeners (code: " + code + ")");
+    let scheduleMenuSwitchButton = document.getElementById("schedule-menu-switch-button");
+    if (scheduleMenuSwitchButton) {
+        scheduleMenuSwitchButton.addEventListener("click", function() {
+            switchScheduleSettingsPanelDisplay(code);
+        });
+    }
+}
+
+function switchScheduleSettingsPanelDisplay(code: number) {
+    console.log("Switching schedule settings panel display (code: " + code + ")");
+    let scheduleSettingsPanel = document.getElementById("schedule-settings-panel");
+    if (scheduleSettingsPanel) {
+        console.log("Schedule settings panel found");
+        if (scheduleSettingsPanel.style.display === "none") {
+            scheduleSettingsPanel.style.display = "block";
+        } else {
+            scheduleSettingsPanel.style.display = "none";
+        }
+    }
+}
+
+console.log("Setting up event listeners from script");
+setupEventListeners(0);
+
+document.addEventListener('astro:after-swap', () => {
+    console.log("Setting up event listeners from astro:after-swap");
+    setupEventListeners(1);
+}, { once: false });
+
+document.addEventListener('astro:page-load', () => {
+    console.log("Setting up event listeners from astro:page-load");
+    setupEventListeners(2);
+}, { once: false });
+*/
+</script>
