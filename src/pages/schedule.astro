@@ -639,6 +639,10 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     </div>
 </MainGridLayout>
 <script is:inline>
+if (!localStorage.getItem("subgroup")) {
+    console.log("Setting subgroup to 1");
+    localStorage.setItem("subgroup", 1);
+}
 applySubGroup(localStorage.getItem("subgroup") || 1);
 setupHours(window.matchMedia("(max-width: 768px)").matches);
 // hideSubjectData();
