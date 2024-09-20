@@ -92,9 +92,18 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         // transition: border-color ease-out 0.2s;
     }
 
+    html.dark #subject-data-panel {
+        background-color: oklch(0.0 0.0 0);
+    }
+
     #subject-data-panel.lc {
         background-color: hsl($lc-red, $mid-sat, $high-light);
         border-color: hsl($lc-red, $hover-sat, $base-light);
+    }
+
+    html.dark #subject-data-panel.lc {
+        background-color: hsl($lc-red, $mid-sat, 100% - $base-light);
+        border-color: hsl($lc-red, $hover-sat, 100% - $base-light);
     }
     
     #subject-data-panel.tys {
@@ -102,9 +111,19 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         border-color: hsl($tys-lime, $hover-sat, $base-light);
     }
 
+    html.dark #subject-data-panel.tys {
+        background-color: hsl($tys-lime, $mid-sat, 100% - $base-light);
+        border-color: hsl($tys-lime, $hover-sat, 100% - $base-light);
+    }
+
     #subject-data-panel.pe {
         background-color: hsl($pe-purple, $mid-sat, $high-light);
         border-color: hsl($pe-purple, $hover-sat, $base-light);
+    }
+
+    html.dark #subject-data-panel.pe {
+        background-color: hsl($pe-purple, $mid-sat, 100% - $base-light);
+        border-color: hsl($pe-purple, $hover-sat, 100% - $base-light);
     }
 
     #subject-data-panel.ea {
@@ -112,9 +131,19 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         border-color: hsl($ea-green, $hover-sat, $base-light);
     }
 
+    html.dark #subject-data-panel.ea {
+        background-color: hsl($ea-green, $mid-sat, 100% - $base-light);
+        border-color: hsl($ea-green, $hover-sat, 100% - $base-light);
+    }
+
     #subject-data-panel.mdli {
         background-color: hsl($mdli-cyan, $mid-sat, $high-light);
         border-color: hsl($mdli-cyan, $hover-sat, $base-light);
+    }
+
+    html.dark #subject-data-panel.mdli {
+        background-color: hsl($mdli-cyan, $mid-sat, 100% - $base-light);
+        border-color: hsl($mdli-cyan, $hover-sat, 100% - $base-light);
     }
 
     #subject-data-panel.odlc {
@@ -122,14 +151,29 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         border-color: hsl($odlc-violet, $hover-sat, $base-light);
     }
 
+    html.dark #subject-data-panel.odlc {
+        background-color: hsl($odlc-violet, $mid-sat, 100% - $base-light);
+        border-color: hsl($odlc-violet, $hover-sat, 100% - $base-light);
+    }
+
     #subject-data-panel.hu {
         background-color: hsl($hu-gray, $no-sat, $high-light);
         border-color: hsl($hu-gray, $no-sat, $base-light);
     }
 
+    html.dark #subject-data-panel.hu {
+        background-color: hsl($hu-gray, $no-sat, 100% - $base-light);
+        border-color: hsl($hu-gray, $no-sat, 100% - $base-light);
+    }
+
     #subject-data-panel.md {
         background-color: hsl($md-blue, $mid-sat, $high-light);
         border-color: hsl($md-blue, $hover-sat, $base-light);
+    }
+
+    html.dark #subject-data-panel.md {
+        background-color: hsl($md-blue, $mid-sat, 100% - $base-light);
+        border-color: hsl($md-blue, $hover-sat, 100% - $base-light);
     }
 
     #info-close-button svg {
@@ -143,10 +187,20 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         background-color: hsl(0, 0%, 100%);
         border: 2px solid hsl(0, 0%, 80%);
     }
+
+    html.dark #info-close-button:hover {
+        background-color: hsl(0, 0%, 10%);
+        border: 2px solid hsl(0, 0%, 20%);
+    }
     
     #info-close-button:active {
         background-color: hsl(0, 0%, 90%);
         border: 2px solid hsl(0, 0%, 70%);
+    }
+
+    html.dark #info-close-button:active {
+        background-color: hsl(0, 0%, 20%);
+        border: 2px solid hsl(0, 0%, 30%);
     }
 
     #info-close-button:hover svg {
@@ -173,8 +227,16 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         padding: 0;
     }
 
+    html.dark td {
+        background-color: oklch(0.2 0.0 0);
+    }
+
     td:hover:not(:has(button)) {
         background-color: white;
+    }
+
+    html.dark td:hover:not(:has(button)) {
+        background-color: black;
     }
 
     tr {
@@ -202,11 +264,11 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
 
     // hour
     .hour {
-        background-color: lightgray;
+        background-color: rgb(211, 211, 211);
     }
 
     html.dark .hour {
-        background-color: dimgray;
+        background-color: rgb(44, 44, 44);
     }
 
     // subjects
@@ -214,32 +276,64 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         background-color: $lc-background-color;
     }
 
+    html.dark td.lc {
+        background-color: hsl($lc-red, $mid-sat, 100% - $base-light);
+    }
+
     td.tys {
         background-color: $tys-background-color;;
+    }
+
+    html.dark td.tys {
+        background-color: hsl($tys-lime, $mid-sat, 100% - $base-light);
     }
 
     td.pe {
         background-color: $pe-background-color;
     }
 
+    html.dark td.pe {
+        background-color: hsl($pe-purple, $mid-sat, 100% - $base-light);
+    }
+
     td.ea {
         background-color: $ea-background-color;
+    }
+
+    html.dark td.ea {
+        background-color: hsl($ea-green, $mid-sat, 100% - $base-light);
     }
 
     td.mdli {
         background-color: $mdli-background-color;
     }
 
+    html.dark td.mdli {
+        background-color: hsl($mdli-cyan, $mid-sat, 100% - $base-light);
+    }
+
     td.odlc {
         background-color: $odlc-background-color;
+    }
+
+    html.dark td.odlc {
+        background-color: hsl($odlc-violet, $mid-sat, 100% - $base-light);
     }
 
     td.hu {
         background-color: $hu-background-color;
     }
 
+    html.dark td.hu {
+        background-color: hsl($hu-gray, $no-sat, 100% - $base-light);
+    }
+
     td.md {
         background-color: $md-background-color;
+    }
+
+    html.dark td.md {
+        background-color: hsl($md-blue, $mid-sat, 100% - $base-light);
     }
 
     // subject buttons
@@ -263,64 +357,128 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         background-color: hsl($lc-red, $hover-sat, $hover-light);
     }
 
+    html.dark td.lc button:hover {
+        background-color: hsl($lc-red, $hover-sat, 100% - $hover-light);
+    }
+
     td.lc button:active {
         background-color: hsl($lc-red, $active-sat, $active-light);
+    }
+
+    html.dark td.lc button:active {
+        background-color: hsl($lc-red, $active-sat, 100% - $active-light);
     }
 
     td.tys button:hover {
         background-color: hsl($tys-lime, $hover-sat, $hover-light);
     }
 
+    html.dark td.tys button:hover {
+        background-color: hsl($tys-lime, $hover-sat, 100% - $hover-light);
+    }
+
     td.tys button:active {
         background-color: hsl($tys-lime, $active-sat, $active-light);
+    }
+
+    html.dark td.tys button:active {
+        background-color: hsl($tys-lime, $active-sat, 100% - $active-light);
     }
 
     td.pe button:hover {
         background-color: hsl($pe-purple, $hover-sat, $hover-light);
     }
 
+    html.dark td.pe button:hover {
+        background-color: hsl($pe-purple, $hover-sat, 100% - $hover-light);
+    }
+
     td.pe button:active {
         background-color: hsl($pe-purple, $active-sat, $active-light);
+    }
+
+    html.dark td.pe button:active {
+        background-color: hsl($pe-purple, $active-sat, 100% - $active-light);
     }
 
     td.ea button:hover {
         background-color: hsl($ea-green, $hover-sat, $hover-light);
     }
 
+    html.dark td.ea button:hover {
+        background-color: hsl($ea-green, $hover-sat, 100% - $hover-light);
+    }
+
     td.ea button:active {
         background-color: hsl($ea-green, $active-sat, $active-light);
+    }
+
+    html.dark td.ea button:active {
+        background-color: hsl($ea-green, $active-sat, 100% - $active-light);
     }
 
     td.mdli button:hover {
         background-color: hsl($mdli-cyan, $hover-sat, $hover-light);
     }
 
+    html.dark td.mdli button:hover {
+        background-color: hsl($mdli-cyan, $hover-sat, 100% - $hover-light);
+    }
+
     td.mdli button:active {
         background-color: hsl($mdli-cyan, $active-sat, $active-light);
+    }
+
+    html.dark td.mdli button:active {
+        background-color: hsl($mdli-cyan, $active-sat, 100% - $active-light);
     }
 
     td.odlc button:hover {
         background-color: hsl($odlc-violet, $hover-sat, $hover-light);
     }
 
+    html.dark td.odlc button:hover {
+        background-color: hsl($odlc-violet, $hover-sat, 100% - $hover-light);
+    }
+
     td.odlc button:active {
         background-color: hsl($odlc-violet, $active-sat, $active-light);
+    }
+
+    html.dark td.odlc button:active {
+        background-color: hsl($odlc-violet, $active-sat, 100% - $active-light);
     }
 
     td.hu button:hover {
         background-color: hsl($hu-gray, $no-sat, $hover-light);
     }
 
+    html.dark td.hu button:hover {
+        background-color: hsl($hu-gray, $no-sat, 100% - $hover-light);
+    }
+
     td.hu button:active {
         background-color: hsl($hu-gray, $no-sat, $active-light);
+    }
+
+    html.dark td.hu button:active {
+        background-color: hsl($hu-gray, $no-sat, 100% - $active-light);
     }
 
     td.md button:hover {
         background-color: hsl($md-blue, $hover-sat, $hover-light);
     }
 
+    html.dark td.md button:hover {
+        background-color: hsl($md-blue, $hover-sat, 100% - $hover-light);
+    }
+
     td.md button:active {
         background-color: hsl($md-blue, $active-sat, $active-light);
+    }
+
+    html.dark td.md button:active {
+        background-color: hsl($md-blue, $active-sat, 100% - $active-light);
     }
 </style>
 
@@ -882,7 +1040,10 @@ function showSubjectData(day = 0, hour = 13, display = true) {
     let currentHourSelectedVar = document.getElementById("current-hour-selected-var");
     let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
     if (subjectDataPreLineBreak) {
-        subjectDataPreLineBreak.style.display = "inline";
+        if (display) {
+            console.log("Debug: Showing pre-line break!");
+            subjectDataPreLineBreak.style.display = "inline";
+        }
     }
     if (subjectDataPanel) {
         if (display) {
@@ -912,6 +1073,7 @@ function hideSubjectData() {
         removeSubjectDataClasses(subjectDataPanel);
     }
     if (subjectDataPreLineBreak) {
+        console.log("Debug: Hiding pre-line break!");
         subjectDataPreLineBreak.style.display = "none";
     }
 }
@@ -920,22 +1082,5 @@ function removeSubjectDataClasses(subjectDataPanel) {
     if (subjectDataPanel) {
         subjectDataPanel.classList.remove("lc", "tys", "pe", "ea", "mdli", "odlc", "hu", "md");
     }
-} 
-
-/*
-function loadButtonScript() {
-    console.log("Debug: Loading button script!")
-    let menuBtn = document.getElementById("schedule-menu-switch");
-    if (menuBtn) {
-        menuBtn.addEventListener("click", function () {
-            return;
-        });
-    }
 }
-
-
-loadButtonScript();
-
-document.addEventListener('astro:after-swap', loadButtonScript, { once: false });
-*/
 </script>
