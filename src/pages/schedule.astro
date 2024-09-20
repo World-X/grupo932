@@ -639,17 +639,14 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     </div>
 </MainGridLayout>
 <script is:inline>
-console.log("schedule.astro");
-console.log("subgroup: ", localStorage.getItem("subgroup"));
-if (!localStorage.getItem("subgroup")) {
-    localStorage.setItem("subgroup", "1");
-}
+console.log("Hello from schedule.astro");
 applySubGroup(localStorage.getItem("subgroup"));
 setupHours(window.matchMedia("(max-width: 768px)").matches);
 // hideSubjectData();
 
 // Call setupHours function when screen is resized
 window.addEventListener("resize", function () {
+    console.log("Resized");
     setupHours(window.matchMedia("(max-width: 768px)").matches);
 });
 
@@ -693,6 +690,7 @@ function setSubGroup(subgroup) {
 }
 
 function applySubGroup(subgroup) {
+    console.log("Applying subgroup: ", subgroup);
     // Buttons for subgroup selection
     let buttonOne = document.getElementById("subgroup-one-button");
     let buttonTwo = document.getElementById("subgroup-two-button");
@@ -701,9 +699,17 @@ function applySubGroup(subgroup) {
     let subEaLc = document.getElementById("sub-ea-lc");
     let subLcEa = document.getElementById("sub-lc-ea");
     let subOdlcPe = document.getElementById("sub-odlc-pe");
-    // Get current day and hour
-    let currentDay = parseInt(document.getElementById("current-day-selected-var").textContent);
-    let currentHour = parseInt(document.getElementById("current-hour-selected-var").textContent);
+    // Get current day and hour (to prevent errors, we will have to check first if the elements exist)
+    let currentDayElement = document.getElementById("current-day-selected-var");
+    let currentHourElement = document.getElementById("current-hour-selected-var");
+    let currentDay = -1;
+    let currentHour = -1;
+    if (currentDayElement) {
+        currentDay = parseInt(currentDayElement.textContent);
+    }
+    if (currentHourElement) {
+        currentHour = parseInt(currentHourElement.textContent);
+    }
     if (buttonOne) {
         if (buttonTwo) {
             if (subgroup == '1') {
@@ -749,7 +755,9 @@ function applySubGroup(subgroup) {
             }
         }
     }
-    showSubjectData(currentDay, currentHour, false);
+    if (currentDay != -1 && currentHour != -1) {
+        showSubjectData(currentDay, currentHour, false);
+    }
 }
 
 // NOTE: Will refactor this code, so functions regarding subjectData take a day and hour parameters instead of a subject id number

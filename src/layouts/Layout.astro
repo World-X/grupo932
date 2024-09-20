@@ -276,6 +276,11 @@ function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
+	console.log("Hello, World!");
+	// if localStorage.subgroup is not set, set it to '1'
+	if (!localStorage.subgroup) {
+		localStorage.subgroup = '1';
+	}
 }
 
 /* Load settings when entering the site */
