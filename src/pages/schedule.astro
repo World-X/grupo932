@@ -639,6 +639,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     </div>
 </MainGridLayout>
 <script is:inline>
+console.log("schedule.astro");
 console.log("subgroup: ", localStorage.getItem("subgroup"));
 if (!localStorage.getItem("subgroup")) {
     localStorage.setItem("subgroup", "1");
