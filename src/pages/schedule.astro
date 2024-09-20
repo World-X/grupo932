@@ -107,6 +107,31 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         border-color: hsl($pe-purple, $hover-sat, $base-light);
     }
 
+    #subject-data-panel.ea {
+        background-color: hsl($ea-green, $mid-sat, $high-light);
+        border-color: hsl($ea-green, $hover-sat, $base-light);
+    }
+
+    #subject-data-panel.mdli {
+        background-color: hsl($mdli-cyan, $mid-sat, $high-light);
+        border-color: hsl($mdli-cyan, $hover-sat, $base-light);
+    }
+
+    #subject-data-panel.odlc {
+        background-color: hsl($odlc-violet, $mid-sat, $high-light);
+        border-color: hsl($odlc-violet, $hover-sat, $base-light);
+    }
+
+    #subject-data-panel.hu {
+        background-color: hsl($hu-gray, $no-sat, $high-light);
+        border-color: hsl($hu-gray, $no-sat, $base-light);
+    }
+
+    #subject-data-panel.md {
+        background-color: hsl($md-blue, $mid-sat, $high-light);
+        border-color: hsl($md-blue, $hover-sat, $base-light);
+    }
+
     #info-close-button svg {
         rotate: 0deg;
         display: block;
@@ -143,8 +168,13 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     }
     
     td {
+        background-color: oklch(0.95 0.02 var(--hue));
         margin: 0;
         padding: 0;
+    }
+
+    td:hover:not(:has(button)) {
+        background-color: white;
     }
 
     tr {
@@ -338,10 +368,10 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <td rowspan="2" class="ea">
                         <button onclick="showSubjectData(1, 13)" class="rowspan-2">Estadística Avanzada</button>
                     </td>
-                    <td rowspan="2" class="ea">
+                    <td rowspan="2" id="sub-ea-lc">
                         <button onclick="showSubjectData(2, 13)" class="rowspan-2">EA/LC</button>
                     </td>
-                    <td rowspan="2" class="odlc">
+                    <td rowspan="2" id="sub-odlc-pe">
                         <button onclick="showSubjectData(3, 13)" class="rowspan-2">ODLC/PE</button>
                     </td>
                     <td rowspan="2" class="lc">
@@ -359,14 +389,14 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <td class="mdli">
                         <button onclick="showSubjectData(1, 15)" style="font-size: 0.85rem;">Metodología de la Investigación</button>
                     </td>
-                    <td rowspan="2" class="lc">
+                    <td rowspan="2" id="sub-lc-ea">
                         <button onclick="showSubjectData(2, 15)" class="rowspan-2">LC/EA</button>
                     </td>
                     <td class="tys">
                         <button onclick="showSubjectData(3, 15)" style="font-size: 0.85rem;">Tecnología y Sociedad</button>
                     </td>
                     <td rowspan="2" class="mdli">
-                        <button onclick="showSubjectData(4, 15)" class="rowspan-2">MDLI</button>
+                        <button onclick="showSubjectData(4, 15)" class="rowspan-2">Metología de la Investigación</button>
                     </td>
                 </tr>
                 <tr>
@@ -374,11 +404,11 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <td rowspan="2" class="pe">
                         <button onclick="showSubjectData(0, 16)" class="rowspan-2">Programación Estructurada</button>
                     </td>
-                    <td rowspan="2" class="pe">
+                    <td rowspan="2" id="sub-pe-odlc">
                         <button onclick="showSubjectData(1, 16)" class="rowspan-2">PE/ODLC</button>
                     </td>
                     <td class="hu">
-                        <button onclick="showSubjectData(3, 16)">HU</button>
+                        <button onclick="showSubjectData(3, 16)" style="font-size: 0.85rem;">Hora Universitaria</button>
                     </td>
                 </tr>
                 <tr>
@@ -399,10 +429,12 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <td></td>
                 </tr>
             </table>
-            <br>
-            <div class="w-full" id="subject-data-panel" style="display: block;">
+            <br id="subject-data-pre-line-break" style="display: none;">
+            <div class="w-full" id="subject-data-panel" style="display: none;">
                 <!--hr>
                 <br-->
+                <div style="display: none;" id="current-day-selected-var">0</div>
+                <div style="display: none;" id="current-hour-selected-var">13</div>
                 <div class="flex w-full">
                     <!-- 'Asignatura' is placeholder -->
                     <h2>Información</h2>
@@ -416,31 +448,35 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <p><b>Asignatura: </b><span id="subject-data-name">A</span></p>
                 </div>
                 <div class="flex w-full">
+                    <Icon name="material-symbols:calendar-today-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p><b>Día: </b><span id="subject-data-day">B</span></p>
+                </div>
+                <div class="flex w-full">
                     <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
-                    <p><b>Hora: </b><span id="subject-data-hour">B</span></p>
+                    <p><b>Hora: </b><span id="subject-data-hour">C</span></p>
                 </div>
-                <div class="flex w-full">
+                <div class="flex w-full" id="subject-data-teacher-div">
                     <Icon name="material-symbols:person" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
-                    <p><b>Profesor: </b><span id="subject-data-teacher">C</span></p>
+                    <p><b>Profesor: </b><span id="subject-data-teacher">D</span></p>
                 </div>
-                <div class="flex w-full">
+                <div class="flex w-full" id="subject-data-classroom-div">
                     <Icon name="material-symbols:location-on-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
-                    <p><b>Aula: </b><span id="subject-data-classroom">D</span></p>
+                    <p><b>Aula: </b><span id="subject-data-classroom">E</span></p>
                 </div>
-                <div class="flex w-full">
+                <div class="flex w-full" id="subject-data-subgroup-div">
                     <Icon name="material-symbols:group-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
-                    <p><b>Subgrupo: </b><span id="subject-data-subgroup">E</span></p>
+                    <p><b>Subgrupo: </b><span id="subject-data-subgroup">F</span></p>
                 </div>
-                <div class="flex w-full">
+                <div class="flex w-full" id="subject-data-type-div">
                     <Icon name="material-symbols:category-rounded" class="text-[1rem]" style="margin: auto 8px auto 0;"></Icon>
-                    <p><b>Tipo: </b><span id="subject-data-type">F</span></p>
+                    <p><b>Tipo: </b><span id="subject-data-type">G</span></p>
                 </div>
                 <!--br-->
             </div>
             <!--hr-->
             <br>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, mollitia? Enim amet dignissimos error atque qui eveniet consequatur veritatis itaque rem est illum, ullam, culpa consequuntur dolorem cupiditate dolore nihil!</p>
-            <p id="date-element">Fecha</p>
+            <!--p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut, mollitia? Enim amet dignissimos error atque qui eveniet consequatur veritatis itaque rem est illum, ullam, culpa consequuntur dolorem cupiditate dolore nihil!</p>
+            <p id="date-element">Fecha</p-->
         </div>
     </div>
 </MainGridLayout>
@@ -455,7 +491,7 @@ window.addEventListener("resize", function () {
 });
 
 // Muestra el dia de la semana (Lunes, Martes, etc.)
-document.getElementById("date-element").textContent = new Date().toLocaleDateString("es-ES", { weekday: "long" });
+// document.getElementById("date-element").textContent = new Date().toLocaleDateString("es-ES", { weekday: "long" });
 
 function setupHours(is_screen_medium) {
     // Get all elements with "hour" class, IF screen is medium, set their content to an hour (from 13:00 to 19:00), ELSE set their content to an hour (from 13:00 to 19:00) and a dash followed by the next hour
@@ -494,22 +530,72 @@ function setSubGroup(subgroup) {
 }
 
 function applySubGroup(subgroup) {
+    // Buttons for subgroup selection
     let buttonOne = document.getElementById("subgroup-one-button");
     let buttonTwo = document.getElementById("subgroup-two-button");
-    if (buttonOne && buttonTwo) {
-        if (subgroup == 1) {
-            buttonOne.classList.add("current-theme-btn");
-            buttonTwo.classList.remove("current-theme-btn");
-        } else {
-            buttonOne.classList.remove("current-theme-btn");
-            buttonTwo.classList.add("current-theme-btn");
+    // Buttons for subject selection
+    let subPeOdlc = document.getElementById("sub-pe-odlc");
+    let subEaLc = document.getElementById("sub-ea-lc");
+    let subLcEa = document.getElementById("sub-lc-ea");
+    let subOdlcPe = document.getElementById("sub-odlc-pe");
+    // Get current day and hour
+    let currentDay = parseInt(document.getElementById("current-day-selected-var").textContent);
+    let currentHour = parseInt(document.getElementById("current-hour-selected-var").textContent);
+    if (buttonOne) {
+        if (buttonTwo) {
+            if (subgroup == 1) {
+                // Change button styles
+                buttonOne.classList.add("current-theme-btn");
+                buttonTwo.classList.remove("current-theme-btn");
+                // Change subject buttons
+                subPeOdlc.classList.remove("odlc");
+                subPeOdlc.classList.add("pe");
+                subEaLc.classList.remove("lc");
+                subEaLc.classList.add("ea");
+                subLcEa.classList.remove("ea");
+                subLcEa.classList.add("lc");
+                subOdlcPe.classList.remove("pe");
+                subOdlcPe.classList.add("odlc");
+                // Change button text
+                subPeOdlc.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
+                subEaLc.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
+                subLcEa.getElementsByTagName("button")[0].textContent = "Lenguaje C";
+                subOdlcPe.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
+            } else {
+                // Change button styles
+                buttonOne.classList.remove("current-theme-btn");
+                buttonTwo.classList.add("current-theme-btn");
+                // Change subject buttons
+                subPeOdlc.classList.remove("pe");
+                subPeOdlc.classList.add("odlc");
+                subEaLc.classList.remove("ea");
+                subEaLc.classList.add("lc");
+                subLcEa.classList.remove("lc");
+                subLcEa.classList.add("ea");
+                subOdlcPe.classList.remove("odlc");
+                subOdlcPe.classList.add("pe");
+                // Change button text
+                subPeOdlc.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
+                subEaLc.getElementsByTagName("button")[0].textContent = "Lenguaje C";
+                subLcEa.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
+                subOdlcPe.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
+            }
         }
     }
+    showSubjectData(currentDay, currentHour, false);
 }
 
 // NOTE: Will refactor this code, so functions regarding subjectData take a day and hour parameters instead of a subject id number
 
 function getSubjectData(day = 0, hour = 13) {
+    const DEFAULT_SUBJECT_DATA = {
+        name: "Name",
+        hour: "Hour",
+        teacher: "Teacher",
+        classroom: "Classroom",
+        subgroup: "Subgroup",
+        type: "Type"
+    };
     switch (day) {
         case 0: // Monday
             switch (hour) {
@@ -523,7 +609,7 @@ function getSubjectData(day = 0, hour = 13) {
                         subgroup: "Ambos",
                         type: "Clase"
                     };
-                case 14: // 14:00 or 2:00PM
+                case 14: case 15: // 14:00 or 2:00PM
                     return {
                         tag: "tys",
                         name: "Tecnología y Sociedad",
@@ -533,7 +619,7 @@ function getSubjectData(day = 0, hour = 13) {
                         subgroup: "Ambos",
                         type: "Taller"
                     };
-                case 16: // 16:00 or 4:00PM
+                case 16: case 17: // 16:00 or 4:00PM
                     return {
                         tag: "pe",
                         name: "Programación Estructurada",
@@ -544,60 +630,289 @@ function getSubjectData(day = 0, hour = 13) {
                         type: "Taller"
                     }
                 default:
+                    return DEFAULT_SUBJECT_DATA;
+            }
+        case 1: // Tuesday
+            switch (hour) {
+                case 13: case 14: // 13:00 or 1:00PM
                     return {
-                        name: "Name",
-                        hour: "Hour",
-                        teacher: "Teacher",
-                        classroom: "Classroom",
-                        subgroup: "Subgroup",
-                        type: "Type"
+                        tag: "ea",
+                        name: "Estadística Avanzada",
+                        hour: "13:00 - 15:00",
+                        teacher: "Nieto Hipólito Juan Iván",
+                        classroom: "E45 - 301",
+                        subgroup: "Ambos",
+                        type: "Clase"
+                    };
+                case 15: // 15:00 or 3:00PM
+                    return {
+                        tag: "mdli",
+                        name: "Metodología de la Investigación",
+                        hour: "15:00 - 16:00",
+                        teacher: "López Sánchez Carlos Saul",
+                        classroom: "E45 - 301",
+                        subgroup: "Ambos",
+                        type: "Clase"
+                    };
+                case 16: case 17: // 16:00 or 4:00PM
+                    if (localStorage.getItem("subgroup") == 1) {
+                        return {
+                            tag: "pe",
+                            name: "Programación Estructurada",
+                            hour: "16:00 - 18:00",
+                            teacher: "Nuñez Yepiz Pedro",
+                            classroom: "E40 - A",
+                            subgroup: "1",
+                            type: "Laboratorio"
+                        }
+                    } else {
+                        return {
+                            tag: "odlc",
+                            name: "Organización de las Computadoras",
+                            hour: "16:00 - 18:00",
+                            teacher: "Crespo Ragland Jonatan",
+                            classroom: "E40 - B",
+                            subgroup: "2",
+                            type: "Laboratorio"
+                        };
                     }
+                default:
+                    return DEFAULT_SUBJECT_DATA;
+            }
+        case 2: // Wednesday
+            switch (hour) {
+                case 13: case 14: // 13:00 or 1:00PM
+                    if (localStorage.getItem("subgroup") == 1) {
+                        return {
+                            tag: "ea",
+                            name: "Estadística Avanzada",
+                            hour: "13:00 - 15:00",
+                            teacher: "Nieto Hipólito Juan Iván",
+                            classroom: "E40 - C",
+                            subgroup: "1",
+                            type: "Laboratorio"
+                        };
+                    } else {
+                        return {
+                            tag: "lc",
+                            name: "Lenguaje C",
+                            hour: "13:00 - 15:00",
+                            teacher: "Antillón Macías César",
+                            classroom: "E40 - B",
+                            subgroup: "2",
+                            type: "Laboratorio"
+                        };
+                    }
+                case 15: case 16: // 15:00 or 3:00PM
+                    if (localStorage.getItem("subgroup") == 1) {
+                        return {
+                            tag: "lc",
+                            name: "Lenguaje C",
+                            hour: "15:00 - 17:00",
+                            teacher: "Antillón Macías César",
+                            classroom: "E40 - C",
+                            subgroup: "1",
+                            type: "Laboratorio"
+                        };
+                    } else {
+                        return {
+                            tag: "ea",
+                            name: "Estadística Avanzada",
+                            hour: "15:00 - 17:00",
+                            teacher: "Nieto Hipólito Juan Iván",
+                            classroom: "E34 - LCO - ARQUITECTURA",
+                            subgroup: "2",
+                            type: "Laboratorio"
+                        };
+                    }
+                case 17: case 18: // 17:00 or 5:00PM
+                    return {
+                        tag: "odlc",
+                        name: "Organización de las Computadoras",
+                        hour: "17:00 - 19:00",
+                        teacher: "Crespo Ragland Jonatan",
+                        classroom: "E1 - 207",
+                        subgroup: "Ambos",
+                        type: "Clase"
+                    };
+                default:
+                    return DEFAULT_SUBJECT_DATA;
+            }
+        case 3: // Thursday
+            switch (hour) {
+                case 13: case 14: // 13:00 or 1:00PM
+                    if (localStorage.getItem("subgroup") == 1) {
+                        return {
+                            tag: "odlc",
+                            name: "Organización de las Computadoras",
+                            hour: "13:00 - 15:00",
+                            teacher: "Crespo Ragland Jonatan",
+                            classroom: "E40 - B",
+                            subgroup: "1",
+                            type: "Laboratorio"
+                        };
+                    } else {
+                        return {
+                            tag: "pe",
+                            name: "Programación Estructurada",
+                            hour: "13:00 - 15:00",
+                            teacher: "Nuñez Yepiz Pedro",
+                            classroom: "E40 - A",
+                            subgroup: "2",
+                            type: "Laboratorio"
+                        };
+                    }
+                case 15: // 15:00 or 3:00PM
+                    return {
+                        tag: "tys",
+                        name: "Tecnología y Sociedad",
+                        hour: "15:00 - 16:00",
+                        teacher: "Rangel Lopez Claudia Margarita",
+                        classroom: "E1 - 305",
+                        subgroup: "Ambos",
+                        type: "Clase"
+                    };
+                case 16: // 16:00 or 4:00PM
+                    return {
+                        tag: "hu",
+                        name: "Hora Universitaria",
+                        hour: "16:00 - 17:00",
+                        teacher: "",
+                        classroom: "",
+                        subgroup: "",
+                        type: ""
+                    };
+                case 17: case 18: // 17:00 or 5:00PM
+                    return {
+                        tag: "md",
+                        name: "Matemáticas Discretas",
+                        hour: "17:00 - 19:00",
+                        teacher: "Crespo Ragland Jonatan",
+                        classroom: "E1 - 301",
+                        subgroup: "Ambos",
+                        type: "Clase"
+                    };
+                default:
+                    return DEFAULT_SUBJECT_DATA;
+            }
+        case 4: // Friday
+            switch (hour) {
+                case 13: case 14: // 13:00 or 1:00PM
+                    return {
+                        tag: "lc",
+                        name: "Lenguaje C",
+                        hour: "13:00 - 15:00",
+                        teacher: "Antillón Macías César",
+                        classroom: "E1 - 209",
+                        subgroup: "Ambos",
+                        type: "Taller"
+                    };
+                case 15: case 16: // 15:00 or 3:00PM
+                    return {
+                        tag: "mdli",
+                        name: "Metodología de la Investigación",
+                        hour: "15:00 - 17:00",
+                        teacher: "López Sánchez Carlos Saul",
+                        classroom: "E1 - 209",
+                        subgroup: "Ambos",
+                        type: "Taller"
+                    };
+                case 17: case 18: // 17:00 or 5:00PM
+                    return {
+                        tag: "md",
+                        name: "Matemáticas Discretas",
+                        hour: "17:00 - 19:00",
+                        teacher: "Crespo Ragland Jonatan",
+                        classroom: "E1 - 209",
+                        subgroup: "Ambos",
+                        type: "Taller"
+                    };
+                default:
+                    return DEFAULT_SUBJECT_DATA;
             }
         default:
-            return {
-                name: "Name",
-                hour: "Hour",
-                teacher: "Teacher",
-                classroom: "Classroom",
-                subgroup: "Subgroup",
-                type: "Type"
-            }
+            return DEFAULT_SUBJECT_DATA;
     }
 }
 
-function showSubjectData(day = 0, hour = 13) {
-    const SUBJECT_DATA = getSubjectData(day, hour);
+function updateSubjectDataPanel(subject_data, day) {
     let subjectDataName = document.getElementById("subject-data-name");
+    let subjectDataDay = document.getElementById("subject-data-day");
     let subjectDataHour = document.getElementById("subject-data-hour");
     let subjectDataTeacher = document.getElementById("subject-data-teacher");
     let subjectDataClassroom = document.getElementById("subject-data-classroom");
     let subjectDataSubgroup = document.getElementById("subject-data-subgroup");
     let subjectDataType = document.getElementById("subject-data-type");
-
-    if (SUBJECT_DATA) {
-        subjectDataName.textContent = SUBJECT_DATA.name;
-        subjectDataHour.textContent = SUBJECT_DATA.hour;
-        subjectDataTeacher.textContent = SUBJECT_DATA.teacher;
-        subjectDataClassroom.textContent = SUBJECT_DATA.classroom;
-        subjectDataSubgroup.textContent = SUBJECT_DATA.subgroup;
-        subjectDataType.textContent = SUBJECT_DATA.type;
-    }
-    let subjectDataPanel = document.getElementById("subject-data-panel");
-    if (subjectDataPanel) {
-        subjectDataPanel.style.display = "block";
-        removeSubjectDataClasses(subjectDataPanel);
-        if (SUBJECT_DATA.tag) {
-            subjectDataPanel.classList.add(SUBJECT_DATA.tag);
+    if (subject_data) {
+        subjectDataName.textContent = subject_data.name;
+        subjectDataDay.textContent = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"][day];
+        subjectDataHour.textContent = subject_data.hour;
+        if (subject_data.teacher == "") {
+            document.getElementById("subject-data-teacher-div").style.display = "none";
+        } else {
+            subjectDataTeacher.textContent = subject_data.teacher;
+            document.getElementById("subject-data-teacher-div").style.display = "flex";
+        }
+        if (subject_data.classroom == "") {
+            document.getElementById("subject-data-classroom-div").style.display = "none";
+        } else {
+            subjectDataClassroom.textContent = subject_data.classroom;
+            document.getElementById("subject-data-classroom-div").style.display = "flex";
+        }
+        if (subject_data.subgroup == "") {
+            document.getElementById("subject-data-subgroup-div").style.display = "none";
+        } else {
+            subjectDataSubgroup.textContent = subject_data.subgroup;
+            document.getElementById("subject-data-subgroup-div").style.display = "flex";
+        }
+        if (subject_data.type == "") {
+            document.getElementById("subject-data-type-div").style.display = "none";
+        } else {
+            subjectDataType.textContent = subject_data.type;
+            document.getElementById("subject-data-type-div").style.display = "flex";
         }
     }
 }
 
-function hideSubjectData() {
-    console.log("Debug: Hiding subject data!");
+function showSubjectData(day = 0, hour = 13, display = true) {
+    const SUBJECT_DATA = getSubjectData(day, hour);
+    updateSubjectDataPanel(SUBJECT_DATA, day);
     let subjectDataPanel = document.getElementById("subject-data-panel");
+    let currentDaySelectedVar = document.getElementById("current-day-selected-var");
+    let currentHourSelectedVar = document.getElementById("current-hour-selected-var");
+    let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
+    if (subjectDataPreLineBreak) {
+        subjectDataPreLineBreak.style.display = "inline";
+    }
+    if (subjectDataPanel) {
+        if (display) {
+            subjectDataPanel.style.display = "block";
+        }
+        removeSubjectDataClasses(subjectDataPanel);
+        if (SUBJECT_DATA.tag) {
+            subjectDataPanel.classList.add(SUBJECT_DATA.tag);
+        }
+        if (subjectDataPanel.getBoundingClientRect().bottom > window.innerHeight) {
+            subjectDataPanel.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+    }
+    if (currentDaySelectedVar) {
+        currentDaySelectedVar.textContent = day;
+    }
+    if (currentHourSelectedVar) {
+        currentHourSelectedVar.textContent = hour;
+    }
+}
+
+function hideSubjectData() {
+    let subjectDataPanel = document.getElementById("subject-data-panel");
+    let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
     if (subjectDataPanel) {
         subjectDataPanel.style.display = "none";
         removeSubjectDataClasses(subjectDataPanel);
+    }
+    if (subjectDataPreLineBreak) {
+        subjectDataPreLineBreak.style.display = "none";
     }
 }
 
