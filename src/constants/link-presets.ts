@@ -15,4 +15,12 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
     name: i18n(I18nKey.archive),
     url: '/archive/',
   },
+  [LinkPreset.Schedule]: {
+    name: 'Horario',
+    url: '/schedule/',
+  },
+  [LinkPreset.History]: {
+    name: 'Historia',
+    url: '/history/',
+  },
 }

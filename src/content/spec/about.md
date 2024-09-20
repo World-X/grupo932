@@ -1,9 +1,5 @@
 # Acerca De
-:::important[IMPORTANTE]
-Esta página está incompleta y/o en desarrollo. Puede cambiar en el futuro. Si tienes alguna sugerencia para mejorar ésta, déjame saber por favor. Gracias por su comprensión.
-:::
-## Horario
-![Horario del Grupo 932](./horario.jpg)
+___
 ## Bienvenida
 ¡Bienvenidos a la página del Grupo 932 de la FIAD de la UABC!
 Este sitio fue creado por Javier Jalid, con la meta de crear un sitio web donde el grupo pueda acceder a información, guías, documentación, entre otras cosas, de forma más conveniente y rápida.
@@ -15,12 +11,4 @@ Recomiendo bastante que lean los siguientes artículos para comenzar:
 Cualquier duda, pregunta, o sugerencia puedes acércarte conmigo presencialmente o por medio de WhatsApp o Discord.
 
 Este sitio fue hecho con la plantilla [Fuwari](https://github.com/saicaca/fuwari) y [Github Pages](https://pages.github.com/), y no está afiliada con la ***Universidad Autónoma de Baja California***, la ***Facultad de Ingeniería, Arquitectura y Diseño***, ni ningún otro grupo, organización, o individuo además de mí.
-
 ::github{repo="saicaca/fuwari"}
-
-## Pendiente
-- Agregar más artículos y publicaciones
-- Cambiar el horario por algo más dinámico y estéticamente consistente
-- Mejorar presentación de artículos existentes
-- Escuchar la opinión del grupo
-- Más...

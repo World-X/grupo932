@@ -20,7 +20,7 @@ export const siteConfig: SiteConfig = {
     position: 'center', // Equivalent to object-position, defaults center
     credit: {
       enable: false,         // Display the credit text of the banner image
-      text: 'World X',              // Credit text to be displayed
+      text: '',              // Credit text to be displayed
       url: ''                // (Optional) URL link to the original artwork or artist's page
     }
   },
@@ -37,7 +37,9 @@ export const navBarConfig: NavBarConfig = {
   links: [
     //LinkPreset.Home,
     LinkPreset.Archive,
-    LinkPreset.About,
+    //LinkPreset.About,
+    LinkPreset.Schedule,
+    LinkPreset.History,
     {
       name: 'UABC',
       url: 'https://www.uabc.mx/',
@@ -58,8 +60,8 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
   avatar: 'assets/images/avatar.jpg',  // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-  name: 'Javier Jalid S. S. (World X)',
-  bio: '¡Bienvenidos a la página del Grupo 932!',
+  name: 'Grupo 932 - ISyTE',
+  bio: 'v1.1',
   links: [
     /*
     {
