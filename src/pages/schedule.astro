@@ -480,6 +480,55 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     html.dark td.md button:active {
         background-color: hsl($md-blue, $active-sat, 100% - $active-light);
     }
+
+    // Make "schedule-table" table scrollable horizontally if screen is medium or smaller (768px)
+    @media (max-width: 768px) {
+        #schedule-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0;
+            margin: 0;
+            padding-bottom: 12px;
+            border: none;
+            border-collapse: separate;
+            // remove gap
+            border-spacing: 0;
+            table-layout: fixed;
+        }
+
+        td, th, td, button {
+            max-width: 128px;
+            // Wrap text if it's too long, once it reaches 96px
+            white-space: normal;
+        }
+        
+        td, td, th {
+            border-width: 1px;
+        }
+
+        th {
+            border-top-width: 2px;
+        }
+
+        .hour-heading, .hour {
+            // Fixed to the left
+            width: 96px;
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            border-left-width: 2px;
+        }
+
+        .bottom {
+            border-bottom-width: 2px;
+        }
+
+        .right {
+            border-right-width: 2px;
+        }
+    }
+
 </style>
 
 <MainGridLayout title="Horario" description="Horario">
@@ -509,14 +558,14 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <hr>
             </div>
             <br>
-            <table class="text-90" id="table-test">
+            <table class="text-90" id="schedule-table">
                 <tr>
-                    <th>Hora</th>
+                    <th class="hour-heading">Hora</th>
                     <th>Lunes</th>
                     <th>Martes</th>
                     <th>Miércoles</th>
                     <th>Jueves</th>
-                    <th>Viernes</th>
+                    <th class="right">Viernes</th>
                 </tr>
                 <tr>
                     <td class="hour">13:00 - 14:00</td>
@@ -532,7 +581,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <td rowspan="2" id="sub-odlc-pe">
                         <button onclick="showSubjectData(3, 13)" class="rowspan-2">ODLC/PE</button>
                     </td>
-                    <td rowspan="2" class="lc">
+                    <td rowspan="2" class="lc right">
                         <button onclick="showSubjectData(4, 13)" class="rowspan-2">Lenguaje C</button>
                     </td>
                 </tr>
@@ -553,7 +602,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                     <td class="tys">
                         <button onclick="showSubjectData(3, 15)" style="font-size: 0.85rem;">Tecnología y Sociedad</button>
                     </td>
-                    <td rowspan="2" class="mdli">
+                    <td rowspan="2" class="mdli right">
                         <button onclick="showSubjectData(4, 15)" class="rowspan-2">Metología de la Investigación</button>
                     </td>
                 </tr>
@@ -571,20 +620,20 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">17:00 - 18:00</td>
-                    <td rowspan="2" class="odlc">
+                    <td rowspan="2" class="odlc bottom">
                         <button onclick="showSubjectData(2, 17)" class="rowspan-2">Organización de las Computadoras</button>
                     </td>
-                    <td rowspan="2" class="md">
+                    <td rowspan="2" class="md bottom">
                         <button onclick="showSubjectData(3, 17)" class="rowspan-2">Matemáticas Discretas</button>
                     </td>
-                    <td rowspan="2" class="md">
+                    <td rowspan="2" class="md bottom right">
                         <button onclick="showSubjectData(4, 17)" class="rowspan-2">Matemáticas Discretas</button>
                     </td>
                 </tr>
                 <tr>
-                    <td class="hour">18:00 - 19:00</td>
-                    <td></td>
-                    <td></td>
+                    <td class="hour bottom">18:00 - 19:00</td>
+                    <td class="bottom"></td>
+                    <td class="bottom"></td>
                 </tr>
             </table>
             <br id="subject-data-pre-line-break" style="display: none;">
