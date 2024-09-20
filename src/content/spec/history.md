@@ -4,7 +4,7 @@ Puede que existan cambios que no hayan sido mencionados en este artículo.
 :::
 ___
 ## Tabla de contenido
-- [1.1](#11) (14/09/2024)
+- [1.1](#11) (19/09/2024)
 - [1.0](#10) (13/09/2024)
     - [1.0.1](#101) (14/09/2024)
 ___
