@@ -502,8 +502,8 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <div class="flex w-full">
                     <Icon name="material-symbols:group-rounded" class="text-[1.5rem]" style="margin: auto 8px auto 0;"></Icon>
                     <p style="margin: auto 8px auto 0;"><b>Subgrupo</b>: </p>
-                    <button class="flex transition whitespace-nowrap items-center w-full btn-plain scale-animation rounded-lg h-9 px-3 active:scale-95 mb-0.5" style="width: 64px; margin-right: 4px;" id="subgroup-one-button" onclick="setSubGroup(1);">1</button>
-                    <button class="flex transition whitespace-nowrap items-center w-full btn-plain scale-animation rounded-lg h-9 px-3 active:scale-95 mb-0.5" style="width: 64px;" id="subgroup-two-button" onclick="setSubGroup(2);">2</button>
+                    <button class="flex transition whitespace-nowrap items-center w-full btn-plain scale-animation rounded-lg h-9 px-3 active:scale-95 mb-0.5" style="width: 64px; margin-right: 4px;" id="subgroup-one-button" onclick="setSubGroup('1');">1</button>
+                    <button class="flex transition whitespace-nowrap items-center w-full btn-plain scale-animation rounded-lg h-9 px-3 active:scale-95 mb-0.5" style="width: 64px;" id="subgroup-two-button" onclick="setSubGroup('2');">2</button>
                 </div>
                 <div style="margin-bottom: 0.5rem;"></div>
                 <hr>
@@ -639,11 +639,11 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
     </div>
 </MainGridLayout>
 <script is:inline>
+console.log("subgroup: ", localStorage.getItem("subgroup"));
 if (!localStorage.getItem("subgroup")) {
-    console.log("Setting subgroup to 1");
-    localStorage.setItem("subgroup", 1);
+    localStorage.setItem("subgroup", "1");
 }
-applySubGroup(localStorage.getItem("subgroup") || 1);
+applySubGroup(localStorage.getItem("subgroup"));
 setupHours(window.matchMedia("(max-width: 768px)").matches);
 // hideSubjectData();
 
@@ -705,7 +705,8 @@ function applySubGroup(subgroup) {
     let currentHour = parseInt(document.getElementById("current-hour-selected-var").textContent);
     if (buttonOne) {
         if (buttonTwo) {
-            if (subgroup == 1) {
+            if (subgroup == '1') {
+                console.log("Subgroup 1");
                 // Change button styles
                 buttonOne.classList.add("current-theme-btn");
                 buttonTwo.classList.remove("current-theme-btn");
@@ -723,7 +724,8 @@ function applySubGroup(subgroup) {
                 subEaLc.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
                 subLcEa.getElementsByTagName("button")[0].textContent = "Lenguaje C";
                 subOdlcPe.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
-            } else {
+            } else if (subgroup == '2') {
+                console.log("Subgroup 2");
                 // Change button styles
                 buttonOne.classList.remove("current-theme-btn");
                 buttonTwo.classList.add("current-theme-btn");
@@ -741,6 +743,8 @@ function applySubGroup(subgroup) {
                 subEaLc.getElementsByTagName("button")[0].textContent = "Lenguaje C";
                 subLcEa.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
                 subOdlcPe.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
+            } else {
+                console.error("Invalid subgroup: ", subgroup);
             }
         }
     }
@@ -817,7 +821,7 @@ function getSubjectData(day = 0, hour = 13) {
                         type: "Clase"
                     };
                 case 16: case 17: // 16:00 or 4:00PM
-                    if (localStorage.getItem("subgroup") == 1) {
+                    if (localStorage.getItem("subgroup") == '1') {
                         return {
                             tag: "pe",
                             name: "Programación Estructurada",
@@ -844,7 +848,7 @@ function getSubjectData(day = 0, hour = 13) {
         case 2: // Wednesday
             switch (hour) {
                 case 13: case 14: // 13:00 or 1:00PM
-                    if (localStorage.getItem("subgroup") == 1) {
+                    if (localStorage.getItem("subgroup") == '1') {
                         return {
                             tag: "ea",
                             name: "Estadística Avanzada",
@@ -866,7 +870,7 @@ function getSubjectData(day = 0, hour = 13) {
                         };
                     }
                 case 15: case 16: // 15:00 or 3:00PM
-                    if (localStorage.getItem("subgroup") == 1) {
+                    if (localStorage.getItem("subgroup") == '1') {
                         return {
                             tag: "lc",
                             name: "Lenguaje C",
@@ -903,7 +907,7 @@ function getSubjectData(day = 0, hour = 13) {
         case 3: // Thursday
             switch (hour) {
                 case 13: case 14: // 13:00 or 1:00PM
-                    if (localStorage.getItem("subgroup") == 1) {
+                    if (localStorage.getItem("subgroup") == '1') {
                         return {
                             tag: "odlc",
                             name: "Organización de las Computadoras",
