@@ -22,6 +22,7 @@ ___
 - **Se agregaron 2 nuevos artículos**.
     1. [Sinónimos de un tipo (en C)](../posts/type-synonyms-in-c/)
     2. [Literales (en C)](../posts/literals-in-c/)
+- Corregido un error visual en el borde derecho de la primera columna del horario que se mostraba en pantallas pequeñas cuando se deplazaba horizontalmente.
 ___
 ## 1.0
 (13/09/2024)

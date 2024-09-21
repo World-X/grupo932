@@ -5,7 +5,7 @@ description: 'Aprende a crear sinónimos de tipos en C, que te permitirán hacer
 image: ''
 tags: [c, recurso, libro, tipos]
 category: 'Recurso'
-draft: true 
+draft: false
 language: ''
 ---
 Artículo previo: [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)

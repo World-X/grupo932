@@ -5,7 +5,7 @@ description: 'Los literales son valores constantes. Son fundamentales en los len
 image: ''
 tags: [c, recurso, libro, tipos, binario, decimal, hexadecimal]
 category: 'Recurso'
-draft: true 
+draft: false
 language: ''
 ---
 ## Tabla de contenido

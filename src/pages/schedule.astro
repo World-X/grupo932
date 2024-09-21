@@ -518,6 +518,11 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
             left: 0;
             z-index: 1;
             border-left-width: 2px;
+            border-right-width: 2px;
+        }
+
+        .second-column {
+            border-left-width: 0;
         }
 
         .bottom {
@@ -561,7 +566,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
             <table class="text-90" id="schedule-table">
                 <tr>
                     <th class="hour-heading">Hora</th>
-                    <th>Lunes</th>
+                    <th class="second-column">Lunes</th>
                     <th>Martes</th>
                     <th>Miércoles</th>
                     <th>Jueves</th>
@@ -569,7 +574,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">13:00 - 14:00</td>
-                    <td class="lc">
+                    <td class="lc second-column">
                         <button onclick="showSubjectData(0, 13)">Lenguaje C</button>
                     </td>
                     <td rowspan="2" class="ea">
@@ -587,7 +592,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">14:00 - 15:00</td>
-                    <td rowspan="2" class="tys">
+                    <td rowspan="2" class="tys second-column">
                         <button onclick="showSubjectData(0, 14)" class="rowspan-2">Tecnología y Sociedad</button>
                     </td>
                 </tr>
@@ -608,7 +613,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour">16:00 - 17:00</td>
-                    <td rowspan="2" class="pe">
+                    <td rowspan="2" class="pe second-column">
                         <button onclick="showSubjectData(0, 16)" class="rowspan-2">Programación Estructurada</button>
                     </td>
                     <td rowspan="2" id="sub-pe-odlc">
@@ -632,7 +637,7 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 </tr>
                 <tr>
                     <td class="hour bottom">18:00 - 19:00</td>
-                    <td class="bottom"></td>
+                    <td class="bottom second-column"></td>
                     <td class="bottom"></td>
                 </tr>
             </table>
