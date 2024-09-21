@@ -3,7 +3,7 @@ title: Tipos de datos (en C)
 published: 2024-09-13
 description: 'Aprende todos los tipos de datos que existen en C, y algunas características de cada uno.'
 image: ''
-tags: [c, recurso, datos, libro]
+tags: [c, recurso, datos, libro, tipos]
 category: 'Recurso'
 draft: false 
 language: ''
