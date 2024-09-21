@@ -5,17 +5,23 @@ Puede que existan cambios que no hayan sido mencionados en este artículo.
 ___
 ## Tabla de contenido
 - [1.1](#11) (19/09/2024)
+    - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
     - [1.0.1](#101) (14/09/2024)
 ___
 ## 1.1
 (19/09/2024)
-<!-- Se incorporó GitHub Copilot en el proceso de desarrollo. -->
+<!-- Se incorporó GitHub Copilot en el proceso de desarrollo desde el 14 de Septiembre -->
 - **Se agregaron 2 nuevos artículos especiales**.
     1. [Horario](/grupo932/schedule/)
     2. [Historia](#historia)
 - Eliminado el botón "Acerca De" en la barra de navegación superior, ya que era redundante.
 - Modificado el perfil de la sección izquierda para mostrar el nombre de la página y su versión más reciente.
+### 1.1.1
+(20/09/2024)
+- **Se agregaron 2 nuevos artículos**.
+    1. [Sinónimos de un tipo (en C)](../posts/type-synonyms-in-c/)
+    2. [Literales (en C)](../posts/literals-in-c/)
 ___
 ## 1.0
 (13/09/2024)

@@ -193,12 +193,9 @@ main()
 }
 ```
 Ejecución del programa:
-<pre>
-<i>
-Color: 3<b>[Entrar]</b>
+<pre><i>Color: 3<b>[Entrar]</b>
 3
-<i>
-</pre>
+</i></pre>
 ### *float*
 El tipo **float** se utiliza para declarar un dato en coma flotante de 32 bits (4 bytes) en el formato IEEE 754 (este formato utiliza 1 bit para el signo, 8 bits para el exponente y 23 para la [mantisa](https://dle.rae.es/mantisa)). Los datos de tipo **float** almacenan valores con una precisión aproximada de 6-7 digítos. Para especificar que una constante (un literal) es de tipo **float**, hay que añadir al final de su valor la letra 'f' o 'F'. El siguiente ejemplo declara las variables *a*, *b* y *c*, de tipo real de precisión simple:
 ```c
@@ -222,3 +219,4 @@ Los tipos derivados son más complejos que los tipos primitivos. Siendo franco, 
 Por otro lado, si sabes usar los tipos derivados, puedes acercarte conmigo para actualizar este artículo con tu apoyo.
 :::
 
+Siguiente artículo: [Sinónimos de un tipo (en C)](/grupo932/posts/type-synonyms-in-c/)

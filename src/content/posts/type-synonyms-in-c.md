@@ -13,9 +13,7 @@ Artículo previo: [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)
 Esta información fue principalmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* (páginas 28-29).
 :::
 Utilizando la palabra reservada `typedef` podemos declarar nuevos nombres de tipo de datos; esto es, sinónimos de otro tipo ya sean primitivos o derivados, los cuales pueden ser utilizados más tarde para declarar variables de esos tipos. La sintaxis de `typedef` es la siguiente:
-```c
-typedef declaración_tipo sinónimo[, sinónimo]...;
-```
+<pre>typedef declaración_tipo sinónimo[, sinónimo]...;</pre>
 donde *declaración_tipo* es cualquier tipo definido en C, primitivo o derivado, y *sinónimo* es el nuevo nombre elegido para el tipo especificado.
 Por ejemplo, la sentencia siguiente declara el nuevo tipo *ulong* como sinónimo del tipo `unsigned long`:
 ```c
@@ -57,3 +55,4 @@ typedef enum
     azul, amarillo, rojo, verde, blanco, negro
 } t_colores;
 ```
+Siguiente artículo: [Literales (en C)](/grupo932/posts/literals-in-c/)
