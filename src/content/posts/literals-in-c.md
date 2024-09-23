@@ -7,6 +7,7 @@ tags: [c, recurso, libro, tipos, binario, decimal, hexadecimal]
 category: 'Recurso'
 draft: false
 language: ''
+id: 8
 ---
 ## Tabla de contenido
 - [Literales enteros](#literales-enteros)

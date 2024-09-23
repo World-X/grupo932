@@ -7,6 +7,7 @@ tags: [c, recurso, caracteres, libro]
 category: 'Recurso'
 draft: false
 language: ''
+id: 5
 ---
 ## Tabla de contenido
 - [Letras, dígitos y carácter de subrayado](#letras-dígitos-y-carácter-de-subrayado)

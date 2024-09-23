@@ -7,6 +7,7 @@ tags: [binario, ascii, hexadecimal, decimal, trabajo, tarea, organizacion, compu
 category: 'Recurso'
 draft: false 
 language: ''
+id: 3
 ---
 ## Tabla de contenido
 - [Herramientas](#herramientas)

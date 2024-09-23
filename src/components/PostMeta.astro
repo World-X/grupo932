@@ -10,6 +10,7 @@ interface Props {
   published: Date
   tags: string[]
   category: string
+  id: number
   hideTagsForMobile?: boolean
 }
 const { published, tags, category, hideTagsForMobile = false } = Astro.props

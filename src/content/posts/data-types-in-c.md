@@ -7,6 +7,7 @@ tags: [c, recurso, datos, libro, tipos]
 category: 'Recurso'
 draft: false 
 language: ''
+id: 6
 ---
 ## Tabla de contenido
 - [Tipos primitivos](#tipos-primitivos)

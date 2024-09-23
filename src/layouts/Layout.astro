@@ -279,10 +279,16 @@ function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
-	console.log("Hello, World!");
+	console.log("init layout");
 	// if localStorage.subgroup is not set, set it to '1'
 	if (!localStorage.subgroup) {
 		localStorage.subgroup = '1';
+		console.log("Subgroup set to 1");
+	}
+	if (!localStorage.seen_posts) {
+		let seen_posts_arr: number[] = [];
+		localStorage.seen_posts = JSON.stringify(seen_posts_arr);
+		console.log("Array created");
 	}
 }
 

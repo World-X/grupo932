@@ -7,6 +7,7 @@ tags: [intro, info, meta]
 category: 'Informativo'
 draft: false 
 language: ''
+id: 0
 ---
 <style>
 .wg, .dp, .gg { transition: color 1s; }
