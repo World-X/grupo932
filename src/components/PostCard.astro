@@ -42,7 +42,36 @@ const coverWidth = '28%'
 
 const { remarkPluginFrontmatter } = await entry.render()
 ---
-<div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-[var(--radius-large)] overflow-hidden relative", className]} style={style}>
+<style>
+    .bottom-panel > div {
+        margin: auto 0;
+    }
+
+    .new-panel {
+        background-color: hsl(0, 50%, 80%);
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: hsl(0, 50%, 20%);
+    }
+
+    html.dark .new-panel {
+        background-color: hsl(0, 50%, 20%);
+        color: hsl(0, 50%, 90%);
+    }
+
+    .unread-panel {
+        background-color: hsl(60, 50%, 80%);
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: hsl(60, 50%, 20%);
+    }
+
+    html.dark .unread-panel {
+        background-color: hsl(60, 50%, 20%);
+        color: hsl(60, 50%, 90%);
+    }
+</style>
+<div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-[var(--radius-large)] overflow-hidden relative", className, "post-card"]} style={style} data-post-card-id={id} data-post-card-title={title} data-post-card-published={published}>
     <div class:list={["pl-6 md:pl-9 pr-6 md:pr-2 pt-6 md:pt-7 pb-6 relative", {"w-full md:w-[calc(100%_-_52px_-_12px)]": !hasCover, "w-full md:w-[calc(100%_-_var(--coverWidth)_-_12px)]": hasCover}]}>
         <a href={url}
            class="transition group w-full block font-bold mb-3 text-3xl text-90
@@ -51,7 +80,7 @@ const { remarkPluginFrontmatter } = await entry.render()
         before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]
         before:absolute before:top-[35px] before:left-[18px] before:hidden md:before:block
         ">
-            {title} [{id}]
+            {title}
             <Icon class="inline text-[2rem] text-[var(--primary)] md:hidden translate-y-0.5 absolute" name="material-symbols:chevron-right-rounded" ></Icon>
             <Icon class="text-[var(--primary)] text-[2rem] transition hidden md:inline absolute translate-y-0.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0" name="material-symbols:chevron-right-rounded"></Icon>
         </a>
@@ -65,7 +94,17 @@ const { remarkPluginFrontmatter } = await entry.render()
         </div>
 
         <!-- word count and read time  -->
-        <div class="text-sm text-black/30 dark:text-white/30 flex gap-4 transition">
+        <div class="text-sm text-black/30 dark:text-white/30 flex gap-4 transition bottom-panel">
+            <!-- new panel -->
+            <div class="flex gap-1 new-panel text-black/90 dark:text-white/90 transition text-sm" style="display: none;">
+                <Icon style="margin: auto 0;" name="ic:round-new-releases" class="text-[1.5rem]"></Icon>
+                <div style="margin: auto 0;"><b>NUEVO</b></div>
+            </div>
+            <!-- unread panel -->
+            <div class="flex gap-1 unread-panel text-black/90 dark:text-white/90 transition text-sm" style="display: none;">
+                <Icon style="margin: auto 0;" name="material-symbols:notifications-unread-rounded" class="text-[1.5rem]"></Icon>
+                <div style="margin: auto 0;"><b>SIN LEER</b></div>
+            </div>
             <div>{remarkPluginFrontmatter.words} {" " + i18n(I18nKey.wordsCount)}</div>
             <div>|</div>
             <div>{remarkPluginFrontmatter.minutes} {" " + i18n(I18nKey.minutesCount)}</div>

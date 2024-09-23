@@ -285,9 +285,9 @@ function init() {
 		localStorage.subgroup = '1';
 		console.log("Subgroup set to 1");
 	}
-	if (!localStorage.seen_posts) {
-		let seen_posts_arr: number[] = [];
-		localStorage.seen_posts = JSON.stringify(seen_posts_arr);
+	if (!localStorage.read_posts) {
+		let read_posts_arr: number[] = [];
+		localStorage.read_posts = JSON.stringify(read_posts_arr);
 		console.log("Array created");
 	}
 }
@@ -413,6 +413,18 @@ if (window.swup) {
 window.safety = 1;
 if (!document.getElementById("schedule-settings-panel")) {
 	window.safety = 0;
+}
+
+if (document.getElementById("slug-id")) {
+	const id = parseInt(document.getElementById("slug-id").textContent);
+	if (localStorage.read_posts) {
+		let readPosts = JSON.parse(localStorage.read_posts);
+		if (!readPosts.includes(id)) {
+			console.log("Adding unread post with id: ", id);
+			readPosts.push(id);
+			localStorage.read_posts = JSON.stringify(readPosts);
+		}
+	}
 }
 
 function init() {
