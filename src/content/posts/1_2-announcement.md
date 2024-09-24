@@ -25,6 +25,9 @@ Pueden ver todos los cambios de la versión [1.2](/grupo932/history/#12) en la p
     - Sin leer (amarillo): Indica que el artículo no ha sido leído por el usuario.
 - Horario.
     - Se implementó una barra que muestra la asignatura actual y la próxima en [Horario](/grupo932/schedule/).
+:::warning[AVISO]
+El horario se actualiza automáticamente cada segundo, y durante esa actualización realizá bastantes operaciones. Si experimenta problemas de rendimiento, por favor cambie a otra pestaña.
+:::
 ## Sobre el futuro
 Por demanda popular, tengo planeado subir varios artículos relacionados con Python. Seguiré subiendo artículos relacionados con C, considerando que es el lenguaje principal del curso, y por lo tanto, sigue siendo relevante. Además, note algo de interés en HTML y desarrollo de páginas web, por lo que también consideraré subir contenido relacionado con eso.
 

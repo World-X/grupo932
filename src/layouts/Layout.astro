@@ -450,7 +450,9 @@ function init() {
 	// Update datetime-el element and keep it updated every second
 	let datetimeEl = document.getElementById("datetime-el");
 	let currentSubjectEl = document.getElementById("current-subject-el");
+	let currentSubjectMdEl = document.getElementById("current-subject-md-el");
 	let nextSubjectEl = document.getElementById("next-subject-el");
+	let nextSubjectMdEl = document.getElementById("next-subject-md-el");
 	let nextTimeEl = document.getElementById("next-time-el");
 	let nextClassEl = document.getElementById("next-class-el");
 	if (datetimeEl) {
@@ -458,7 +460,11 @@ function init() {
 			if (nextSubjectEl) {
 				if (nextTimeEl) {
 					if (nextClassEl) {
-						setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl);
+						if (currentSubjectMdEl) {
+							if (nextSubjectMdEl) {
+								setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
+							}
+						}
 					}
 				}
 			}
@@ -468,7 +474,7 @@ function init() {
 
 init();
 
-function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl) {
+function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
 	const updateDateTime = (first_time = false) => {
 	// Format: "Día, HH:MM:SS", Día must start with a capital letter
 	const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
@@ -477,8 +483,9 @@ function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClas
 	const hours = date.getHours().toString().padStart(2, "0");
 	const minutes = date.getMinutes().toString().padStart(2, "0");
 	const seconds = date.getSeconds().toString().padStart(2, "0");
+	const is_screen_medium = window.matchMedia("(max-width: 768px)").matches;
 	// If screen is medium or small, hide seconds
-	if (window.matchMedia("(max-width: 768px)").matches) {
+	if (is_screen_medium) {
 		datetimeEl.textContent = `${day}, ${hours}:${minutes}`;
 		nextClassEl.textContent = "";
 	} else {
@@ -488,9 +495,29 @@ function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClas
 	// Update current subject data
 	const subjectData = getSubjectData(date.getDay() - 1, date.getHours());
 	if (subjectData.name === "") {
-		currentSubjectEl.textContent = "No hay clase";
+		if (is_screen_medium) {
+			currentSubjectMdEl.textContent = "No hay clase";
+			currentSubjectMdEl.style.display = "flex";
+			currentSubjectEl.textContent = "";
+			currentSubjectEl.style.display = "none";
+		} else {
+			currentSubjectMdEl.textContent = "";
+			currentSubjectMdEl.style.display = "none";
+			currentSubjectEl.textContent = "No hay clase";
+			currentSubjectEl.style.display = "flex";
+		}
 	} else {
-		currentSubjectEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
+		if (is_screen_medium) {
+			currentSubjectMdEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
+			currentSubjectMdEl.style.display = "flex";
+			currentSubjectEl.textContent = "";
+			currentSubjectEl.style.display = "none";
+		} else {
+			currentSubjectMdEl.textContent = "";
+			currentSubjectMdEl.style.display = "none";
+			currentSubjectEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
+			currentSubjectEl.style.display = "flex";
+		}
 	}
 
 	if (first_time) {
@@ -521,7 +548,18 @@ function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClas
 		newDate.setHours(13);
 		nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
 	}
-	nextSubjectEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
+
+	if (is_screen_medium) {
+		nextSubjectMdEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
+		nextSubjectMdEl.style.display = "flex";
+		nextSubjectEl.textContent = "";
+		nextSubjectEl.style.display = "none";
+	} else {
+		nextSubjectMdEl.textContent = "";
+		nextSubjectMdEl.style.display = "none";
+		nextSubjectEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
+		nextSubjectEl.style.display = "flex";
+	}
 	
 	let delta = Math.abs(newDate - date) / 1000;
 	const diffDays = Math.floor(delta / 86400);
