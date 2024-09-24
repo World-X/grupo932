@@ -504,6 +504,11 @@ function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClas
 	newDate.setMinutes(0);
 	newDate.setSeconds(0);
 	let nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
+	if (nextSubjectData.name === subjectData.name) {
+		newDate.setHours(newDate.getHours() + 1);
+		nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
+	}
+
 	if (nextSubjectData.name === "") {
 		if (newDate.getHours() > 13) {
 			newDate.setHours(newDate.getHours() + 24);
