@@ -4,11 +4,22 @@ Puede que existan cambios que no hayan sido mencionados en este artículo.
 :::
 ___
 ## Tabla de contenido
+- [1.2](#12) (24/09/2024)
 - [1.1](#11) (19/09/2024)
     - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
     - [1.0.1](#101) (14/09/2024)
 ___
+## 1.2
+(24/09/2024)
+- **Se agregaron etiquetas especiales a los artículos** en la página principal.
+    - Nuevo (rojo): Indica que el artículo es nuevo (publicado antes de 7 días).
+    - Actualizado (morado): Indica que el artículo ha sido actualizado (antes de 7 días desde la última actualización).
+    - Sin leer (amarillo): Indica que el artículo no ha sido leído por el usuario.
+- **Se implementó una barra que muestra la asignatura actual y la próxima** en [Horario](/grupo932/schedule/).
+- Se agregarón 2 nuevos artículos.
+    1. [Identificadores, palabras clave y comentarios (en C)](../posts/identifiers-keywords-comments-in-c/)
+    2. [📅 ¡La 1.2 está aquí!](../posts/1_2-announcement/)
 ## 1.1
 (19/09/2024)
 <!-- Se incorporó GitHub Copilot en el proceso de desarrollo desde el 14 de Septiembre -->

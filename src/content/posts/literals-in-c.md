@@ -7,6 +7,7 @@ tags: [c, recurso, libro, tipos, binario, decimal, hexadecimal]
 category: 'Recurso'
 draft: false
 language: ''
+id: 8
 ---
 ## Tabla de contenido
 - [Literales enteros](#literales-enteros)
@@ -169,3 +170,5 @@ El ejemplo anterior daría lugar a una sola cadena:
 Los caracteres de una cadena de caracteres son almacenados en localizaciones sucesivas de memoria. Cada carácter ocupa un byte y una cadena de caracteres es finalizada automáticamente por el carácter nulo representado por la secuencia de escape `\0`. Por ejemplo, la cadena `"hola"` sería representada en memoria así:
 
 <pre>h o l a \0</pre>
+
+Siguiente artículo: [Identificadores, palabras clave y comentarios (en C)](/grupo932/posts/identifiers-keywords-comments-in-c/)

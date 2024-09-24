@@ -7,6 +7,7 @@ tags: [guía, c, c++]
 category: 'Guía'
 draft: false 
 language: ''
+id: 2
 ---
 ## Tabla de contenido
 - [Paso 1: Descarga MinGW](#paso-1-descarga-mingw)

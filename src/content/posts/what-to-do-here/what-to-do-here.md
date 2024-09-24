@@ -7,6 +7,7 @@ tags: [intro, info, guía, meta]
 category: 'Informativo'
 draft: false
 language: ''
+id: 1
 ---
 ## Tabla de contenido
 - [Barra de navegación superior](#barra-de-navegación-superior)

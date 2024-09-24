@@ -7,6 +7,7 @@ tags: [c, recurso, libro, tipos]
 category: 'Recurso'
 draft: false
 language: ''
+id: 7
 ---
 Artículo previo: [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)
 :::note[NOTA]

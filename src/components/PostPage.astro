@@ -4,11 +4,12 @@ import PostCard from './PostCard.astro'
 
 const { page } = Astro.props
 
+// biome-ignore lint/style/useConst: <explanation>
 let delay = 0
 const interval = 50
 ---
 <div class="transition flex flex-col rounded-[var(--radius-large)] bg-[var(--card-bg)] py-1 md:py-0 md:bg-transparent md:gap-4 mb-4">
-    {page.data.map((entry: { data: { draft: boolean; title: string; tags: string[]; category: string; published: Date; image: string; description: string; }; slug: string; }) => {
+    {page.data.map((entry: { data: { draft: boolean; title: string; tags: string[]; category: string; published: Date; image: string; description: string; id: number }; slug: string; }) => {
         return (
             <PostCard
                     entry={entry}
@@ -20,9 +21,57 @@ const interval = 50
                     image={entry.data.image}
                     description={entry.data.description}
                     draft={entry.data.draft}
+                    id={entry.data.id}
                     class:list="onload-animation"
                     style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
             ></PostCard>
         );
     })}
 </div>
+
+<script is:inline data-astro-rerun>
+if (true) {
+    let postCards = document.getElementsByClassName('post-card')
+    for (let postCard of postCards) {
+        const id = parseInt(postCard.getAttribute('data-post-card-id'))
+        let bottomPanel = postCard.getElementsByClassName('bottom-panel')[0]
+        let published = postCard.getAttribute('data-post-card-published')
+        if (bottomPanel) {
+            if (published) {
+                const date = new Date(published)
+                const now = new Date()
+                const diff = now.getTime() - date.getTime()
+                const diffDays = Math.ceil(diff / (1000 * 3600 * 24))
+                if (diffDays < 7) {
+                    let newPanel = bottomPanel.getElementsByClassName('new-panel')[0]
+                    newPanel.style.display = 'flex'
+                }
+            }
+            const updatedPostIDs = [4]
+            const updatedPostDates = ['2024-09-24']
+            if (updatedPostIDs.includes(id)) {
+                // if it was updated in the last 7 days
+                const updatedPostIndex = updatedPostIDs.indexOf(id)
+                const updatedPostDate = new Date(updatedPostDates[updatedPostIndex])
+                const now = new Date()
+                const diff = now.getTime() - updatedPostDate.getTime()
+                const diffDays = Math.ceil(diff / (1000 * 3600 * 24))
+                if (diffDays < 7) {
+                    let updatedPanel = bottomPanel.getElementsByClassName('updated-panel')[0]
+                    updatedPanel.style.display = 'flex'
+                }
+            }
+            if (localStorage.read_posts) {
+                let readPosts = JSON.parse(localStorage.read_posts)
+                if (!readPosts.includes(id)) {
+                    let unreadPanel = bottomPanel.getElementsByClassName('unread-panel')[0]
+                    unreadPanel.style.display = 'flex'
+                }
+            } else {
+                let unreadPanel = bottomPanel.getElementsByClassName('unread-panel')[0]
+                unreadPanel.style.display = 'flex'
+            }
+        }
+    }
+}
+</script>

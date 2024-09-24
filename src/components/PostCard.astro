@@ -1,5 +1,5 @@
 ---
-import path from 'path'
+import path from 'node:path'
 import { Icon } from 'astro-icon/components'
 import I18nKey from '../i18n/i18nKey'
 import { i18n } from '../i18n/translation'
@@ -9,6 +9,7 @@ import ImageWrapper from './misc/ImageWrapper.astro'
 
 interface Props {
   class?: string
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   entry: any
   title: string
   url: string
@@ -19,6 +20,7 @@ interface Props {
   description: string
   draft: boolean
   style: string
+  id: number
 }
 const {
   entry,
@@ -30,6 +32,7 @@ const {
   image,
   description,
   style,
+  id,
 } = Astro.props
 const className = Astro.props.class
 
@@ -39,7 +42,48 @@ const coverWidth = '28%'
 
 const { remarkPluginFrontmatter } = await entry.render()
 ---
-<div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-[var(--radius-large)] overflow-hidden relative", className]} style={style}>
+<style>
+    .bottom-panel > div {
+        margin: auto 0;
+    }
+
+    .new-panel {
+        background-color: hsl(0, 50%, 80%);
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: hsl(0, 50%, 20%);
+    }
+
+    html.dark .new-panel {
+        background-color: hsl(0, 50%, 20%);
+        color: hsl(0, 50%, 90%);
+    }
+
+    .unread-panel {
+        background-color: hsl(60, 50%, 80%);
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: hsl(60, 50%, 20%);
+    }
+
+    html.dark .unread-panel {
+        background-color: hsl(60, 50%, 20%);
+        color: hsl(60, 50%, 90%);
+    }
+
+    .updated-panel {
+        background-color: hsl(300, 50%, 80%);
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: hsl(300, 50%, 20%);
+    }
+
+    html.dark .updated-panel {
+        background-color: hsl(300, 50%, 20%);
+        color: hsl(300, 50%, 90%);
+    }
+</style>
+<div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-[var(--radius-large)] overflow-hidden relative", className, "post-card"]} style={style} data-post-card-id={id} data-post-card-title={title} data-post-card-published={published}>
     <div class:list={["pl-6 md:pl-9 pr-6 md:pr-2 pt-6 md:pt-7 pb-6 relative", {"w-full md:w-[calc(100%_-_52px_-_12px)]": !hasCover, "w-full md:w-[calc(100%_-_var(--coverWidth)_-_12px)]": hasCover}]}>
         <a href={url}
            class="transition group w-full block font-bold mb-3 text-3xl text-90
@@ -54,7 +98,7 @@ const { remarkPluginFrontmatter } = await entry.render()
         </a>
 
         <!-- metadata -->
-        <PostMetadata published={published} tags={tags} category={category} hideTagsForMobile={true} class="mb-4 shortened-tags"></PostMetadata>
+        <PostMetadata published={published} tags={tags} category={category} id={id} hideTagsForMobile={true} class="mb-4 shortened-tags"></PostMetadata>
 
         <!-- description -->
         <div class:list={["transition text-75 mb-3.5 pr-4", {"line-clamp-2 md:line-clamp-1": !description}]}>
@@ -62,7 +106,22 @@ const { remarkPluginFrontmatter } = await entry.render()
         </div>
 
         <!-- word count and read time  -->
-        <div class="text-sm text-black/30 dark:text-white/30 flex gap-4 transition">
+        <div class="text-sm text-black/30 dark:text-white/30 flex gap-4 transition bottom-panel">
+            <!-- new panel -->
+            <div class="flex gap-1 new-panel text-black/90 dark:text-white/90 transition text-sm" style="display: none;">
+                <Icon style="margin: auto 0;" name="ic:round-new-releases" class="text-[1.5rem]"></Icon>
+                <div style="margin: auto 0;"><b>NUEVO</b></div>
+            </div>
+            <!-- updated panel -->
+            <div class="flex gap-1 updated-panel text-black/90 dark:text-white/90 transition text-sm" style="display: none;">
+                <Icon style="margin: auto 0;" name="ic:round-update" class="text-[1.5rem]"></Icon>
+                <div style="margin: auto 0;"><b>ACTUALIZADO</b></div>
+            </div>
+            <!-- unread panel -->
+            <div class="flex gap-1 unread-panel text-black/90 dark:text-white/90 transition text-sm" style="display: none;">
+                <Icon style="margin: auto 0;" name="material-symbols:notifications-unread-rounded" class="text-[1.5rem]"></Icon>
+                <div style="margin: auto 0;"><b>SIN LEER</b></div>
+            </div>
             <div>{remarkPluginFrontmatter.words} {" " + i18n(I18nKey.wordsCount)}</div>
             <div>|</div>
             <div>{remarkPluginFrontmatter.minutes} {" " + i18n(I18nKey.minutesCount)}</div>

@@ -7,6 +7,7 @@ tags: [c, c++, libro, guía, recurso, info, meta]
 category: 'Recurso'
 draft: false
 language: ''
+id: 4
 ---
 *C/C++ Curso de programación* es un libro escrito por *Fco. Javier Ceballos*. Ha pesar de que la segunda edición fue publicado en el mes de abril en el año 2002, es decir, han pasado mínimo 22 años desde su salida, sigue siendo relevante incluso en 2024, ya que C no ha cambiado mucho desde su creación en 1972.
 :::tip[DATO CURIOSO]
@@ -18,4 +19,5 @@ A continuación se muestra una tabla de contenido de todos los artículos en est
 2. [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)
 3. [Sinónimos de un tipo (en C)](/grupo932/posts/type-synonyms-in-c/)
 4. [Literales (en C)](/grupo932/posts/literals-in-c/)
+5. [Identificadores, palabras clave y comentarios (en C)](/grupo932/posts/identifiers-keywords-comments-in-c/)
 
