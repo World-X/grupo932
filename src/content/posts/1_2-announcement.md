@@ -1,5 +1,5 @@
 ---
-title: ¡La 1.2 está aquí!
+title: 📅 ¡La 1.2 está aquí!
 published: 2024-09-24
 description: 'Nuevas etiquetas especiales fueron añadidas a cada publicación, y el horario tuvo una mejora. Por favor lean este anuncio importante.'
 image: ''

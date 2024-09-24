@@ -17,6 +17,9 @@ ___
     - Actualizado (morado): Indica que el artículo ha sido actualizado (antes de 7 días desde la última actualización).
     - Sin leer (amarillo): Indica que el artículo no ha sido leído por el usuario.
 - **Se implementó una barra que muestra la asignatura actual y la próxima** en [Horario](/grupo932/schedule/).
+- Se agregarón 2 nuevos artículos.
+    1. [Identificadores, palabras clave y comentarios (en C)](../posts/identifiers-keywords-comments-in-c/)
+    2. [📅 ¡La 1.2 está aquí!](../posts/1_2-announcement/)
 ## 1.1
 (19/09/2024)
 <!-- Se incorporó GitHub Copilot en el proceso de desarrollo desde el 14 de Septiembre -->
