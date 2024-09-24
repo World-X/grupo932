@@ -534,6 +534,25 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
         }
     }
 
+    .datetime-panel {
+        background-color: oklch(0.95 0.02 var(--hue));
+        margin: 0.5rem 0;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 1.25rem;
+        color: oklch(0.35 0.1 var(--hue));
+        border: 2px dotted oklch(0.35 0.15 var(--hue));
+    }
+
+    html.dark .datetime-panel {
+        background-color: oklch(0.2 0.0 0);
+        color: oklch(0.86 0.1 var(--hue));
+        border-color: white;
+    }
+
+    #current-subject-el, #next-subject-el {
+        margin-left: auto;
+    }
 </style>
 
 <MainGridLayout title="Horario" description="Horario">
@@ -543,7 +562,15 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <Content />
             </Markdown-->
             <div class="flex w-full">
+                <Icon name="material-symbols:calendar-clock" class="text-[2rem]" style="margin: auto 8px auto 0;"></Icon>
                 <h1>Horario</h1>
+                <!--div class="flex">
+                    <h1>Horario</h1>
+                    <p class="text-[1.5rem]" style="margin: auto 0 5px 6px;">&nbsp;&mdash;&nbsp;</p>
+                    <p class="text-[1.5rem]" style="margin: auto 0 5px 6px;" id="weekday-el">Lunes</p>
+                    <p class="text-[1.2rem]" style="margin: auto 0 8px 0;">,</p>
+                    <p class="text-[1.2rem]" style="margin: auto 0 7px 6px;" id="hour-el">13:00</p>
+                </div-->
                 <button aria-label="Settings Menu" name="Schedule Settings Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="schedule-menu-switch" style="margin-left: auto;" onclick="scheduleSwitchButton();">
                     <Icon name="material-symbols:settings-rounded" class="text-[1.25rem]" id="schedule-settings-icon" is:inline></Icon>
                 </button>
@@ -562,7 +589,20 @@ import MainGridLayout from '../layouts/MainGridLayout.astro'
                 <div style="margin-bottom: 0.5rem;"></div>
                 <hr>
             </div>
-            <br>
+            <div class="datetime-panel">
+                <div class="flex w-full">
+                    <Icon name="material-symbols:nest-clock-farsight-analog" class="text-[1.5rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p id="datetime-el">Lunes, 13:00</p>
+                    <p id="current-subject-el"></p>
+                </div>
+            </div>
+            <div class="datetime-panel">
+                <div class="flex w-full">
+                    <Icon name="material-symbols:skip-next-rounded" class="text-[1.5rem]" style="margin: auto 8px auto 0;"></Icon>
+                    <p>Siguiente clase en <span id="next-time-el"></span></p>
+                    <p id="next-subject-el"></p>
+                </div>
+            </div>
             <table class="text-90" id="schedule-table">
                 <tr>
                     <th class="hour-heading">Hora</th>
