@@ -19,4 +19,5 @@ A continuación se muestra una tabla de contenido de todos los artículos en est
 2. [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)
 3. [Sinónimos de un tipo (en C)](/grupo932/posts/type-synonyms-in-c/)
 4. [Literales (en C)](/grupo932/posts/literals-in-c/)
+5. [Identificadores, palabras clave y comentarios (en C)](/grupo932/posts/identifiers-keywords-comments-in-c/)
 
