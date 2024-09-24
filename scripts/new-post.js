@@ -50,7 +50,7 @@ tags: []
 category: ''
 draft: false 
 language: ''
-id: ${getPostCount()}
+id: ${getPostCount() - 1}
 ---
 `
 

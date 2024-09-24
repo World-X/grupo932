@@ -288,7 +288,7 @@ function init() {
 	if (!localStorage.read_posts) {
 		let read_posts_arr: number[] = [];
 		localStorage.read_posts = JSON.stringify(read_posts_arr);
-		console.log("Array created");
+		console.log("Read array created");
 	}
 }
 
@@ -452,86 +452,14 @@ function init() {
 	let currentSubjectEl = document.getElementById("current-subject-el");
 	let nextSubjectEl = document.getElementById("next-subject-el");
 	let nextTimeEl = document.getElementById("next-time-el");
+	let nextClassEl = document.getElementById("next-class-el");
 	if (datetimeEl) {
 		if (currentSubjectEl) {
 			if (nextSubjectEl) {
 				if (nextTimeEl) {
-					const updateDateTime = (first_time = false) => {
-						// Format: "Día, HH:MM:SS", Día must start with a capital letter
-						const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-						const date = new Date();
-						const day = days[date.getDay()];
-						const hours = date.getHours().toString().padStart(2, "0");
-						const minutes = date.getMinutes().toString().padStart(2, "0");
-						const seconds = date.getSeconds().toString().padStart(2, "0");
-						// If screen is medium or small, hide seconds
-						if (window.matchMedia("(max-width: 768px)").matches) {
-							datetimeEl.textContent = `${day}, ${hours}:${minutes}`;
-						} else {
-							datetimeEl.textContent = `${day}, ${hours}:${minutes}:${seconds}`;
-						}
-						// Update current subject data
-						const subjectData = getSubjectData(date.getDay() - 1, date.getHours());
-						if (subjectData.name === "") {
-							currentSubjectEl.textContent = "No hay clase";
-						} else {
-							currentSubjectEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
-						}
-
-						if (first_time) {
-							console.log("updateDateTime first time");
-							console.log("date: ", date);
-							console.log("subjectData: ", subjectData);
-						}
-
-						let newDate = new Date();
-						newDate.setHours(newDate.getHours() + 1);
-						newDate.setMinutes(0);
-						newDate.setSeconds(0);
-						let nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
-						if (nextSubjectData.name === "") {
-							newDate.setHours(newDate.getHours() + 24);
-							if (newDate.getDay() === 0) {
-								newDate.setHours(newDate.getHours() + 24);
-							} else if (newDate.getDay() === 6) {
-								newDate.setHours(newDate.getHours() + 48);
-							}
-							newDate.setHours(13);
-							nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
-						}
-						nextSubjectEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
-						
-						let delta = Math.abs(newDate - date) / 1000;
-						let diffDays = Math.floor(delta / 86400);
-						delta -= diffDays * 86400;
-						let diffHours = Math.floor(delta / 3600) % 24;
-						delta -= diffHours * 3600;
-						let diffMinutes = Math.floor(delta / 60) % 60;
-						delta -= diffMinutes * 60;
-						let diffSeconds = delta % 60;
-						let nextTimeText = "";
-						if (diffDays > 0) {
-							nextTimeText = `${diffDays}d`;
-							if (diffHours !== 0) {
-								nextTimeText += ` y ${diffMinutes}m`;
-							}
-						} else if (diffHours > 0) {
-							nextTimeText = `${diffHours}h`;
-							if (diffMinutes !== 0) {
-								nextTimeText += ` y ${diffMinutes}m`;
-							}
-						} else if (diffMinutes > 0) {
-							nextTimeText = `${diffMinutes}m`;
-							if (diffSeconds !== 0) {
-								nextTimeText += ` y ${diffSeconds}s`;
-							}
-						} else {
-							nextTimeText = `${diffSeconds}s`;
-						}
-						nextTimeEl.textContent = nextTimeText;
-					};
-					updateDateTime(true);
-					setInterval(updateDateTime, 850);
+					if (nextClassEl) {
+						setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl);
+					}
 				}
 			}
 		}
@@ -539,6 +467,90 @@ function init() {
 }
 
 init();
+
+function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl) {
+	const updateDateTime = (first_time = false) => {
+	// Format: "Día, HH:MM:SS", Día must start with a capital letter
+	const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+	const date = new Date();
+	const day = days[date.getDay()];
+	const hours = date.getHours().toString().padStart(2, "0");
+	const minutes = date.getMinutes().toString().padStart(2, "0");
+	const seconds = date.getSeconds().toString().padStart(2, "0");
+	// If screen is medium or small, hide seconds
+	if (window.matchMedia("(max-width: 768px)").matches) {
+		datetimeEl.textContent = `${day}, ${hours}:${minutes}`;
+		nextClassEl.textContent = "";
+	} else {
+		datetimeEl.textContent = `${day}, ${hours}:${minutes}:${seconds}`;
+		nextClassEl.textContent = "Próxima clase en";
+	}
+	// Update current subject data
+	const subjectData = getSubjectData(date.getDay() - 1, date.getHours());
+	if (subjectData.name === "") {
+		currentSubjectEl.textContent = "No hay clase";
+	} else {
+		currentSubjectEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
+	}
+
+	if (first_time) {
+		console.log("updateDateTime first time");
+		console.log("date: ", date);
+		console.log("subjectData: ", subjectData);
+	}
+
+	let newDate = new Date();
+	newDate.setHours(newDate.getHours() + 1);
+	newDate.setMinutes(0);
+	newDate.setSeconds(0);
+	let nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
+	if (nextSubjectData.name === "") {
+		if (newDate.getHours() > 13) {
+			newDate.setHours(newDate.getHours() + 24);
+		}
+		if (newDate.getDay() === 0) {
+			newDate.setHours(newDate.getHours() + 24);
+		} else if (newDate.getDay() === 6) {
+			newDate.setHours(newDate.getHours() + 48);
+		}
+		newDate.setHours(13);
+		nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
+	}
+	nextSubjectEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
+	
+	let delta = Math.abs(newDate - date) / 1000;
+	const diffDays = Math.floor(delta / 86400);
+	delta -= diffDays * 86400;
+	const diffHours = Math.floor(delta / 3600) % 24;
+	delta -= diffHours * 3600;
+	const diffMinutes = Math.floor(delta / 60) % 60;
+	delta -= diffMinutes * 60;
+	const diffSeconds = Math.trunc(delta % 60);
+	let nextTimeText = "";
+	if (diffDays > 0) {
+		nextTimeText = `${diffDays}d`;
+		if (diffHours !== 0) {
+			nextTimeText += ` y ${diffMinutes}m`;
+		}
+	} else if (diffHours > 0) {
+		nextTimeText = `${diffHours}h`;
+		if (diffMinutes !== 0) {
+			nextTimeText += ` y ${diffMinutes}m`;
+		}
+	} else if (diffMinutes > 0) {
+		nextTimeText = `${diffMinutes}m`;
+		if (diffSeconds !== 0) {
+			nextTimeText += ` y ${diffSeconds}s`;
+		}
+	} else {
+		nextTimeText = `${diffSeconds}s`;
+	}
+	nextTimeEl.textContent = nextTimeText;
+};
+updateDateTime(true);
+setInterval(updateDateTime, 1000);
+}
+
 
 // Muestra el dia de la semana (Lunes, Martes, etc.)
 // document.getElementById("date-element").textContent = new Date().toLocaleDateString("es-ES", { weekday: "long" });
