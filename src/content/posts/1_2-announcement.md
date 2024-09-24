@@ -12,9 +12,9 @@ id: 10
 # Anuncio importante
 Debido a quejas (como tengo entendido) anónimas, es muy probable que se dejará de publicar actualizaciones y encuestas en el grupo de WhatsApp. **Si todo prosigue como se tiene planeado**, a partir de hoy, **todas las actualizaciones y encuestas serán publicadas en el grupo de Discord**. Si no se han unido al grupo de Discord, por favor tomen esta oportunidad para hacerlo.
 
-Una disculpa a todas las personas que pude haber molestado con las notificaciones de WhatsApp. Si tienen alguna pregunta o sugerencia, por favor háganmela saber.
+Una disculpa a todas las personas que pude haber molestado con las notificaciones de WhatsApp. Mi intención era mantener a todos informados, pero debí haber preguntado primero. Si tienen alguna pregunta o sugerencia, por favor háganmela saber.
 :::note[NOTA]
-En el caso que no se llegue a un acuerdo o se presente algún problema, se continuará publicando en el grupo de WhatsApp.
+En el caso que no se llegue a un acuerdo o se presente algún problema, se continuará publicando en el grupo de WhatsApp, o es posible que se deje de publicar actualizaciones en general (excepto aquí).
 :::
 ## Sobre la actualización
 Pueden ver todos los cambios de la versión [1.2](/grupo932/history/#12) en la página de [Historia](/grupo932/history/). En resumen, se agregaron etiquetas especiales a cada publicación, y el horario tuvo una mejora.
