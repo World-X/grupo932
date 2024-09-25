@@ -13,8 +13,9 @@ id: 4
 :::tip[DATO CURIOSO]
 La versión (formalmente llamado *estándar abierto*) pública más reciente de C es [C18](https://en.wikipedia.org/wiki/C17_(C_standard_revision)), pero se espera que la [C23](https://en.wikipedia.org/wiki/C23_(C_standard_revision)) se vuelva pública en 2024.
 :::
-A continuación se muestra una tabla de contenido de todos los artículos en este sitio cuales tienen contenido que fueron principalmente extraídos del libro, en orden cronológico.
 
+# Índice
+A continuación se muestra una tabla de contenido de todos los artículos en este sitio cuales tienen contenido que fueron principalmente extraídos del libro, en orden cronológico.
 1. [Caracteres de C](/grupo932/posts/characters-in-c/)
 2. [Tipos de datos (en C)](/grupo932/posts/data-types-in-c/)
 3. [Sinónimos de un tipo (en C)](/grupo932/posts/type-synonyms-in-c/)
