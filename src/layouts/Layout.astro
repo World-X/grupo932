@@ -462,7 +462,7 @@ function init() {
 					if (nextClassEl) {
 						if (currentSubjectMdEl) {
 							if (nextSubjectMdEl) {
-								setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
+								setup_elements(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
 							}
 						}
 					}
@@ -474,8 +474,11 @@ function init() {
 
 init();
 
-function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
+function setup_elements(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
 	const updateDateTime = (first_time = false) => {
+	if (window.safety == 0) {
+		return;
+	}
 	// Format: "Día, HH:MM:SS", Día must start with a capital letter
 	const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 	const date = new Date();
