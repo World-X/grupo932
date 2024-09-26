@@ -107,4 +107,4 @@ Un comentario es un mensaje a cualquiera que lea el código fuente. Añadiendo c
 // Agregar aquí el código de iniciación
 ```
 
-
+Siguiente artículo: [Constantes y variables (en C)](/grupo932/posts/constants-and-variables-in-c/)

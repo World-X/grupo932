@@ -48,15 +48,15 @@ if (true) {
                 }
             }
             const updatedPostIDs = [4, 10]
-            const updatedPostDates = ['2024-09-25', '2024-09-24']
+            const updatedPostDates = ['2024-09-26', '2024-09-24']
             if (updatedPostIDs.includes(id)) {
-                // if it was updated in the last 7 days
+                // if it was updated in the last 5 days
                 const updatedPostIndex = updatedPostIDs.indexOf(id)
                 const updatedPostDate = new Date(updatedPostDates[updatedPostIndex])
                 const now = new Date()
                 const diff = now.getTime() - updatedPostDate.getTime()
                 const diffDays = Math.ceil(diff / (1000 * 3600 * 24))
-                if (diffDays < 7) {
+                if (diffDays < 5) {
                     let updatedPanel = bottomPanel.getElementsByClassName('updated-panel')[0]
                     updatedPanel.style.display = 'flex'
                 }

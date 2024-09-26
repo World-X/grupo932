@@ -6,6 +6,7 @@ ___
 ## Tabla de contenido
 - [1.2](#12) (24/09/2024)
     - [1.2.1](#121) (25/09/2024)
+    - [1.2.2](#122) (26/09/2024)
 - [1.1](#11) (19/09/2024)
     - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
@@ -30,6 +31,13 @@ El horario se actualiza automáticamente cada segundo, y durante esa actualizaci
     1. [Python 3 - Guía](../posts/python-course-index/python-course-index/)
     2. [¿Cómo usar Python?](../posts/how-to-use-python/how-to-use-python/)
     3. [Imprimir, comentarios y variables (en Python)](../posts/comments-and-variables-in-python/)
+### 1.2.2
+(26/09/2024)
+- **Se agregó un nuevo artículo**.
+    1. [Constantes y variables (en C)](../posts/constants-and-variables-in-c/)
+- Se corrigió un error con el horario.
+- El período para considerar una publicación como actualizada se ha reducido de 7 a 5 días.
+___
 ## 1.1
 (19/09/2024)
 <!-- Se incorporó GitHub Copilot en el proceso de desarrollo desde el 14 de Septiembre -->

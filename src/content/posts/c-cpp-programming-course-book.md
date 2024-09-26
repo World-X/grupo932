@@ -21,4 +21,5 @@ A continuación se muestra una tabla de contenido de todos los artículos en est
 3. [Sinónimos de un tipo (en C)](/grupo932/posts/type-synonyms-in-c/)
 4. [Literales (en C)](/grupo932/posts/literals-in-c/)
 5. [Identificadores, palabras clave y comentarios (en C)](/grupo932/posts/identifiers-keywords-comments-in-c/)
+6. [Constantes y variables (en C)](/grupo932/posts/constants-and-variables-in-c/)
 
