@@ -5,7 +5,7 @@ description: 'Python es un lenguaje de programación interpretado, de alto nivel
 image: './image.jpeg'
 tags: [python, guía, recurso, info, meta]
 category: 'Recurso'
-draft: true 
+draft: false 
 language: ''
 id: 11
 ---

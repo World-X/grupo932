@@ -5,6 +5,7 @@ Puede que existan cambios que no hayan sido mencionados en este artículo.
 ___
 ## Tabla de contenido
 - [1.2](#12) (24/09/2024)
+    - [1.2.1](#121) (25/09/2024)
 - [1.1](#11) (19/09/2024)
     - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
@@ -23,6 +24,12 @@ El horario se actualiza automáticamente cada segundo, y durante esa actualizaci
 - Se agregarón 2 nuevos artículos.
     1. [Identificadores, palabras clave y comentarios (en C)](../posts/identifiers-keywords-comments-in-c/)
     2. [📅 ¡La 1.2 está aquí!](../posts/1_2-announcement/)
+### 1.2.1
+(25/09/2024)
+- **Se agregaron 3 nuevos artículos**.
+    1. [Python 3 - Guía](../posts/python-course-index/python-course-index/)
+    2. [¿Cómo usar Python?](../posts/how-to-use-python/how-to-use-python/)
+    3. [Imprimir, comentarios y variables (en Python)](../posts/comments-and-variables-in-python/)
 ## 1.1
 (19/09/2024)
 <!-- Se incorporó GitHub Copilot en el proceso de desarrollo desde el 14 de Septiembre -->

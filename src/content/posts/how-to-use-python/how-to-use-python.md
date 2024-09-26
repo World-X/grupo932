@@ -5,7 +5,7 @@ description: 'Hay varias formas de usar Python, ya sea en tu computadora local o
 image: ''
 tags: [python, recurso]
 category: 'Guía'
-draft: true
+draft: false
 language: ''
 id: 12
 ---

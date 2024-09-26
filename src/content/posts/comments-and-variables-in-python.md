@@ -5,7 +5,7 @@ description: 'Aprende a imprimir, comentar y declarar variables en Python.'
 image: ''
 tags: [python, comentarios, variables, imprimir, tipos, recurso]
 category: 'Recurso'
-draft: true 
+draft: false
 language: ''
 id: 13
 ---
