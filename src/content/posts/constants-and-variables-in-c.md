@@ -4,7 +4,7 @@ published: 2024-09-26
 description: 'Las constantes y variables sirven para almacenar información. En este artículo se explica cómo se declaran y se utilizan en C.'
 image: ''
 tags: [c, recurso, libro, constantes, variables]
-category: ''
+category: 'Recurso'
 draft: false
 language: ''
 id: 14
