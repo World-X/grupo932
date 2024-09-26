@@ -17,8 +17,6 @@ import { defaultFavicons } from '../constants/icon'
 import type { Favicon } from '../types/config'
 import { url, pathsEqual } from '../utils/url-utils'
 
-import { ViewTransitions } from 'astro:transitions'
-
 interface Props {
   title?: string
   banner?: string
@@ -130,7 +128,6 @@ const bannerOffset =
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
 		<style define:vars={{ configHue }}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
-		<ViewTransitions />
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 	data-overlayscrollbars-initialize
@@ -138,8 +135,8 @@ const bannerOffset =
 		<ConfigCarrier></ConfigCarrier>
 		<GlobalStyles>
 		{siteConfig.banner.enable && <div id="banner-wrapper" class="absolute -top-[30vh] w-full transition duration-700 overflow-hidden">
-			<ImageWrapper id="banner" alt="Banner image of the blog" class:list={["object-cover h-full transition duration-700"]}
-					  src={siteConfig.banner.src} position={siteConfig.banner.position}
+			<ImageWrapper id="banner" alt="Banner image of the blog" class:list={["object-cover h-full transition duration-700 opacity-0 scale-105"]}
+						  src={siteConfig.banner.src} position={siteConfig.banner.position}
 			>
 			</ImageWrapper>
 		</div>}
@@ -186,6 +183,10 @@ const bannerOffset =
 	.navbar-hidden {
 		@apply opacity-0 -translate-y-16
 	}
+}
+
+.enable-banner.is-home #sidebar-sticky {
+	color: red;
 }
 </style>
 <script>
@@ -305,11 +306,21 @@ function initCustomScrollbar() {
 	});
 }
 
+function showBanner() {
+	const banner = document.getElementById('banner')
+	if (!banner) {
+		console.error('Failed to find the banner element')
+		return
+	}
+	banner.classList.remove('opacity-0', 'scale-105')
+}
+
 function init() {
 	// disableAnimation()()		// TODO
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
+	showBanner();
 	console.log("init layout");
 	// if localStorage.subgroup is not set, set it to '1'
 	if (!localStorage.subgroup) {
@@ -398,7 +409,6 @@ if (window?.swup?.hooks) {
 }
 
 let backToTopBtn = document.getElementById('back-to-top-btn');
-const bannerEnable = !!document.getElementById('banner-wrapper')
 let navbar = document.getElementById('navbar-wrapper')
 function scrollFunction() {
 	if (backToTopBtn) {
@@ -542,7 +552,7 @@ if (window.swup) {
 						if (nextClassEl) {
 							if (currentSubjectMdEl) {
 								if (nextSubjectMdEl) {
-									setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
+									setup_elements(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
 								}
 							}
 						}
@@ -554,8 +564,11 @@ if (window.swup) {
 	
 	init();
 	
-	function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
+	function setup_elements(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
 		const updateDateTime = (first_time = false) => {
+		if (window.safety == 0) {
+			return;
+		}
 		// Format: "Día, HH:MM:SS", Día must start with a capital letter
 		const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 		const date = new Date();
