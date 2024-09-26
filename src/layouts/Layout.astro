@@ -60,10 +60,23 @@ if (!lang) {
   lang = `${siteConfig.lang}`
 }
 const siteLang = lang.replace('_', '-')
+
+const bannerOffsetByPosition = {
+  top: '30vh',
+  center: '15vh',
+  bottom: '0',
+}
+const bannerOffset =
+  bannerOffsetByPosition[
+    (siteConfig.banner.position as keyof typeof bannerOffsetByPosition) ||
+      'center'
+  ]
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
+<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]"
+	  data-overlayscrollbars-initialize
+>
 	<head>
 
 		<title>{pageTitle}</title>
@@ -117,20 +130,24 @@ const siteLang = lang.replace('_', '-')
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
 		<style define:vars={{ configHue }}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
-
 		<ViewTransitions />
 	</head>
-	<body class=" min-h-screen transition " class:list={[{"is-home": isHomePage, "enable-banner": enableBanner}]}>
+	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
+	data-overlayscrollbars-initialize
+>
 		<ConfigCarrier></ConfigCarrier>
 		<GlobalStyles>
-		<div id="banner-wrapper" class="absolute w-full transition-all duration-700">
-			<ImageWrapper id="boxtest" alt="Banner image of the blog" class:list={["object-cover h-full", {"hidden": !siteConfig.banner.enable}]}
+		{siteConfig.banner.enable && <div id="banner-wrapper" class="absolute -top-[30vh] w-full transition duration-700 overflow-hidden">
+			<ImageWrapper id="banner" alt="Banner image of the blog" class:list={["object-cover h-full transition duration-700"]}
 					  src={siteConfig.banner.src} position={siteConfig.banner.position}
 			>
 			</ImageWrapper>
-		</div>
+		</div>}
 		<slot />
 		</GlobalStyles>
+
+		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
+		<div id="page-height-extend" class="hidden h-[300vh]"></div>
 	</body>
 </html>
 <style is:global>
@@ -139,23 +156,35 @@ const siteLang = lang.replace('_', '-')
 		--page-width: 75rem;
 	}
 </style>
-<style is:global>
+<style is:global define:vars={{ bannerOffset }}>
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
 	.enable-banner.is-home #banner-wrapper {
-		@apply h-[var(--banner-height)] md:h-[var(--banner-height-home)]
+		@apply h-[var(--banner-height-home)] translate-y-[30vh]
 	}
 	.enable-banner #banner-wrapper {
-		@apply h-[var(--banner-height)]
+		@apply h-[var(--banner-height-home)]
 	}
 
-	.enable-banner.is-home #top-row {
-		@apply h-[calc(var(--banner-height)_-_4.5rem)] md:h-[calc(var(--banner-height-home)_-_4.5rem)]
+	.enable-banner.is-home #banner {
+		@apply h-[var(--banner-height-home)] translate-y-0
+	}
+	.enable-banner #banner {
+		@apply h-[var(--banner-height-home)] translate-y-[var(--bannerOffset)]
+	}
+	.enable-banner.is-home #main-grid {
+		@apply translate-y-[30vh];
 	}
 	.enable-banner #top-row {
-		@apply h-[calc(var(--banner-height)_-_4.5rem)]
+		@apply h-[calc(var(--banner-height-home)_-_4.5rem)] transition-all duration-300
+	}
+	.enable-banner.is-home #sidebar-sticky {
+		@apply top-[calc(-30vh_+_1rem)]
+	}
+	.navbar-hidden {
+		@apply opacity-0 -translate-y-16
 	}
 }
 </style>
@@ -213,6 +242,8 @@ function disableAnimation() {
 	}
 }
 */
+
+const bannerEnabled = !!document.getElementById('banner-wrapper')
 
 function setClickOutsideToClose(panel: string, ignores: string[]) {
 	console.log(panel)
@@ -315,24 +346,83 @@ const setup = () => {
 	// Remove the delay for the first time page load
 	window.swup.hooks.on('link:click', () => {
 		document.documentElement.style.setProperty('--content-delay', '0ms')
+
+		// prevent elements from overlapping the navbar
+		if (!bannerEnabled) {
+			return
+		}
+		let threshold = window.innerHeight * 0.30 - 72 - 16
+		let navbar = document.getElementById('navbar-wrapper')
+		if (!navbar || !document.body.classList.contains('lg:is-home')) {
+			return
+		}
+		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
+			navbar.classList.add('navbar-hidden')
+		}
 	})
 	window.swup.hooks.on('content:replace', initCustomScrollbar)
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
 		if (pathsEqual(visit.to.url, url('/'))) {
-			bodyElement!.classList.add('is-home');
+			bodyElement!.classList.add('lg:is-home');
 		} else {
-			bodyElement!.classList.remove('is-home');
+			bodyElement!.classList.remove('lg:is-home');
+		}
+
+		// increase the page height during page transition to prevent the scrolling animation from jumping
+		const heightExtend = document.getElementById('page-height-extend')
+		if (heightExtend) {
+			heightExtend.classList.remove('hidden')
 		}
 	});
-
+	window.swup.hooks.on('page:view', () => {
+		// hide the temp high element when the transition is done
+		const heightExtend = document.getElementById('page-height-extend')
+		if (heightExtend) {
+			heightExtend.classList.remove('hidden')
+		}
+	});
+	window.swup.hooks.on('visit:end', (visit: {to: {url: string}}) => {
+		// execute 1s later
+		const heightExtend = document.getElementById('page-height-extend')
+		if (heightExtend) {
+			heightExtend.classList.add('hidden')
+		}
+	});
 }
 if (window?.swup?.hooks) {
 	setup()
 } else {
 	document.addEventListener('swup:enable', setup)
 }
+
+let backToTopBtn = document.getElementById('back-to-top-btn');
+const bannerEnable = !!document.getElementById('banner-wrapper')
+let navbar = document.getElementById('navbar-wrapper')
+function scrollFunction() {
+	if (backToTopBtn) {
+		if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+			backToTopBtn.classList.remove('hide')
+		} else {
+			backToTopBtn.classList.add('hide')
+		}
+	}
+
+	if (!bannerEnabled) return
+	if (navbar) {
+		let threshold = window.innerHeight * 0.30 - 72 - 16
+		if (document.body.classList.contains('lg:is-home') && window.innerWidth >= 1024) {
+			threshold = window.innerHeight * 0.60 - 72 - 16
+		}
+		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
+			navbar.classList.add('navbar-hidden')
+		} else {
+			navbar.classList.remove('navbar-hidden')
+		}
+	}
+}
+window.onscroll = scrollFunction
 
 </script>
 
@@ -398,71 +488,62 @@ if (window.swup) {
 }
 </script>
 
-
-<style is:global lang="stylus">
-#banner-wrapper
-	top: 0
-	opacity: 1
-.banner-closed
-	#banner-wrapper
-		top: -120px
-		opacity: 0
-</style>
 <!-- SETUP FOR SCHEDULE -->
 <script is:inline data-astro-rerun>
-window.safety = 1;
-if (!document.getElementById("schedule-settings-panel")) {
-	window.safety = 0;
-}
-
-if (document.getElementById("slug-id")) {
-	const id = parseInt(document.getElementById("slug-id").textContent);
-	if (localStorage.read_posts) {
-		let readPosts = JSON.parse(localStorage.read_posts);
-		if (!readPosts.includes(id)) {
-			console.log("Adding unread post with id: ", id);
-			readPosts.push(id);
-			localStorage.read_posts = JSON.stringify(readPosts);
+	window.safety = 1;
+	if (!document.getElementById("schedule-settings-panel")) {
+		window.safety = 0;
+	}
+	
+	if (document.getElementById("slug-id")) {
+		const id = parseInt(document.getElementById("slug-id").textContent);
+		if (localStorage.read_posts) {
+			let readPosts = JSON.parse(localStorage.read_posts);
+			if (!readPosts.includes(id)) {
+				console.log("Adding unread post with id: ", id);
+				readPosts.push(id);
+				localStorage.read_posts = JSON.stringify(readPosts);
+			}
 		}
 	}
-}
-
-function init() {
-	if (window.safety == 0) {
-		return;
-	}
-	console.log("Hello, World! FROM LAYOUT");
-	applySubGroup(localStorage.getItem("subgroup") || '1');
-	setupHours(window.matchMedia("(max-width: 768px)").matches);
-	// hideSubjectData();
-
-	// Call setupHours function when screen is resized
-	console.log("window.resizeEventListener: ", window.removeEventListener);
-	if (!window.removeEventListener) {
-		window.removeEventListener = true;
-		console.log("Adding resize event listener");
-		window.addEventListener("resize", function () {
-			console.log("Resized");
-			setupHours(window.matchMedia("(max-width: 768px)").matches);
-		});
-	}
-
-	// Update datetime-el element and keep it updated every second
-	let datetimeEl = document.getElementById("datetime-el");
-	let currentSubjectEl = document.getElementById("current-subject-el");
-	let currentSubjectMdEl = document.getElementById("current-subject-md-el");
-	let nextSubjectEl = document.getElementById("next-subject-el");
-	let nextSubjectMdEl = document.getElementById("next-subject-md-el");
-	let nextTimeEl = document.getElementById("next-time-el");
-	let nextClassEl = document.getElementById("next-class-el");
-	if (datetimeEl) {
-		if (currentSubjectEl) {
-			if (nextSubjectEl) {
-				if (nextTimeEl) {
-					if (nextClassEl) {
-						if (currentSubjectMdEl) {
-							if (nextSubjectMdEl) {
-								setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
+	
+	function init() {
+		if (window.safety == 0) {
+			return;
+		}
+		console.log("Hello, World! FROM LAYOUT");
+		applySubGroup(localStorage.getItem("subgroup") || '1');
+		setupHours(window.matchMedia("(max-width: 768px)").matches);
+		// hideSubjectData();
+	
+		// Call setupHours function when screen is resized
+		console.log("window.resizeEventListener: ", window.removeEventListener);
+		if (!window.removeEventListener) {
+			window.removeEventListener = true;
+			console.log("Adding resize event listener");
+			window.addEventListener("resize", function () {
+				console.log("Resized");
+				setupHours(window.matchMedia("(max-width: 768px)").matches);
+			});
+		}
+	
+		// Update datetime-el element and keep it updated every second
+		let datetimeEl = document.getElementById("datetime-el");
+		let currentSubjectEl = document.getElementById("current-subject-el");
+		let currentSubjectMdEl = document.getElementById("current-subject-md-el");
+		let nextSubjectEl = document.getElementById("next-subject-el");
+		let nextSubjectMdEl = document.getElementById("next-subject-md-el");
+		let nextTimeEl = document.getElementById("next-time-el");
+		let nextClassEl = document.getElementById("next-class-el");
+		if (datetimeEl) {
+			if (currentSubjectEl) {
+				if (nextSubjectEl) {
+					if (nextTimeEl) {
+						if (nextClassEl) {
+							if (currentSubjectMdEl) {
+								if (nextSubjectMdEl) {
+									setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl);
+								}
 							}
 						}
 					}
@@ -470,666 +551,665 @@ function init() {
 			}
 		}
 	}
-}
-
-init();
-
-function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
-	const updateDateTime = (first_time = false) => {
-	// Format: "Día, HH:MM:SS", Día must start with a capital letter
-	const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-	const date = new Date();
-	const day = days[date.getDay()];
-	const hours = date.getHours().toString().padStart(2, "0");
-	const minutes = date.getMinutes().toString().padStart(2, "0");
-	const seconds = date.getSeconds().toString().padStart(2, "0");
-	const is_screen_medium = window.matchMedia("(max-width: 768px)").matches;
-	// If screen is medium or small, hide seconds
-	if (is_screen_medium) {
-		datetimeEl.textContent = `${day}, ${hours}:${minutes}`;
-		nextClassEl.textContent = "";
-	} else {
-		datetimeEl.textContent = `${day}, ${hours}:${minutes}:${seconds}`;
-		nextClassEl.textContent = "Próxima clase en";
-	}
-	// Update current subject data
-	const subjectData = getSubjectData(date.getDay() - 1, date.getHours());
-	if (subjectData.name === "") {
+	
+	init();
+	
+	function setup(datetimeEl, currentSubjectEl, nextSubjectEl, nextTimeEl, nextClassEl, currentSubjectMdEl, nextSubjectMdEl) {
+		const updateDateTime = (first_time = false) => {
+		// Format: "Día, HH:MM:SS", Día must start with a capital letter
+		const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+		const date = new Date();
+		const day = days[date.getDay()];
+		const hours = date.getHours().toString().padStart(2, "0");
+		const minutes = date.getMinutes().toString().padStart(2, "0");
+		const seconds = date.getSeconds().toString().padStart(2, "0");
+		const is_screen_medium = window.matchMedia("(max-width: 768px)").matches;
+		// If screen is medium or small, hide seconds
 		if (is_screen_medium) {
-			currentSubjectMdEl.textContent = "No hay clase";
-			currentSubjectMdEl.style.display = "flex";
-			currentSubjectEl.textContent = "";
-			currentSubjectEl.style.display = "none";
+			datetimeEl.textContent = `${day}, ${hours}:${minutes}`;
+			nextClassEl.textContent = "";
 		} else {
-			currentSubjectMdEl.textContent = "";
-			currentSubjectMdEl.style.display = "none";
-			currentSubjectEl.textContent = "No hay clase";
-			currentSubjectEl.style.display = "flex";
+			datetimeEl.textContent = `${day}, ${hours}:${minutes}:${seconds}`;
+			nextClassEl.textContent = "Próxima clase en";
 		}
-	} else {
-		if (is_screen_medium) {
-			currentSubjectMdEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
-			currentSubjectMdEl.style.display = "flex";
-			currentSubjectEl.textContent = "";
-			currentSubjectEl.style.display = "none";
+		// Update current subject data
+		const subjectData = getSubjectData(date.getDay() - 1, date.getHours());
+		if (subjectData.name === "") {
+			if (is_screen_medium) {
+				currentSubjectMdEl.textContent = "No hay clase";
+				currentSubjectMdEl.style.display = "flex";
+				currentSubjectEl.textContent = "";
+				currentSubjectEl.style.display = "none";
+			} else {
+				currentSubjectMdEl.textContent = "";
+				currentSubjectMdEl.style.display = "none";
+				currentSubjectEl.textContent = "No hay clase";
+				currentSubjectEl.style.display = "flex";
+			}
 		} else {
-			currentSubjectMdEl.textContent = "";
-			currentSubjectMdEl.style.display = "none";
-			currentSubjectEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
-			currentSubjectEl.style.display = "flex";
+			if (is_screen_medium) {
+				currentSubjectMdEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
+				currentSubjectMdEl.style.display = "flex";
+				currentSubjectEl.textContent = "";
+				currentSubjectEl.style.display = "none";
+			} else {
+				currentSubjectMdEl.textContent = "";
+				currentSubjectMdEl.style.display = "none";
+				currentSubjectEl.textContent = `${subjectData.name} (${subjectData.classroom})`;
+				currentSubjectEl.style.display = "flex";
+			}
 		}
-	}
-
-	if (first_time) {
-		console.log("updateDateTime first time");
-		console.log("date: ", date);
-		console.log("subjectData: ", subjectData);
-	}
-
-	let newDate = new Date();
-	newDate.setHours(newDate.getHours() + 1);
-	newDate.setMinutes(0);
-	newDate.setSeconds(0);
-	let nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
-	if (nextSubjectData.name === subjectData.name) {
+	
+		if (first_time) {
+			console.log("updateDateTime first time");
+			console.log("date: ", date);
+			console.log("subjectData: ", subjectData);
+		}
+	
+		let newDate = new Date();
 		newDate.setHours(newDate.getHours() + 1);
-		nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
-	}
-
-	if (nextSubjectData.name === "") {
-		if (newDate.getHours() > 13) {
-			newDate.setHours(newDate.getHours() + 24);
+		newDate.setMinutes(0);
+		newDate.setSeconds(0);
+		let nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
+		if (nextSubjectData.name === subjectData.name) {
+			newDate.setHours(newDate.getHours() + 1);
+			nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
 		}
-		if (newDate.getDay() === 0) {
-			newDate.setHours(newDate.getHours() + 24);
-		} else if (newDate.getDay() === 6) {
-			newDate.setHours(newDate.getHours() + 48);
+	
+		if (nextSubjectData.name === "") {
+			if (newDate.getHours() > 13) {
+				newDate.setHours(newDate.getHours() + 24);
+			}
+			if (newDate.getDay() === 0) {
+				newDate.setHours(newDate.getHours() + 24);
+			} else if (newDate.getDay() === 6) {
+				newDate.setHours(newDate.getHours() + 48);
+			}
+			newDate.setHours(13);
+			nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
 		}
-		newDate.setHours(13);
-		nextSubjectData = getSubjectData(newDate.getDay() - 1, newDate.getHours());
-	}
-
-	if (is_screen_medium) {
-		nextSubjectMdEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
-		nextSubjectMdEl.style.display = "flex";
-		nextSubjectEl.textContent = "";
-		nextSubjectEl.style.display = "none";
-	} else {
-		nextSubjectMdEl.textContent = "";
-		nextSubjectMdEl.style.display = "none";
-		nextSubjectEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
-		nextSubjectEl.style.display = "flex";
+	
+		if (is_screen_medium) {
+			nextSubjectMdEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
+			nextSubjectMdEl.style.display = "flex";
+			nextSubjectEl.textContent = "";
+			nextSubjectEl.style.display = "none";
+		} else {
+			nextSubjectMdEl.textContent = "";
+			nextSubjectMdEl.style.display = "none";
+			nextSubjectEl.textContent = `${nextSubjectData.name} (${nextSubjectData.classroom})`;
+			nextSubjectEl.style.display = "flex";
+		}
+		
+		let delta = Math.abs(newDate - date) / 1000;
+		const diffDays = Math.floor(delta / 86400);
+		delta -= diffDays * 86400;
+		const diffHours = Math.floor(delta / 3600) % 24;
+		delta -= diffHours * 3600;
+		const diffMinutes = Math.floor(delta / 60) % 60;
+		delta -= diffMinutes * 60;
+		const diffSeconds = Math.trunc(delta % 60);
+		let nextTimeText = "";
+		if (diffDays > 0) {
+			nextTimeText = `${diffDays}d`;
+			if (diffHours !== 0) {
+				nextTimeText += ` y ${diffMinutes}m`;
+			}
+		} else if (diffHours > 0) {
+			nextTimeText = `${diffHours}h`;
+			if (diffMinutes !== 0) {
+				nextTimeText += ` y ${diffMinutes}m`;
+			}
+		} else if (diffMinutes > 0) {
+			nextTimeText = `${diffMinutes}m`;
+			if (diffSeconds !== 0) {
+				nextTimeText += ` y ${diffSeconds}s`;
+			}
+		} else {
+			nextTimeText = `${diffSeconds}s`;
+		}
+		nextTimeEl.textContent = nextTimeText;
+	};
+	updateDateTime(true);
+	setInterval(updateDateTime, 1000);
 	}
 	
-	let delta = Math.abs(newDate - date) / 1000;
-	const diffDays = Math.floor(delta / 86400);
-	delta -= diffDays * 86400;
-	const diffHours = Math.floor(delta / 3600) % 24;
-	delta -= diffHours * 3600;
-	const diffMinutes = Math.floor(delta / 60) % 60;
-	delta -= diffMinutes * 60;
-	const diffSeconds = Math.trunc(delta % 60);
-	let nextTimeText = "";
-	if (diffDays > 0) {
-		nextTimeText = `${diffDays}d`;
-		if (diffHours !== 0) {
-			nextTimeText += ` y ${diffMinutes}m`;
+	
+	// Muestra el dia de la semana (Lunes, Martes, etc.)
+	// document.getElementById("date-element").textContent = new Date().toLocaleDateString("es-ES", { weekday: "long" });
+	
+	function setupHours(is_screen_medium) {
+		if (window.safety == 0) {
+			return;
 		}
-	} else if (diffHours > 0) {
-		nextTimeText = `${diffHours}h`;
-		if (diffMinutes !== 0) {
-			nextTimeText += ` y ${diffMinutes}m`;
-		}
-	} else if (diffMinutes > 0) {
-		nextTimeText = `${diffMinutes}m`;
-		if (diffSeconds !== 0) {
-			nextTimeText += ` y ${diffSeconds}s`;
-		}
-	} else {
-		nextTimeText = `${diffSeconds}s`;
-	}
-	nextTimeEl.textContent = nextTimeText;
-};
-updateDateTime(true);
-setInterval(updateDateTime, 1000);
-}
-
-
-// Muestra el dia de la semana (Lunes, Martes, etc.)
-// document.getElementById("date-element").textContent = new Date().toLocaleDateString("es-ES", { weekday: "long" });
-
-function setupHours(is_screen_medium) {
-	if (window.safety == 0) {
-		return;
-	}
-	// Get all elements with "hour" class, IF screen is medium, set their content to an hour (from 13:00 to 19:00), ELSE set their content to an hour (from 13:00 to 19:00) and a dash followed by the next hour
-	let hours = document.getElementsByClassName("hour");
-	if (hours) {
-		for (let i = 0; i < hours.length; i++) {
-			let hour = hours[i];
-			if (is_screen_medium) {
-				hour.textContent = `${13 + i}:00`;
-			} else {
-				hour.textContent = `${13 + i}:00 - ${14 + i}:00`;
+		// Get all elements with "hour" class, IF screen is medium, set their content to an hour (from 13:00 to 19:00), ELSE set their content to an hour (from 13:00 to 19:00) and a dash followed by the next hour
+		let hours = document.getElementsByClassName("hour");
+		if (hours) {
+			for (let i = 0; i < hours.length; i++) {
+				let hour = hours[i];
+				if (is_screen_medium) {
+					hour.textContent = `${13 + i}:00`;
+				} else {
+					hour.textContent = `${13 + i}:00 - ${14 + i}:00`;
+				}
 			}
 		}
 	}
-}
-
-function scheduleSwitchButton() {
-	if (window.safety == 0) {
-		return;
-	}
-	let panel = document.getElementById("schedule-settings-panel");
-	let scheduleSettingsIcon = document.getElementById("schedule-settings-icon");
-	const settingsSVG = "M10.825 22q-.675 0-1.162-.45t-.588-1.1L8.85 18.8q-.325-.125-.612-.3t-.563-.375l-1.55.65q-.625.275-1.25.05t-.975-.8l-1.175-2.05q-.35-.575-.2-1.225t.675-1.075l1.325-1Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337l-1.325-1Q2.675 9.9 2.525 9.25t.2-1.225L3.9 5.975q.35-.575.975-.8t1.25.05l1.55.65q.275-.2.575-.375t.6-.3l.225-1.65q.1-.65.588-1.1T10.825 2h2.35q.675 0 1.163.45t.587 1.1l.225 1.65q.325.125.613.3t.562.375l1.55-.65q.625-.275 1.25-.05t.975.8l1.175 2.05q.35.575.2 1.225t-.675 1.075l-1.325 1q.025.175.025.338v.674q0 .163-.05.338l1.325 1q.525.425.675 1.075t-.2 1.225l-1.2 2.05q-.35.575-.975.8t-1.25-.05l-1.5-.65q-.275.2-.575.375t-.6.3l-.225 1.65q-.1.65-.587 1.1t-1.163.45zm1.225-6.5q1.45 0 2.475-1.025T15.55 12t-1.025-2.475T12.05 8.5q-1.475 0-2.488 1.025T8.55 12t1.013 2.475T12.05 15.5";
-	const closeSVG = "m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z";
-	if (panel) {
-		if (panel.style.display === "none") {
-			panel.style.display = "block";
-			if (scheduleSettingsIcon) {
-				scheduleSettingsIcon.getElementsByTagName("path")[0].setAttribute("d", closeSVG);
-			}
-		} else {
-			panel.style.display = "none";
-			if (scheduleSettingsIcon) {
-				scheduleSettingsIcon.getElementsByTagName("path")[0].setAttribute("d", settingsSVG);
-			}
+	
+	function scheduleSwitchButton() {
+		if (window.safety == 0) {
+			return;
 		}
-	}
-}
-
-function setSubGroup(subgroup) {
-	if (window.safety == 0) {
-		return;
-	}
-	localStorage.setItem("subgroup", subgroup);
-	applySubGroup(subgroup);
-}
-
-function applySubGroup(subgroup) {
-	if (window.safety == 0) {
-		return;
-	}
-	console.log("Applying subgroup: ", subgroup);
-	// Buttons for subgroup selection
-	let buttonOne = document.getElementById("subgroup-one-button");
-	let buttonTwo = document.getElementById("subgroup-two-button");
-	// Buttons for subject selection
-	let subPeOdlc = document.getElementById("sub-pe-odlc");
-	let subEaLc = document.getElementById("sub-ea-lc");
-	let subLcEa = document.getElementById("sub-lc-ea");
-	let subOdlcPe = document.getElementById("sub-odlc-pe");
-	// Get current day and hour (to prevent errors, we will have to check first if the elements exist)
-	let currentDayElement = document.getElementById("current-day-selected-var");
-	let currentHourElement = document.getElementById("current-hour-selected-var");
-	let currentDay = -1;
-	let currentHour = -1;
-	if (currentDayElement) {
-		currentDay = parseInt(currentDayElement.textContent || "-1");
-	}
-	if (currentHourElement) {
-		currentHour = parseInt(currentHourElement.textContent || "-1");
-	}
-	if (buttonOne) {
-		if (buttonTwo) {
-			if (subgroup == '1') {
-				console.log("Subgroup 1");
-				// Change button styles
-				buttonOne.classList.add("current-theme-btn");
-				buttonTwo.classList.remove("current-theme-btn");
-				// Change subject buttons
-				if (subPeOdlc) {
-					subPeOdlc.classList.remove("odlc");
-					subPeOdlc.classList.add("pe");
-					subPeOdlc.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
-				}
-				if (subEaLc) {
-					subEaLc.classList.remove("lc");
-					subEaLc.classList.add("ea");
-					subEaLc.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
-				}
-				if (subLcEa) {
-					subLcEa.classList.remove("ea");
-					subLcEa.classList.add("lc");
-					subLcEa.getElementsByTagName("button")[0].textContent = "Lenguaje C";
-				}
-				if (subOdlcPe) {
-					subOdlcPe.classList.remove("pe");
-					subOdlcPe.classList.add("odlc");
-					subOdlcPe.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
-				}
-			} else if (subgroup == '2') {
-				console.log("Subgroup 2");
-				// Change button styles
-				buttonOne.classList.remove("current-theme-btn");
-				buttonTwo.classList.add("current-theme-btn");
-				// Change subject buttons
-				if (subPeOdlc) {
-					subPeOdlc.classList.remove("pe");
-					subPeOdlc.classList.add("odlc");
-					subPeOdlc.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
-				}
-				if (subEaLc) {
-					subEaLc.classList.remove("ea");
-					subEaLc.classList.add("lc");
-					subEaLc.getElementsByTagName("button")[0].textContent = "Lenguaje C";
-				}
-				if (subLcEa) {
-					subLcEa.classList.remove("lc");
-					subLcEa.classList.add("ea");
-					subLcEa.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
-				}
-
-				if (subOdlcPe) {
-					subOdlcPe.classList.remove("odlc");
-					subOdlcPe.classList.add("pe");
-					subOdlcPe.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
+		let panel = document.getElementById("schedule-settings-panel");
+		let scheduleSettingsIcon = document.getElementById("schedule-settings-icon");
+		const settingsSVG = "M10.825 22q-.675 0-1.162-.45t-.588-1.1L8.85 18.8q-.325-.125-.612-.3t-.563-.375l-1.55.65q-.625.275-1.25.05t-.975-.8l-1.175-2.05q-.35-.575-.2-1.225t.675-1.075l1.325-1Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337l-1.325-1Q2.675 9.9 2.525 9.25t.2-1.225L3.9 5.975q.35-.575.975-.8t1.25.05l1.55.65q.275-.2.575-.375t.6-.3l.225-1.65q.1-.65.588-1.1T10.825 2h2.35q.675 0 1.163.45t.587 1.1l.225 1.65q.325.125.613.3t.562.375l1.55-.65q.625-.275 1.25-.05t.975.8l1.175 2.05q.35.575.2 1.225t-.675 1.075l-1.325 1q.025.175.025.338v.674q0 .163-.05.338l1.325 1q.525.425.675 1.075t-.2 1.225l-1.2 2.05q-.35.575-.975.8t-1.25-.05l-1.5-.65q-.275.2-.575.375t-.6.3l-.225 1.65q-.1.65-.587 1.1t-1.163.45zm1.225-6.5q1.45 0 2.475-1.025T15.55 12t-1.025-2.475T12.05 8.5q-1.475 0-2.488 1.025T8.55 12t1.013 2.475T12.05 15.5";
+		const closeSVG = "m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z";
+		if (panel) {
+			if (panel.style.display === "none") {
+				panel.style.display = "block";
+				if (scheduleSettingsIcon) {
+					scheduleSettingsIcon.getElementsByTagName("path")[0].setAttribute("d", closeSVG);
 				}
 			} else {
-				console.error("Invalid subgroup: ", subgroup);
+				panel.style.display = "none";
+				if (scheduleSettingsIcon) {
+					scheduleSettingsIcon.getElementsByTagName("path")[0].setAttribute("d", settingsSVG);
+				}
 			}
 		}
 	}
-	if (currentDay != -1 && currentHour != -1) {
-		showSubjectData(currentDay, currentHour, false);
+	
+	function setSubGroup(subgroup) {
+		if (window.safety == 0) {
+			return;
+		}
+		localStorage.setItem("subgroup", subgroup);
+		applySubGroup(subgroup);
 	}
-}
-
-// NOTE: Will refactor this code, so functions regarding subjectData take a day and hour parameters instead of a subject id number
-
-function getSubjectData(day = 0, hour = 13) {
-	if (window.safety == 0) {
-		return;
-	}
-	const DEFAULT_SUBJECT_DATA = {
-		tag: "none",
-		name: "",
-		hour: "Hour",
-		teacher: "Teacher",
-		classroom: "Ninguna",
-		subgroup: "Subgroup",
-		type: "Type"
-	};
-	switch (day) {
-		case 0: // Monday
-			switch (hour) {
-				case 13: // 13:00 or 1:00PM
-					return {
-						tag: "lc",
-						name: "Lenguaje C",
-						hour: "13:00 - 14:00",
-						teacher: "Antillón Macías César",
-						classroom: "E45 - 301",
-						subgroup: "Ambos",
-						type: "Clase"
-					};
-				case 14: case 15: // 14:00 or 2:00PM
-					return {
-						tag: "tys",
-						name: "Tecnología y Sociedad",
-						hour: "14:00 - 16:00",
-						teacher: "Rangel Lopez Claudia Margarita",
-						classroom: "E45 - 301",
-						subgroup: "Ambos",
-						type: "Taller"
-					};
-				case 16: case 17: // 16:00 or 4:00PM
-					return {
-						tag: "pe",
-						name: "Programación Estructurada",
-						hour: "16:00 - 18:00",
-						teacher: "Nuñez Yepiz Pedro",
-						classroom: "E45 - 301",
-						subgroup: "Ambos",
-						type: "Taller"
+	
+	function applySubGroup(subgroup) {
+		if (window.safety == 0) {
+			return;
+		}
+		console.log("Applying subgroup: ", subgroup);
+		// Buttons for subgroup selection
+		let buttonOne = document.getElementById("subgroup-one-button");
+		let buttonTwo = document.getElementById("subgroup-two-button");
+		// Buttons for subject selection
+		let subPeOdlc = document.getElementById("sub-pe-odlc");
+		let subEaLc = document.getElementById("sub-ea-lc");
+		let subLcEa = document.getElementById("sub-lc-ea");
+		let subOdlcPe = document.getElementById("sub-odlc-pe");
+		// Get current day and hour (to prevent errors, we will have to check first if the elements exist)
+		let currentDayElement = document.getElementById("current-day-selected-var");
+		let currentHourElement = document.getElementById("current-hour-selected-var");
+		let currentDay = -1;
+		let currentHour = -1;
+		if (currentDayElement) {
+			currentDay = parseInt(currentDayElement.textContent || "-1");
+		}
+		if (currentHourElement) {
+			currentHour = parseInt(currentHourElement.textContent || "-1");
+		}
+		if (buttonOne) {
+			if (buttonTwo) {
+				if (subgroup == '1') {
+					console.log("Subgroup 1");
+					// Change button styles
+					buttonOne.classList.add("current-theme-btn");
+					buttonTwo.classList.remove("current-theme-btn");
+					// Change subject buttons
+					if (subPeOdlc) {
+						subPeOdlc.classList.remove("odlc");
+						subPeOdlc.classList.add("pe");
+						subPeOdlc.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
 					}
-				default:
-					return DEFAULT_SUBJECT_DATA;
+					if (subEaLc) {
+						subEaLc.classList.remove("lc");
+						subEaLc.classList.add("ea");
+						subEaLc.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
+					}
+					if (subLcEa) {
+						subLcEa.classList.remove("ea");
+						subLcEa.classList.add("lc");
+						subLcEa.getElementsByTagName("button")[0].textContent = "Lenguaje C";
+					}
+					if (subOdlcPe) {
+						subOdlcPe.classList.remove("pe");
+						subOdlcPe.classList.add("odlc");
+						subOdlcPe.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
+					}
+				} else if (subgroup == '2') {
+					console.log("Subgroup 2");
+					// Change button styles
+					buttonOne.classList.remove("current-theme-btn");
+					buttonTwo.classList.add("current-theme-btn");
+					// Change subject buttons
+					if (subPeOdlc) {
+						subPeOdlc.classList.remove("pe");
+						subPeOdlc.classList.add("odlc");
+						subPeOdlc.getElementsByTagName("button")[0].textContent = "Organización de las Computadoras";
+					}
+					if (subEaLc) {
+						subEaLc.classList.remove("ea");
+						subEaLc.classList.add("lc");
+						subEaLc.getElementsByTagName("button")[0].textContent = "Lenguaje C";
+					}
+					if (subLcEa) {
+						subLcEa.classList.remove("lc");
+						subLcEa.classList.add("ea");
+						subLcEa.getElementsByTagName("button")[0].textContent = "Estadística Avanzada";
+					}
+	
+					if (subOdlcPe) {
+						subOdlcPe.classList.remove("odlc");
+						subOdlcPe.classList.add("pe");
+						subOdlcPe.getElementsByTagName("button")[0].textContent = "Programación Estructurada";
+					}
+				} else {
+					console.error("Invalid subgroup: ", subgroup);
+				}
 			}
-		case 1: // Tuesday
-			switch (hour) {
-				case 13: case 14: // 13:00 or 1:00PM
-					return {
-						tag: "ea",
-						name: "Estadística Avanzada",
-						hour: "13:00 - 15:00",
-						teacher: "Nieto Hipólito Juan Iván",
-						classroom: "E45 - 301",
-						subgroup: "Ambos",
-						type: "Clase"
-					};
-				case 15: // 15:00 or 3:00PM
-					return {
-						tag: "mdli",
-						name: "Metodología de la Investigación",
-						hour: "15:00 - 16:00",
-						teacher: "López Sánchez Carlos Saul",
-						classroom: "E45 - 301",
-						subgroup: "Ambos",
-						type: "Clase"
-					};
-				case 16: case 17: // 16:00 or 4:00PM
-					if (localStorage.getItem("subgroup") == '1') {
+		}
+		if (currentDay != -1 && currentHour != -1) {
+			showSubjectData(currentDay, currentHour, false);
+		}
+	}
+	
+	// NOTE: Will refactor this code, so functions regarding subjectData take a day and hour parameters instead of a subject id number
+	
+	function getSubjectData(day = 0, hour = 13) {
+		if (window.safety == 0) {
+			return;
+		}
+		const DEFAULT_SUBJECT_DATA = {
+			tag: "none",
+			name: "",
+			hour: "Hour",
+			teacher: "Teacher",
+			classroom: "Ninguna",
+			subgroup: "Subgroup",
+			type: "Type"
+		};
+		switch (day) {
+			case 0: // Monday
+				switch (hour) {
+					case 13: // 13:00 or 1:00PM
+						return {
+							tag: "lc",
+							name: "Lenguaje C",
+							hour: "13:00 - 14:00",
+							teacher: "Antillón Macías César",
+							classroom: "E45 - 301",
+							subgroup: "Ambos",
+							type: "Clase"
+						};
+					case 14: case 15: // 14:00 or 2:00PM
+						return {
+							tag: "tys",
+							name: "Tecnología y Sociedad",
+							hour: "14:00 - 16:00",
+							teacher: "Rangel Lopez Claudia Margarita",
+							classroom: "E45 - 301",
+							subgroup: "Ambos",
+							type: "Taller"
+						};
+					case 16: case 17: // 16:00 or 4:00PM
 						return {
 							tag: "pe",
 							name: "Programación Estructurada",
 							hour: "16:00 - 18:00",
 							teacher: "Nuñez Yepiz Pedro",
-							classroom: "E40 - A",
-							subgroup: "1",
-							type: "Laboratorio"
+							classroom: "E45 - 301",
+							subgroup: "Ambos",
+							type: "Taller"
 						}
-					} else {
-						return {
-							tag: "odlc",
-							name: "Organización de las Computadoras",
-							hour: "16:00 - 18:00",
-							teacher: "Crespo Ragland Jonatan",
-							classroom: "E40 - B",
-							subgroup: "2",
-							type: "Laboratorio"
-						};
-					}
-				default:
-					return DEFAULT_SUBJECT_DATA;
-			}
-		case 2: // Wednesday
-			switch (hour) {
-				case 13: case 14: // 13:00 or 1:00PM
-					if (localStorage.getItem("subgroup") == '1') {
+					default:
+						return DEFAULT_SUBJECT_DATA;
+				}
+			case 1: // Tuesday
+				switch (hour) {
+					case 13: case 14: // 13:00 or 1:00PM
 						return {
 							tag: "ea",
 							name: "Estadística Avanzada",
 							hour: "13:00 - 15:00",
 							teacher: "Nieto Hipólito Juan Iván",
-							classroom: "E40 - C",
-							subgroup: "1",
-							type: "Laboratorio"
+							classroom: "E45 - 301",
+							subgroup: "Ambos",
+							type: "Clase"
 						};
-					} else {
+					case 15: // 15:00 or 3:00PM
 						return {
-							tag: "lc",
-							name: "Lenguaje C",
-							hour: "13:00 - 15:00",
-							teacher: "Antillón Macías César",
-							classroom: "E40 - B",
-							subgroup: "2",
-							type: "Laboratorio"
+							tag: "mdli",
+							name: "Metodología de la Investigación",
+							hour: "15:00 - 16:00",
+							teacher: "López Sánchez Carlos Saul",
+							classroom: "E45 - 301",
+							subgroup: "Ambos",
+							type: "Clase"
 						};
-					}
-				case 15: case 16: // 15:00 or 3:00PM
-					if (localStorage.getItem("subgroup") == '1') {
-						return {
-							tag: "lc",
-							name: "Lenguaje C",
-							hour: "15:00 - 17:00",
-							teacher: "Antillón Macías César",
-							classroom: "E40 - C",
-							subgroup: "1",
-							type: "Laboratorio"
-						};
-					} else {
-						return {
-							tag: "ea",
-							name: "Estadística Avanzada",
-							hour: "15:00 - 17:00",
-							teacher: "Nieto Hipólito Juan Iván",
-							classroom: "E34 - LCO - ARQUITECTURA",
-							subgroup: "2",
-							type: "Laboratorio"
-						};
-					}
-				case 17: case 18: // 17:00 or 5:00PM
-					return {
-						tag: "odlc",
-						name: "Organización de las Computadoras",
-						hour: "17:00 - 19:00",
-						teacher: "Crespo Ragland Jonatan",
-						classroom: "E1 - 207",
-						subgroup: "Ambos",
-						type: "Clase"
-					};
-				default:
-					return DEFAULT_SUBJECT_DATA;
-			}
-		case 3: // Thursday
-			switch (hour) {
-				case 13: case 14: // 13:00 or 1:00PM
-					if (localStorage.getItem("subgroup") == '1') {
+					case 16: case 17: // 16:00 or 4:00PM
+						if (localStorage.getItem("subgroup") == '1') {
+							return {
+								tag: "pe",
+								name: "Programación Estructurada",
+								hour: "16:00 - 18:00",
+								teacher: "Nuñez Yepiz Pedro",
+								classroom: "E40 - A",
+								subgroup: "1",
+								type: "Laboratorio"
+							}
+						} else {
+							return {
+								tag: "odlc",
+								name: "Organización de las Computadoras",
+								hour: "16:00 - 18:00",
+								teacher: "Crespo Ragland Jonatan",
+								classroom: "E40 - B",
+								subgroup: "2",
+								type: "Laboratorio"
+							};
+						}
+					default:
+						return DEFAULT_SUBJECT_DATA;
+				}
+			case 2: // Wednesday
+				switch (hour) {
+					case 13: case 14: // 13:00 or 1:00PM
+						if (localStorage.getItem("subgroup") == '1') {
+							return {
+								tag: "ea",
+								name: "Estadística Avanzada",
+								hour: "13:00 - 15:00",
+								teacher: "Nieto Hipólito Juan Iván",
+								classroom: "E40 - C",
+								subgroup: "1",
+								type: "Laboratorio"
+							};
+						} else {
+							return {
+								tag: "lc",
+								name: "Lenguaje C",
+								hour: "13:00 - 15:00",
+								teacher: "Antillón Macías César",
+								classroom: "E40 - B",
+								subgroup: "2",
+								type: "Laboratorio"
+							};
+						}
+					case 15: case 16: // 15:00 or 3:00PM
+						if (localStorage.getItem("subgroup") == '1') {
+							return {
+								tag: "lc",
+								name: "Lenguaje C",
+								hour: "15:00 - 17:00",
+								teacher: "Antillón Macías César",
+								classroom: "E40 - C",
+								subgroup: "1",
+								type: "Laboratorio"
+							};
+						} else {
+							return {
+								tag: "ea",
+								name: "Estadística Avanzada",
+								hour: "15:00 - 17:00",
+								teacher: "Nieto Hipólito Juan Iván",
+								classroom: "E34 - LCO - ARQUITECTURA",
+								subgroup: "2",
+								type: "Laboratorio"
+							};
+						}
+					case 17: case 18: // 17:00 or 5:00PM
 						return {
 							tag: "odlc",
 							name: "Organización de las Computadoras",
-							hour: "13:00 - 15:00",
+							hour: "17:00 - 19:00",
 							teacher: "Crespo Ragland Jonatan",
-							classroom: "E40 - B",
-							subgroup: "1",
-							type: "Laboratorio"
+							classroom: "E1 - 207",
+							subgroup: "Ambos",
+							type: "Clase"
 						};
-					} else {
+					default:
+						return DEFAULT_SUBJECT_DATA;
+				}
+			case 3: // Thursday
+				switch (hour) {
+					case 13: case 14: // 13:00 or 1:00PM
+						if (localStorage.getItem("subgroup") == '1') {
+							return {
+								tag: "odlc",
+								name: "Organización de las Computadoras",
+								hour: "13:00 - 15:00",
+								teacher: "Crespo Ragland Jonatan",
+								classroom: "E40 - B",
+								subgroup: "1",
+								type: "Laboratorio"
+							};
+						} else {
+							return {
+								tag: "pe",
+								name: "Programación Estructurada",
+								hour: "13:00 - 15:00",
+								teacher: "Nuñez Yepiz Pedro",
+								classroom: "E40 - A",
+								subgroup: "2",
+								type: "Laboratorio"
+							};
+						}
+					case 15: // 15:00 or 3:00PM
 						return {
-							tag: "pe",
-							name: "Programación Estructurada",
-							hour: "13:00 - 15:00",
-							teacher: "Nuñez Yepiz Pedro",
-							classroom: "E40 - A",
-							subgroup: "2",
-							type: "Laboratorio"
+							tag: "tys",
+							name: "Tecnología y Sociedad",
+							hour: "15:00 - 16:00",
+							teacher: "Rangel Lopez Claudia Margarita",
+							classroom: "E1 - 305",
+							subgroup: "Ambos",
+							type: "Clase"
 						};
+					case 16: // 16:00 or 4:00PM
+						return {
+							tag: "hu",
+							name: "Hora Universitaria",
+							hour: "16:00 - 17:00",
+							teacher: "",
+							classroom: "",
+							subgroup: "",
+							type: ""
+						};
+					case 17: case 18: // 17:00 or 5:00PM
+						return {
+							tag: "md",
+							name: "Matemáticas Discretas",
+							hour: "17:00 - 19:00",
+							teacher: "Crespo Ragland Jonatan",
+							classroom: "E1 - 301",
+							subgroup: "Ambos",
+							type: "Clase"
+						};
+					default:
+						return DEFAULT_SUBJECT_DATA;
+				}
+			case 4: // Friday
+				switch (hour) {
+					case 13: case 14: // 13:00 or 1:00PM
+						return {
+							tag: "lc",
+							name: "Lenguaje C",
+							hour: "13:00 - 15:00",
+							teacher: "Antillón Macías César",
+							classroom: "E1 - 209",
+							subgroup: "Ambos",
+							type: "Taller"
+						};
+					case 15: case 16: // 15:00 or 3:00PM
+						return {
+							tag: "mdli",
+							name: "Metodología de la Investigación",
+							hour: "15:00 - 17:00",
+							teacher: "López Sánchez Carlos Saul",
+							classroom: "E1 - 209",
+							subgroup: "Ambos",
+							type: "Taller"
+						};
+					case 17: case 18: // 17:00 or 5:00PM
+						return {
+							tag: "md",
+							name: "Matemáticas Discretas",
+							hour: "17:00 - 19:00",
+							teacher: "Crespo Ragland Jonatan",
+							classroom: "E1 - 209",
+							subgroup: "Ambos",
+							type: "Taller"
+						};
+					default:
+						return DEFAULT_SUBJECT_DATA;
+				}
+			default:
+				return DEFAULT_SUBJECT_DATA;
+		}
+	}
+	
+	function updateSubjectDataPanel(subject_data, day) {
+		if (window.safety == 0) {
+			return;
+		}
+		let subjectDataName = document.getElementById("subject-data-name");
+		let subjectDataDay = document.getElementById("subject-data-day");
+		let subjectDataHour = document.getElementById("subject-data-hour");
+		let subjectDataTeacher = document.getElementById("subject-data-teacher");
+		let subjectDataClassroom = document.getElementById("subject-data-classroom");
+		let subjectDataSubgroup = document.getElementById("subject-data-subgroup");
+		let subjectDataType = document.getElementById("subject-data-type");
+		if (subject_data) {
+			if (subjectDataName) {
+				subjectDataName.textContent = subject_data.name;
+			}
+			if (subjectDataDay) {
+				subjectDataDay.textContent = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"][day];
+			}
+			if (subjectDataHour) {
+				subjectDataHour.textContent = subject_data.hour;
+			}
+			if (subject_data.teacher == "") {
+				let subjectDataTeacherDIV = document.getElementById("subject-data-teacher-div");
+				if (subjectDataTeacherDIV) {
+					subjectDataTeacherDIV.style.display = "none";
+				}
+			} else {
+				let subjectDataTeacherDIV = document.getElementById("subject-data-teacher-div");
+				if (subjectDataTeacherDIV) {
+					if (subjectDataTeacher) {
+						subjectDataTeacher.textContent = subject_data.teacher;
 					}
-				case 15: // 15:00 or 3:00PM
-					return {
-						tag: "tys",
-						name: "Tecnología y Sociedad",
-						hour: "15:00 - 16:00",
-						teacher: "Rangel Lopez Claudia Margarita",
-						classroom: "E1 - 305",
-						subgroup: "Ambos",
-						type: "Clase"
-					};
-				case 16: // 16:00 or 4:00PM
-					return {
-						tag: "hu",
-						name: "Hora Universitaria",
-						hour: "16:00 - 17:00",
-						teacher: "",
-						classroom: "",
-						subgroup: "",
-						type: ""
-					};
-				case 17: case 18: // 17:00 or 5:00PM
-					return {
-						tag: "md",
-						name: "Matemáticas Discretas",
-						hour: "17:00 - 19:00",
-						teacher: "Crespo Ragland Jonatan",
-						classroom: "E1 - 301",
-						subgroup: "Ambos",
-						type: "Clase"
-					};
-				default:
-					return DEFAULT_SUBJECT_DATA;
-			}
-		case 4: // Friday
-			switch (hour) {
-				case 13: case 14: // 13:00 or 1:00PM
-					return {
-						tag: "lc",
-						name: "Lenguaje C",
-						hour: "13:00 - 15:00",
-						teacher: "Antillón Macías César",
-						classroom: "E1 - 209",
-						subgroup: "Ambos",
-						type: "Taller"
-					};
-				case 15: case 16: // 15:00 or 3:00PM
-					return {
-						tag: "mdli",
-						name: "Metodología de la Investigación",
-						hour: "15:00 - 17:00",
-						teacher: "López Sánchez Carlos Saul",
-						classroom: "E1 - 209",
-						subgroup: "Ambos",
-						type: "Taller"
-					};
-				case 17: case 18: // 17:00 or 5:00PM
-					return {
-						tag: "md",
-						name: "Matemáticas Discretas",
-						hour: "17:00 - 19:00",
-						teacher: "Crespo Ragland Jonatan",
-						classroom: "E1 - 209",
-						subgroup: "Ambos",
-						type: "Taller"
-					};
-				default:
-					return DEFAULT_SUBJECT_DATA;
-			}
-		default:
-			return DEFAULT_SUBJECT_DATA;
-	}
-}
-
-function updateSubjectDataPanel(subject_data, day) {
-	if (window.safety == 0) {
-		return;
-	}
-	let subjectDataName = document.getElementById("subject-data-name");
-	let subjectDataDay = document.getElementById("subject-data-day");
-	let subjectDataHour = document.getElementById("subject-data-hour");
-	let subjectDataTeacher = document.getElementById("subject-data-teacher");
-	let subjectDataClassroom = document.getElementById("subject-data-classroom");
-	let subjectDataSubgroup = document.getElementById("subject-data-subgroup");
-	let subjectDataType = document.getElementById("subject-data-type");
-	if (subject_data) {
-		if (subjectDataName) {
-			subjectDataName.textContent = subject_data.name;
-		}
-		if (subjectDataDay) {
-			subjectDataDay.textContent = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"][day];
-		}
-		if (subjectDataHour) {
-			subjectDataHour.textContent = subject_data.hour;
-		}
-		if (subject_data.teacher == "") {
-			let subjectDataTeacherDIV = document.getElementById("subject-data-teacher-div");
-			if (subjectDataTeacherDIV) {
-				subjectDataTeacherDIV.style.display = "none";
-			}
-		} else {
-			let subjectDataTeacherDIV = document.getElementById("subject-data-teacher-div");
-			if (subjectDataTeacherDIV) {
-				if (subjectDataTeacher) {
-					subjectDataTeacher.textContent = subject_data.teacher;
+					subjectDataTeacherDIV.style.display = "flex";
 				}
-				subjectDataTeacherDIV.style.display = "flex";
 			}
-		}
-		if (subject_data.classroom == "") {
-			let subjectDataClassroomDIV = document.getElementById("subject-data-classroom-div");
-			if (subjectDataClassroomDIV) {
-				subjectDataClassroomDIV.style.display = "none";
-			}
-		} else {
-			let subjectDataClassroomDIV = document.getElementById("subject-data-classroom-div");
-			if (subjectDataClassroomDIV) {
-				if (subjectDataClassroom) {
-					subjectDataClassroom.textContent = subject_data.classroom;
+			if (subject_data.classroom == "") {
+				let subjectDataClassroomDIV = document.getElementById("subject-data-classroom-div");
+				if (subjectDataClassroomDIV) {
+					subjectDataClassroomDIV.style.display = "none";
 				}
-				subjectDataClassroomDIV.style.display = "flex";
-			}
-		}
-		if (subject_data.subgroup == "") {
-			let subjectDataSubgroupDIV = document.getElementById("subject-data-subgroup-div");
-			if (subjectDataSubgroupDIV) {
-				subjectDataSubgroupDIV.style.display = "none";
-			}
-		} else {
-			let subjectDataSubgroupDIV = document.getElementById("subject-data-subgroup-div");
-			if (subjectDataSubgroupDIV) {
-				if (subjectDataSubgroup) {
-					subjectDataSubgroup.textContent = subject_data.subgroup;
+			} else {
+				let subjectDataClassroomDIV = document.getElementById("subject-data-classroom-div");
+				if (subjectDataClassroomDIV) {
+					if (subjectDataClassroom) {
+						subjectDataClassroom.textContent = subject_data.classroom;
+					}
+					subjectDataClassroomDIV.style.display = "flex";
 				}
-				subjectDataSubgroupDIV.style.display = "flex";
 			}
-		}
-		if (subject_data.type == "") {
-			let subjectDataTypeDIV = document.getElementById("subject-data-type-div");
-			if (subjectDataTypeDIV) {
-				subjectDataTypeDIV.style.display = "none";
-			}
-		} else {
-			let subjectDataTypeDIV = document.getElementById("subject-data-type-div");
-			if (subjectDataTypeDIV) {
-				if (subjectDataType) {
-					subjectDataType.textContent = subject_data.type;
+			if (subject_data.subgroup == "") {
+				let subjectDataSubgroupDIV = document.getElementById("subject-data-subgroup-div");
+				if (subjectDataSubgroupDIV) {
+					subjectDataSubgroupDIV.style.display = "none";
 				}
-				subjectDataTypeDIV.style.display = "flex";
+			} else {
+				let subjectDataSubgroupDIV = document.getElementById("subject-data-subgroup-div");
+				if (subjectDataSubgroupDIV) {
+					if (subjectDataSubgroup) {
+						subjectDataSubgroup.textContent = subject_data.subgroup;
+					}
+					subjectDataSubgroupDIV.style.display = "flex";
+				}
+			}
+			if (subject_data.type == "") {
+				let subjectDataTypeDIV = document.getElementById("subject-data-type-div");
+				if (subjectDataTypeDIV) {
+					subjectDataTypeDIV.style.display = "none";
+				}
+			} else {
+				let subjectDataTypeDIV = document.getElementById("subject-data-type-div");
+				if (subjectDataTypeDIV) {
+					if (subjectDataType) {
+						subjectDataType.textContent = subject_data.type;
+					}
+					subjectDataTypeDIV.style.display = "flex";
+				}
 			}
 		}
 	}
-}
-
-function showSubjectData(day = 0, hour = 13, display = true) {
-	if (window.safety == 0) {
-		return;
-	}
-	const SUBJECT_DATA = getSubjectData(day, hour);
-	updateSubjectDataPanel(SUBJECT_DATA, day);
-	let subjectDataPanel = document.getElementById("subject-data-panel");
-	let currentDaySelectedVar = document.getElementById("current-day-selected-var");
-	let currentHourSelectedVar = document.getElementById("current-hour-selected-var");
-	let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
-	if (subjectDataPreLineBreak) {
-		if (display) {
-			console.log("Debug: Showing pre-line break!");
-			subjectDataPreLineBreak.style.display = "inline";
+	
+	function showSubjectData(day = 0, hour = 13, display = true) {
+		if (window.safety == 0) {
+			return;
+		}
+		const SUBJECT_DATA = getSubjectData(day, hour);
+		updateSubjectDataPanel(SUBJECT_DATA, day);
+		let subjectDataPanel = document.getElementById("subject-data-panel");
+		let currentDaySelectedVar = document.getElementById("current-day-selected-var");
+		let currentHourSelectedVar = document.getElementById("current-hour-selected-var");
+		let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
+		if (subjectDataPreLineBreak) {
+			if (display) {
+				console.log("Debug: Showing pre-line break!");
+				subjectDataPreLineBreak.style.display = "inline";
+			}
+		}
+		if (subjectDataPanel) {
+			if (display) {
+				subjectDataPanel.style.display = "block";
+			}
+			removeSubjectDataClasses(subjectDataPanel);
+			if (SUBJECT_DATA.tag) {
+				subjectDataPanel.classList.add(SUBJECT_DATA.tag);
+			}
+			if (subjectDataPanel.getBoundingClientRect().bottom > window.innerHeight) {
+				subjectDataPanel.scrollIntoView({ behavior: "smooth", block: "end" });
+			}
+		}
+		if (currentDaySelectedVar) {
+			// convert day to string first
+			currentDaySelectedVar.textContent = day.toString();
+		}
+		if (currentHourSelectedVar) {
+			// convert hour to string first
+			currentHourSelectedVar.textContent = hour.toString();
 		}
 	}
-	if (subjectDataPanel) {
-		if (display) {
-			subjectDataPanel.style.display = "block";
+	
+	function hideSubjectData() {
+		if (window.safety == 0) {
+			return;
 		}
-		removeSubjectDataClasses(subjectDataPanel);
-		if (SUBJECT_DATA.tag) {
-			subjectDataPanel.classList.add(SUBJECT_DATA.tag);
+		let subjectDataPanel = document.getElementById("subject-data-panel");
+		let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
+		if (subjectDataPanel) {
+			subjectDataPanel.style.display = "none";
+			removeSubjectDataClasses(subjectDataPanel);
 		}
-		if (subjectDataPanel.getBoundingClientRect().bottom > window.innerHeight) {
-			subjectDataPanel.scrollIntoView({ behavior: "smooth", block: "end" });
+		if (subjectDataPreLineBreak) {
+			console.log("Debug: Hiding pre-line break!");
+			subjectDataPreLineBreak.style.display = "none";
 		}
 	}
-	if (currentDaySelectedVar) {
-		// convert day to string first
-		currentDaySelectedVar.textContent = day.toString();
+	
+	function removeSubjectDataClasses(subjectDataPanel) {
+		if (window.safety == 0) {
+			return;
+		}
+		if (subjectDataPanel) {
+			subjectDataPanel.classList.remove("lc", "tys", "pe", "ea", "mdli", "odlc", "hu", "md");
+		}
 	}
-	if (currentHourSelectedVar) {
-		// convert hour to string first
-		currentHourSelectedVar.textContent = hour.toString();
-	}
-}
-
-function hideSubjectData() {
-	if (window.safety == 0) {
-		return;
-	}
-	let subjectDataPanel = document.getElementById("subject-data-panel");
-	let subjectDataPreLineBreak = document.getElementById("subject-data-pre-line-break");
-	if (subjectDataPanel) {
-		subjectDataPanel.style.display = "none";
-		removeSubjectDataClasses(subjectDataPanel);
-	}
-	if (subjectDataPreLineBreak) {
-		console.log("Debug: Hiding pre-line break!");
-		subjectDataPreLineBreak.style.display = "none";
-	}
-}
-
-function removeSubjectDataClasses(subjectDataPanel) {
-	if (window.safety == 0) {
-		return;
-	}
-	if (subjectDataPanel) {
-		subjectDataPanel.classList.remove("lc", "tys", "pe", "ea", "mdli", "odlc", "hu", "md");
-	}
-}
 </script>
