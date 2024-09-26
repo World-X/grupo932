@@ -47,10 +47,9 @@ Además, Python tiene una gran comunidad de desarrolladores y una amplia varieda
 Python 2 fue lanzado en 2000 y ha llegado al final de su vida útil en 2020. Python 3, por otro lado, fue lanzado en 2008 y es la versión actual de Python. Si estás empezando a aprender Python, te recomiendo que uses Python 3, ya que Python 2 ya no recibe actualizaciones ni soporte, y es prácticamente obsoleto.
 
 Además, es recomandable usar la última versión de Python 3, que en el momento de escribir esto es [Python 3.12.6](https://www.python.org/downloads/release/python-3126/), que salió el 6 de septiembre de 2024. Esto es debido a que incluso en la familia de versiones de Python 3.x, hay cambios y mejoras significativas en cada versión más reciente.
-
 ### ¿Qué hay de Python 1?
 Python 1 fue lanzado en 1994 y es prácticamente obsoleto. Si tienes curiosidad, puedes leer más sobre Python 1 en [este artículo](https://es.wikipedia.org/wiki/Historia_de_Python#Versi%C3%B3n_1.0). **No uses Python 1** para nuevos proyectos.
 ## Índice
 A continuación se muestra una tabla de contenido de todos los artículos en este sitio que forman parte de la guía de Python, en orden cronológico.
-1. [¿Cómo usar Python?](/grupo932/posts/how-to-use-python/)
-
+1. [¿Cómo usar Python?](/grupo932/posts/how-to-use-python/how-to-use-python/)
+2. [Imprimir, comentarios y variables (en Python)](/grupo932/posts/comments-and-variables-in-python/)
