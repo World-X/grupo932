@@ -5,7 +5,7 @@ description: 'Aprende todos los tipos de datos que existen en C, y algunas carac
 image: ''
 tags: [c, recurso, datos, libro, tipos]
 category: 'Recurso'
-draft: false 
+draft: false
 language: ''
 id: 6
 ---
@@ -15,15 +15,17 @@ id: 6
     - *[short](#short)*
     - *[int](#int)*
     - *[long](#long)*
+    - *[long long](#long-long)*
     - *[enum](#enum)*
         - *[Creación de una enumeración](#creación-de-una-enumeración)*
     - *[float](#float)*
     - *[double](#double)*
+    - *[long double](#long-double)*
 - [Tipos derivados](#tipos-derivados)
 ___
 Artículo previo: [Caracteres de C](/grupo932/posts/characters-in-c/)
 :::note[NOTA]
-Esta información fue principalmente extraída del libro *C/C++ Curso de programación (2ª ed.)*, escrita por *Fco. Javier Ceballos* (páginas 20-27).
+Esta información fue principalmente extraída del libro *C/C++ Curso de programación (2ª y 5ª ed.)*, escrita por *Fco. Javier Ceballos* (páginas 20-27 de la 2ª edición).
 :::
 Los tipos de datos en C se clasifican en: tipos *primitivos* y tipos *derivados*.
 ## Tipos primitivos
@@ -109,6 +111,17 @@ long c = 0x1F00230F; /* valor en hexadecimal */
 Evidentemente, el tipo **unsigned long** puede almacenar valores en el rango de *0* a *4,294,967,295* cuando su tamaño es de 32 bits, o de *0* a *18,446,744,073,709,551,615* cuando su tamaño es de 64 bits, ya que ahora no es necesario emplear un bit para el signo.
 
 En general, podemos afirmar que la longitud de un **int** es menor o igual que la longtitud de un **long**.
+### *long long*
+El tipo **long long** se utiliza para declarar datos enteros comprendidos entre los valores *-9223372036854775808* y *+9223372036854775807*. Un valor **long long** se 
+define como un dato de 64 bits de longitud. El siguiente ejemplo declara e inicia 
+la variable *a* de tipo long long:
+```c
+long long a = -1LL; /* LL indica que la constante -1 es long long */
+```
+Evidentemente,  el  tipo  **unsigned long long** puede  almacenar  valores  en  el 
+rango de *0* a *18446744073709551615*, ya que ahora no es necesario emplear un bit para el signo.
+
+En general, podemos afirmar que la longitud de un long es menor o igual que la longitud de un long long.
 ### *enum*
 La declaración de un *tipo enumerado* es simplemente una lista de valores que pueden ser tomados por una variable de ese tipo. Los valores de un tipo enumerado se representarán con identificadores, que serán las constantes del nuevo tipo. Por ejemplo,
 ```c
@@ -212,6 +225,14 @@ double b = 2.2e+5;   /* 2.2e+5 = 2.2 por 10 elevado a 5 */
 double c = 2.0/3.0;
 ```
 Algunos compiladores también proporcionan el tipo **long double**. Un número real de precisión doble formato largo puede tener hasta 19 dígitos significativos.
+### *long double*
+El tipo long double se utiliza para declarar un dato en coma flotante de 80 bits (10 bytes; a veces almacenado como 12 o 16 bytes para mantener la alineación de la estructura de datos) en el formato precisión extendida (un bit para el signo, 15 bits para el exponente y 64 (1+63) para la mantisa (bit 63 a 0: no normalizado, y a 1: normalizado)). Los datos de tipo **long double** almacenan valores con una precisión aproximada de 19 dígitos. 
+
+Para especificar que una constante (un literal) es de tipo **long double**, hay que 
+añadir al final de su valor la letra `'L'`. El siguiente ejemplo declara la variable a de tipo real de *precisión extendida*:
+```c
+long double a = 3.141592L; /* L indica long double */
+```
 ## Tipos derivados
 Los tipos derivados son construidos a partir de los tipos primitivos. Algunos de ellos son: *estructuras*, *uniones*, *matrices* (*arrays*), *punteros* y *funciones*.
 :::warning[AVISO]
