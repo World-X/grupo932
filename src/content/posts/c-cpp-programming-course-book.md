@@ -14,6 +14,10 @@ id: 4
 La versión (formalmente llamado *estándar abierto*) pública más reciente de C es [C18](https://en.wikipedia.org/wiki/C17_(C_standard_revision)), pero se espera que la [C23](https://en.wikipedia.org/wiki/C23_(C_standard_revision)) se vuelva pública en 2024.
 :::
 
+:::note[NOTA]
+A partir de [Expresiones númericas y operadores (en C)](/grupo932/posts/operators-in-c/), el libro utilizado para extraer información cambió a la quinta edición. Se espera que la información sea más actualizada y relevante.
+:::
+
 # Índice
 A continuación se muestra una tabla de contenido de todos los artículos en este sitio cuales tienen contenido que fueron principalmente extraídos del libro, en orden cronológico.
 1. [Caracteres de C](/grupo932/posts/characters-in-c/)
@@ -22,4 +26,4 @@ A continuación se muestra una tabla de contenido de todos los artículos en est
 4. [Literales (en C)](/grupo932/posts/literals-in-c/)
 5. [Identificadores, palabras clave y comentarios (en C)](/grupo932/posts/identifiers-keywords-comments-in-c/)
 6. [Constantes y variables (en C)](/grupo932/posts/constants-and-variables-in-c/)
-
+7. [Expresiones númericas y operadores (en C)](/grupo932/posts/operators-in-c/)

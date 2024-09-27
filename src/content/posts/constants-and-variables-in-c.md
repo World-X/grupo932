@@ -66,3 +66,4 @@ En nuestro ejemplo, se ha declarado la variable `c` antes de la función `main` 
 
 Según lo expuesto, la variable `c` es global y las variables `i`, `f` y `d` son locales.
 
+Siguiente artículo: [Expresiones númericas y operadores (en C)](/grupo932/posts/operators-in-c/)

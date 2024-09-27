@@ -7,6 +7,7 @@ ___
 - [1.2](#12) (24/09/2024)
     - [1.2.1](#121) (25/09/2024)
     - [1.2.2](#122) (26/09/2024)
+    - [1.2.3](#123) (27/09/2024)
 - [1.1](#11) (19/09/2024)
     - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
@@ -37,6 +38,12 @@ El horario se actualiza automáticamente cada segundo, y durante esa actualizaci
     1. [Constantes y variables (en C)](../posts/constants-and-variables-in-c/)
 - Se corrigió un error con el horario.
 - El período para considerar una publicación como actualizada se ha reducido de 7 a 5 días.
+### 1.2.3
+(27/09/2024)
+- **Se agregó un nuevo artículo**.
+    1. [Expresiones númericas y operadores (en C)](../posts/operators-in-c/)
+        * Es el primer artículo que se extrae de la quinta edición del libro *C/C++ Curso de programación*.
+        * Es el artículo más largo hasta la fecha, con más de 3400 palabras y una duración de 17 minutos de lectura.
 ___
 ## 1.1
 (19/09/2024)
