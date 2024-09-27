@@ -47,6 +47,27 @@ const jsonLd = {
   // TODO include cover image here
 }
 ---
+<style is:inline>
+    .markdown-btn {
+        background-color: var(--btn-regular-bg);
+        color: var(--btn-content);
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        border-radius: 0.5rem;
+    }
+    
+    .markdown-btn:hover {
+        background-color: var(--btn-regular-bg-hover);
+    }
+    
+    .markdown-btn:active {
+        background-color: var(--btn-regular-bg-active);
+    }
+    
+    html.dark .markdown-btn {
+        color: rgb(255 255 255 / 0.75);
+    }
+</style>
 <MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.language}>
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4">

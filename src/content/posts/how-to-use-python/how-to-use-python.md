@@ -80,3 +80,5 @@ Guarda el archivo y ejecútalo desde la terminal o desde tu IDE. Deberías ver e
 :::tip[TIP]
 Si usas la terminal de Python, no necesitas crear un archivo. Simplemente escribe `print("Hola, mundo!")` en la terminal y presiona Enter para ver el mensaje impreso en la pantalla.
 :::
+
+Siguiente artículo: [Comentarios, variables y tipos de datos (en Python)](/grupo932/posts/comments-and-variables-in-python/)

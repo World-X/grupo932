@@ -53,3 +53,7 @@ Python 1 fue lanzado en 1994 y es prácticamente obsoleto. Si tienes curiosidad,
 A continuación se muestra una tabla de contenido de todos los artículos en este sitio que forman parte de la guía de Python, en orden cronológico.
 1. [¿Cómo usar Python?](/grupo932/posts/how-to-use-python/how-to-use-python/)
 2. [Imprimir, comentarios y variables (en Python)](/grupo932/posts/comments-and-variables-in-python/)
+3. [Conversión de tipos (en Python)](/grupo932/posts/type-casting-in-python/)
+4. [Entrada de datos (en Python)](/grupo932/posts/input-in-python/)
+5. **Proyecto**: [Crea tu propio juego de "Mad Libs" (en Python)](/grupo932/posts/mad-libs-game-in-python/)
+

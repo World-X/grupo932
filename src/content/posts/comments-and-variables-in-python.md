@@ -3,33 +3,12 @@ title: Imprimir, comentarios y variables (en Python)
 published: 2024-09-25
 description: 'Aprende a imprimir, comentar y declarar variables en Python.'
 image: ''
-tags: [python, comentarios, variables, imprimir, tipos, recurso]
+tags: [python, comentarios, variables, imprimir, tipos, recurso, ejercicio]
 category: 'Recurso'
 draft: false
 language: ''
 id: 13
 ---
-<style>
-.markdown-btn {
-    background-color: oklch(0.85 0.1 var(--hue));
-    color: oklch(0.15 0.1 var(--hue));
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-html.dark .markdown-btn {
-    background-color: oklch(0.15 0.1 var(--hue));
-    color: oklch(0.85 0.1 var(--hue));
-}
-
-.markdown-btn:hover {
-    background-color: oklch(0.75 0.1 var(--hue));
-}
-
-html.dark .markdown-btn:hover {
-    background-color: oklch(0.25 0.1 var(--hue));
-}
-</style>
 ## Tabla de contenido
 - [Impresión](#impresión)
 - [Comentarios](#comentarios)
@@ -186,11 +165,7 @@ print("¡Hola, me llamo " + nombre + " y tengo " + str(edad) + " años!")
 ```
 ## Ejercicio
 Ahora que sabes cómo imprimir, comentar y declarar variables en Python, te propongo un ejercicio para practicar:
-1. Crea una variable `nombre` con tu nombre.
-2. Crea una variable `edad` con tu edad.
-3. Crea una variable `ciudad` con el nombre de tu ciudad.
-4. Imprime un mensaje que diga "¡Hola, me llamo {nombre}, tengo {edad} años y vivo en {ciudad}." usando cualquier método que prefieras (recomiendo f-strings).
-5. Ejecuta el script y verifica que se imprima el mensaje correctamente.
+* Escribe un programa en Python que defina variables (`nombre`, `edad` y `ciudad`) y luego imprima un mensaje que diga algo como: "¡Hola, me llamo `nombre`, tengo `edad` años y vivo en `ciudad`.".
 
 <button onclick="
 let solution = document.getElementById('solution-13');
@@ -210,3 +185,5 @@ print(f"¡Hola, me llamo {nombre}, tengo {edad} años y vivo en {ciudad}.")
 ```
 
 </div>
+
+Siguiente artículo: [Conversión de tipos (en Python)](/grupo932/posts/type-casting-in-python/)

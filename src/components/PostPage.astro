@@ -47,8 +47,12 @@ if (true) {
                     newPanel.style.display = 'flex'
                 }
             }
-            const updatedPostIDs = [4, 6, 10]
-            const updatedPostDates = ['2024-09-27', '2024-09-27', '2024-09-24']
+            // 4: "C/C++ Curso de programación - Guía"
+            // 6: "Tipos de datos (en C)"
+            // 10: "¡La 1.2 está aquí!"
+            // 11: "Python 3 - Guía"
+            const updatedPostIDs = [4, 6, 10, 11]
+            const updatedPostDates = ['2024-09-27', '2024-09-27', '2024-09-24', '2024-09-27']
             if (updatedPostIDs.includes(id)) {
                 // if it was updated in the last 5 days
                 const updatedPostIndex = updatedPostIDs.indexOf(id)
