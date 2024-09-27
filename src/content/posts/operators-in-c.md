@@ -360,3 +360,5 @@ Observando el resultado se ve perfectamente que el contenido de `px` (`*px`) es 
 
 Observe que una vez que px contiene la dirección de `x`, `*px` y `x` hacen referencia al mismo dato, por lo tanto, utilizar `*px` o `x` es indistinto.
 -->
+
+Siguiente artículo: [Prioridad y orden de evaluación (de operadores en C)](/grupo932/posts/operator-priority-in-c/)

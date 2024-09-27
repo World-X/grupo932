@@ -27,3 +27,4 @@ A continuación se muestra una tabla de contenido de todos los artículos en est
 5. [Identificadores, palabras clave y comentarios (en C)](/grupo932/posts/identifiers-keywords-comments-in-c/)
 6. [Constantes y variables (en C)](/grupo932/posts/constants-and-variables-in-c/)
 7. [Expresiones númericas y operadores (en C)](/grupo932/posts/operators-in-c/)
+8. [Prioridad y orden de evaluación (de operadores en C)](/grupo932/posts/operator-priority-in-c/)
