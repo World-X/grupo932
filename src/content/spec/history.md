@@ -54,7 +54,7 @@ Previamente conocida como **1.2.3**, se cambió a **1.2.2.1** debido a que no fu
     1. [Prioridad y orden de evaluación (de operadores en C)](../posts/operator-priority-in-c/)
     2. [Conversión de tipos (en Python)](../posts/type-casting-in-python/)
     3. [Entrada de datos (en Python)](../posts/input-in-python/)
-    4. [Proyecto: Crea tu propio juego de "Mad Libs" (en Python)](../posts/mad-libs-game-in-python/)
+    4. [Crea tu propio juego de "Mad Libs" (en Python)](../posts/mad-libs-game-in-python/)
 ___
 ## 1.1
 (19/09/2024)

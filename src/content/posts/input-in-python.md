@@ -1,7 +1,7 @@
 ---
 title: Entrada de datos (en Python)
 published: 2024-09-27
-description: 'Aprende cómo obtener datos del usuario en Python con la función `input()`.'
+description: 'Aprende cómo obtener datos del usuario en Python con la función input().'
 image: ''
 tags: [python, input, entrada, datos, recurso, ejercicio]
 category: 'Recurso'
