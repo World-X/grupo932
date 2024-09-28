@@ -9,6 +9,7 @@ ___
     - [1.2.2](#122) (26/09/2024)
         - [1.2.2.1](#1221) (27/09/2024)
     - [1.2.3](#123) (27/09/2024)
+        - [1.2.3.1](#1231) (28/09/2024)
 - [1.1](#11) (19/09/2024)
     - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
@@ -55,6 +56,10 @@ Previamente conocida como **1.2.3**, se cambió a **1.2.2.1** debido a que no fu
     2. [Conversión de tipos (en Python)](../posts/type-casting-in-python/)
     3. [Entrada de datos (en Python)](../posts/input-in-python/)
     4. [Crea tu propio juego de "Mad Libs" (en Python)](../posts/mad-libs-game-in-python/)
+#### 1.2.3.1
+(28/09/2024)
+- **Se agregó un nuevo artículo importante**.
+    1. [️️️️️🏳️ Me rindo](../posts/i-give-up/)
 ___
 ## 1.1
 (19/09/2024)
