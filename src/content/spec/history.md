@@ -65,6 +65,7 @@ Previamente conocida como **1.2.3**, se cambió a **1.2.2.1** debido a que no fu
 (21/10/2024)
 - **Se agregó un nuevo artículo**.
     1. [¿Cómo instalar Raylib?](../posts/how-to-install-raylib/how-to-install-raylib/) 
+- Se cambió el salón de la asignatura de "Programación Estrucuturada" de **E45 - 301** a **E1 - 301** en el horario.
 ___
 ## 1.1
 (19/09/2024)
