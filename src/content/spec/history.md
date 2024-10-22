@@ -10,6 +10,7 @@ ___
         - [1.2.2.1](#1221) (27/09/2024)
     - [1.2.3](#123) (27/09/2024)
         - [1.2.3.1](#1231) (28/09/2024)
+        - [1.2.3.2](#1232) (21/10/2024)
 - [1.1](#11) (19/09/2024)
     - [1.1.1](#111) (20/09/2024)
 - [1.0](#10) (13/09/2024)
@@ -60,6 +61,10 @@ Previamente conocida como **1.2.3**, se cambió a **1.2.2.1** debido a que no fu
 (28/09/2024)
 - **Se agregó un nuevo artículo importante**.
     1. [️️️️️🏳️ Me rindo](../posts/i-give-up/)
+#### 1.2.3.2
+(21/10/2024)
+- **Se agregó un nuevo artículo**.
+    1. [¿Cómo instalar Raylib?](../posts/how-to-install-raylib/how-to-install-raylib/) 
 ___
 ## 1.1
 (19/09/2024)
